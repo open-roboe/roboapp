@@ -18,6 +18,10 @@ resource manager > navigation tab > + icon
 
 provide navigation graph name. when prompted for adding dependencies to gradle, choose yes.
 
+In activity_main layout, add a NavHostFragment, and choose the navigation graph when prompted.
+
+## material 3
+
 
 
 
