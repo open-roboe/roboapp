@@ -55,5 +55,9 @@ modify the fragment view to be like this
     </layout>
 
 
+## design with xml
+
+https://constraintlayout.com/basics/create_chains.html
+
 
 

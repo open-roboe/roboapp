@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">RoboApp</string>
     <string name="textfield_hint_password">password</string>
+    <string name="textfield_hint_username">username</string>
+    <string name="fragment_login_title">Welcome</string>
+    <string name="fragment_login_button">Login</string>
+    <string name="fragment_login_edit_server_button">Edit server</string>
+    <string name="fragment_login_app_guide_button">App guide</string>
+    <string name="fragment_login_welcome_paragraph">Log in with the credentials provided by your club</string>
 </resources>
