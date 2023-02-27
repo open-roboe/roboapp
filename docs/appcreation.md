@@ -26,7 +26,9 @@ remove the values-nigh folder.
 in the values folder, replace colors.xml and theme.xml with your colors and theme files,
 generated with the m3 figma plugin or the m3 theme generator website
 
+Tweak the theme to make the app overlap with the statusbar
 https://stackoverflow.com/questions/22192291/how-to-change-the-status-bar-color-in-android
+https://stackoverflow.com/a/52437297/9169799
 
 ## data binding
 
