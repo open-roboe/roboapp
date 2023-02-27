@@ -26,6 +26,8 @@ remove the values-nigh folder.
 in the values folder, replace colors.xml and theme.xml with your colors and theme files,
 generated with the m3 figma plugin or the m3 theme generator website
 
+https://stackoverflow.com/questions/22192291/how-to-change-the-status-bar-color-in-android
+
 ## data binding
 
 in build gradle, inside the android{} scope, add
