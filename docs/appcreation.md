@@ -22,6 +22,38 @@ In activity_main layout, add a NavHostFragment, and choose the navigation graph 
 
 ## material 3
 
+remove the values-nigh folder.
+in the values folder, replace colors.xml and theme.xml with your colors and theme files,
+generated with the m3 figma plugin or the m3 theme generator website
+
+## data binding
+
+in build gradle, inside the android{} scope, add
+
+    buildFeatures {
+        dataBinding true
+    }
+
+Create a fragment with its own viewmodel, using the navigation ui
+
+modify the fragment view to be like this
+
+    <?xml version="1.0" encoding="utf-8"?>
+    <layout xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+        <data>
+            <variable
+                name="viewModel"
+                type="com.example....ViewModel" />
+        </data>
+        <androidx.constraintlayout.widget.ConstraintLayout
+
+        <!-- Fragment design here -->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </layout>
+
 
 
 
