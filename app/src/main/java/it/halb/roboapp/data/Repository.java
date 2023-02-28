@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 import it.halb.roboapp.data.local.Account;
 import it.halb.roboapp.data.local.AccountDao;
@@ -27,10 +28,10 @@ public class Repository {
         regattas = regattaDao.getAllRegattas();
     }
 
-    //TODO: replace asynctask with something better
-    //https://developer.android.com/training/data-storage/room/async-queries#guava-livedata
     public void insertAccount(Account account){
-        new InsertAccountAsyncTask(accountDao).doInBackground(account);
+        Executors.newSingleThreadExecutor().execute(() -> {
+            accountDao.insert(account);
+        });
     }
     public void update(Account account){
 
@@ -48,35 +49,19 @@ public class Repository {
     }
 
     public void insertRegatta(Regatta regatta){
+        //deprecated, and does not work
+        //new InsertRegattaAsyncTask(regattaDao).doInBackground(regatta);
 
+        //deprecated, but at least it works
+        /*
+        AsyncTask.execute(() -> {
+            regattaDao.insert(regatta);
+        });
+         */
+
+        //test
+        Executors.newSingleThreadExecutor().execute(() -> {
+            regattaDao.insert(regatta);
+        });
     }
-
-    private static class InsertAccountAsyncTask extends AsyncTask<Account, Void, Void> {
-
-        private final AccountDao accountDao;
-
-        private InsertAccountAsyncTask(AccountDao accountDao){
-            this.accountDao = accountDao;
-        }
-        @Override
-        protected Void doInBackground(Account... accounts) {
-            accountDao.insert(accounts[0]);
-            return null;
-        }
-    }
-
-    private static class InsertRegattaAsyncTask extends AsyncTask<Regatta, Void, Void> {
-
-        private final RegattaDao regattaDao;
-
-        private InsertRegattaAsyncTask(RegattaDao regattaDao){
-            this.regattaDao = regattaDao;
-        }
-        @Override
-        protected Void doInBackground(Regatta... regattas) {
-            regattaDao.insert(regattas[0]);
-            return null;
-        }
-    }
-
 }
