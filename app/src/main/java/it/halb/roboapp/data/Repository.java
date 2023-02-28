@@ -33,19 +33,18 @@ public class Repository {
             accountDao.insert(account);
         });
     }
-    public void update(Account account){
-
-    }
-    public void delete(Account account){
-
-    }
-
     public LiveData<Account> getAccount(){
         return account;
     }
 
     public LiveData<List<Regatta>> getAllRegattas(){
         return regattas;
+    }
+
+    public void deleteRegatta(Regatta regatta){
+        Executors.newSingleThreadExecutor().execute(() -> {
+            regattaDao.delete(regatta);
+        });
     }
 
     public void insertRegatta(Regatta regatta){

@@ -46,6 +46,10 @@ public class RegattaListAdapter extends RecyclerView.Adapter<RegattaListAdapter.
         notifyDataSetChanged();
     }
 
+    public Regatta getRegattaAt(int position){
+        return regattas.get(position);
+    }
+
     class RegattaHolder extends RecyclerView.ViewHolder{
         private TextView textViewTitle;
         private TextView textViewDescription;

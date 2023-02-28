@@ -32,6 +32,10 @@ public class RegattaListViewModel extends AndroidViewModel {
         return allRegattas;
     }
 
+    public void deleteRegatta(Regatta regatta){
+        repository.deleteRegatta(regatta);
+    }
+
     public void fakeInsert(){
         Log.d("FAKEINSERT", "cliecked");
         Random rand = new Random();
