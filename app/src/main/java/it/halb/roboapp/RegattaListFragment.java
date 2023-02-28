@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,12 +29,24 @@ public class RegattaListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //viewmodel initialization
         RegattaListViewModel model = new ViewModelProvider(this).get(RegattaListViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setRegattaListViewModel(model);
+
+        //recyclerview initialization
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        binding.recyclerView.setHasFixedSize(true);
+        RegattaListAdapter adapter = new RegattaListAdapter();
+        binding.recyclerView.setAdapter(adapter);
+
+        //viewmodel update listeners
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
             Toast.makeText(this.getContext(), "CHANGED", Toast.LENGTH_LONG).show();
+            adapter.setRegattas(regattas);
             Log.d("REGATTAS_OBSERVE", "changes!");
         });
+
+
     }
 }
