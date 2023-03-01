@@ -58,10 +58,3 @@ modify the fragment view to be like this
         </androidx.constraintlayout.widget.ConstraintLayout>
     </layout>
 
-
-## design with xml
-
-https://constraintlayout.com/basics/create_chains.html
-
-
-

@@ -51,7 +51,7 @@ public class RegattaListFragment extends Fragment {
         //viewmodel update listeners
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
             //Toast.makeText(this.getContext(), "CHANGED", Toast.LENGTH_LONG).show();
-            adapter.setRegattas(regattas);
+            adapter.submitList(regattas);
             Log.d("REGATTAS_OBSERVE", "changes!");
         });
 
@@ -68,6 +68,7 @@ public class RegattaListFragment extends Fragment {
                 model.deleteRegatta(
                         adapter.getRegattaAt( viewHolder.getAdapterPosition())
                 );
+                //adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
 
             /**

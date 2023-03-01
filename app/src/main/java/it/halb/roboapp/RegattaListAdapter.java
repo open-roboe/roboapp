@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -13,9 +15,29 @@ import java.util.List;
 
 import it.halb.roboapp.data.local.Regatta;
 
-public class RegattaListAdapter extends RecyclerView.Adapter<RegattaListAdapter.RegattaHolder> {
+public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.RegattaHolder> {
 
-    private List<Regatta> regattas = new ArrayList<>();
+
+    public RegattaListAdapter() {
+        super(DIFF_CALLBACK);
+    }
+
+    private static final DiffUtil.ItemCallback<Regatta> DIFF_CALLBACK = new DiffUtil.ItemCallback<Regatta>() {
+        @Override
+        public boolean areItemsTheSame(@NonNull Regatta oldItem, @NonNull Regatta newItem) {
+            //we compare the primary keys
+            return oldItem.getName().equals(newItem.getName());
+        }
+
+        @Override
+        public boolean areContentsTheSame(@NonNull Regatta oldItem, @NonNull Regatta newItem) {
+            //we compare the content
+            //TODO: implement has in Regatta class and all Database models. compare hash here
+            return oldItem.getName().equals(newItem.getName()) &&
+                    oldItem.getType().equals(newItem.getType()) &&
+                    oldItem.getCreationDate() == (newItem.getCreationDate());
+        }
+    };
 
     @NonNull
     @Override
@@ -29,25 +51,15 @@ public class RegattaListAdapter extends RecyclerView.Adapter<RegattaListAdapter.
     @Override
     public void onBindViewHolder(@NonNull RegattaHolder holder, int position) {
         //this is where we bind data in our regattas list to RegattaHolder instances
-        Regatta currentRegatta = regattas.get(position);
+        Regatta currentRegatta = getItem(position);
         holder.textViewTitle.setText(currentRegatta.getName());
         holder.textViewDescription.setText(currentRegatta.getType());
         holder.textViewDate.setText("dec 12");
     }
 
-    @Override
-    public int getItemCount() {
-        return regattas.size();
-    }
-
-    public void setRegattas(List<Regatta> regattas){
-        this.regattas = regattas;
-        //TODO: update soon with better notify methods
-        notifyDataSetChanged();
-    }
 
     public Regatta getRegattaAt(int position){
-        return regattas.get(position);
+        return getItem(position);
     }
 
     class RegattaHolder extends RecyclerView.ViewHolder{
