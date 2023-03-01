@@ -36,3 +36,11 @@ Per aprire l'editor grafico delle navigazioni.
 premi il tasto + in alto a sinistra, e cerca il nome del fragment che hai creato, per aggiungerlo alle schermate dell'applicazione
 
 
+
+TODO: move to dedicated file
+
+# advanced design
+
+The coordinator layout:
+https://saulmm.github.io/mastering-coordinator
+
