@@ -59,10 +59,12 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_height="match_parent"
+            android:paddingBottom="64dp"
+            android:clipToPadding="false"
             tools:listitem="@layout/regatta_item" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
