@@ -22,11 +22,17 @@ Una schermata ha spesso bisogno di salvare da qualche parte dei dati che servono
 
 I dati di una schermata si salvano nel viewmodel
 
+TODO
+
 ### View
-impostiamo databinding con viewmodel
+impostiamo databinding con viewmodel TODO
+
+In questo esempio non ha importanza il design della view. Normalmente però le cose
+sono piu complesse, e specificate in dettaglio in figma.
+[Questa guida](./view-design.it.md) spiega in dettaglio come implementare il design in una view, inclusi gli elementi descritti in figma.
 
 ### Fragment
-Inizializziamo e coleghiamo tutto
+Inizializziamo e coleghiamo tutto TODO
 
 ### aggiungiamo la schermata alla navigazione
 
@@ -34,13 +40,4 @@ In android studio, apri il file `res/navigation/navigation_main.xml`
 Per aprire l'editor grafico delle navigazioni.
 
 premi il tasto + in alto a sinistra, e cerca il nome del fragment che hai creato, per aggiungerlo alle schermate dell'applicazione
-
-
-
-TODO: move to dedicated file
-
-# advanced design
-
-The coordinator layout:
-https://saulmm.github.io/mastering-coordinator
 

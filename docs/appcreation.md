@@ -58,3 +58,28 @@ modify the fragment view to be like this
         </androidx.constraintlayout.widget.ConstraintLayout>
     </layout>
 
+## data layer
+
+Follow this tutorial serie
+https://www.youtube.com/playlist?list=PLrnPJCHvNZuDihTpkRs6SpZhqgBqPU118
+
+In this serie you should only focus on the data layer: room, the repository, and
+the way the repository is used in a viewmodel.
+
+A good resource on room is also this page: https://developer.android.com/training/data-storage/room#groovy
+
+Now, there are two important things that the video serie don't cover:
+we also want to make requests from a repository, so we need a good way to make
+async requests on another thread, and return some sort of promise(javascript term.)
+
+For this, check out this resource:
+https://developer.android.com/guide/background/asynchronous/java-threads
+
+and this one
+https://developer.android.com/training/data-storage/room/async-queries#guava-livedata
+
+Finally, if you followed the video tutorials, you initialized the repository in a
+viewmodel. This is fine when the repository is small and only uses room, but since we also need to handle web requests, initializing every time is gonna be an expensive operation. we need to transform the repository into a singleton.
+[todo: solve this problem]
+
+
