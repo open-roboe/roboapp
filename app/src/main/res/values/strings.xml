@@ -8,4 +8,5 @@
     <string name="fragment_login_app_guide_button">App guide</string>
     <string name="fragment_login_welcome_paragraph">Log in with the credentials provided by your club</string>
     <string name="fab_new_regatta">New Regatta</string>
+    <string name="fragment_regatta_list_searchbar_text">Search a regatta</string>
 </resources>
