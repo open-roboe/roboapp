@@ -17,13 +17,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/topAppBar"
-                app:layout_scrollFlags="scroll"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:title="apptitle"
-                />
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:padding="24dp"
+                android:shadowColor="@color/md_theme_light_errorContainer"
+                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
+                app:cardCornerRadius="100dp"
+                app:cardElevation="0dp">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:background="@color/md_theme_light_surfaceVariant"
+                    app:layout_scrollFlags="scroll"
+                    app:navigationIcon="@drawable/baseline_menu_24" />
+            </androidx.cardview.widget.CardView>
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
