@@ -13,7 +13,14 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            app:srcCompat="@drawable/track1" />
 
         <TextView
             android:id="@+id/textViewDate"
@@ -21,18 +28,21 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:text="Sep 12"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
             android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
             android:layout_toStartOf="@id/textViewDate"
+            android:layout_toEndOf="@id/imageView2"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+            android:textStyle="bold" />
 
 
         <TextView
@@ -41,8 +51,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewTitle"
             android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/imageView2"
+            android:layout_marginStart="16dp"
             android:text="Subtitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
