@@ -1,5 +1,7 @@
 package it.halb.roboapp;
 
+import static it.halb.roboapp.R.string.snackbar_regatta_deleted_text;
+
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -21,6 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
@@ -54,6 +58,14 @@ public class RegattaListFragment extends Fragment {
             //Toast.makeText(this.getContext(), "CHANGED", Toast.LENGTH_LONG).show();
             adapter.submitList(regattas);
             Log.d("REGATTAS_OBSERVE", "changes!");
+        });
+
+        //temporary test
+        binding.fakeSearchBar.setOnClickListener(v -> {
+            Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
+                    .setDuration(10 * 1000)
+                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {})
+                    .show();
         });
 
         //recyclerview touch gestures
