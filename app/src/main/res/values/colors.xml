@@ -32,4 +32,5 @@
     <color name="md_theme_light_surfaceTint">#0957CB</color>
     <color name="md_theme_light_outlineVariant">#C5C6D0</color>
     <color name="md_theme_light_scrim">#000000</color>
+    <color name="custom_removed_red">#ef5350</color>
 </resources>

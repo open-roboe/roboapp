@@ -11,6 +11,7 @@ import androidx.appcompat.widget.ThemeUtils;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,7 +82,7 @@ public class RegattaListFragment extends Fragment {
                     View itemView = viewHolder.itemView;
 
                     Paint p = new Paint();
-                    p.setColor(ContextCompat.getColor(requireContext(), R.color.md_theme_light_errorContainer));
+                    p.setColor(ContextCompat.getColor(requireContext(), R.color.custom_removed_red));
                     if (dX > 0) {
                         /* Set your color for positive displacement */
 
