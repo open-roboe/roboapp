@@ -34,6 +34,24 @@
                     android:background="@color/md_theme_light_surfaceVariant"
                     app:layout_scrollFlags="scroll"
                     app:navigationIcon="@drawable/baseline_menu_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="60dp"
+                    android:text="Search a regatta"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium">
+
+                </TextView>
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|end"
+                    android:src="@drawable/baseline_search_24" />
             </androidx.cardview.widget.CardView>
         </com.google.android.material.appbar.AppBarLayout>
 
