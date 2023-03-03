@@ -21,6 +21,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+@Deprecated
 public class ApiClientSingleton {
     private static ApiClientSingleton instance;
     private Context context; //this is very probably a memory leak, but it's fine

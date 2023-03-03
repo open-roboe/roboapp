@@ -3,6 +3,7 @@ package it.halb.roboapp.dataLayer.remoteDataSource;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+@Deprecated
 public class StoredData {
     private static String DEFAULT_API_BASE_URL = "https://roboapp.halb.it/";
     private Context ctx;

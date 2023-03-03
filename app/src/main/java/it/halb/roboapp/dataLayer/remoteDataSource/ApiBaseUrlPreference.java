@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import androidx.annotation.NonNull;
 
 /**
- * Typesafe interface to shared preferences, that stores the api base url
+ * Typesafe interface to a shared preference for the api base url
  */
 public class ApiBaseUrlPreference {
     //TODO: pull this from gradle config
