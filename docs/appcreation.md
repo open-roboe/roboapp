@@ -74,12 +74,10 @@ async requests on another thread, and return some sort of promise(javascript ter
 
 For this, check out this resource:
 https://developer.android.com/guide/background/asynchronous/java-threads
+Basically, we either return livedata or a callback
 
-and this one
-https://developer.android.com/training/data-storage/room/async-queries#guava-livedata
 
 Finally, if you followed the video tutorials, you initialized the repository in a
-viewmodel. This is fine when the repository is small and only uses room, but since we also need to handle web requests, initializing every time is gonna be an expensive operation. we need to transform the repository into a singleton.
-[todo: solve this problem]
+viewmodel. This is fine when the repository is small and only uses room, but since we also need to handle web requests, initializing every time is gonna be an expensive operation. we need to transform the repository into a singleton, and in the viewmodel simly call the getInstance method.
 
 

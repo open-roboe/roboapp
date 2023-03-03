@@ -12,19 +12,29 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiBaseUrlPreference;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
 public class Repository {
-    private AccountDao accountDao;
-    private RegattaDao regattaDao;
-    private LiveData<Account> account;
-    private LiveData<List<Regatta>> regattas;
+    private final ApiClient apiClient;
+    private final AccountDao accountDao;
+    private final RegattaDao regattaDao;
+    private final LiveData<Account> account;
+    private final LiveData<List<Regatta>> regattas;
 
     public Repository(Application application){
+        //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
+        //init apiBaseUrl shared preference
+        ApiBaseUrlPreference apiBaseUrlPreference = new ApiBaseUrlPreference(application.getApplicationContext());
+        //init remote data source
+        apiClient = new ApiClient(
+                apiBaseUrlPreference.getApiBaseUrl()
+                , "jwt");
     }
 
     public void insertAccount(Account account){
@@ -47,17 +57,6 @@ public class Repository {
     }
 
     public void insertRegatta(Regatta regatta){
-        //deprecated, and does not work
-        //new InsertRegattaAsyncTask(regattaDao).doInBackground(regatta);
-
-        //deprecated, but at least it works
-        /*
-        AsyncTask.execute(() -> {
-            regattaDao.insert(regatta);
-        });
-         */
-
-        //test
         Executors.newSingleThreadExecutor().execute(() -> {
             regattaDao.insert(regatta);
         });
