@@ -1,4 +1,4 @@
-package it.halb.roboapp.data.local;
+package it.halb.roboapp.dataLayer.localDataSource;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;

@@ -10,8 +10,8 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.Random;
 
-import it.halb.roboapp.data.Repository;
-import it.halb.roboapp.data.local.Regatta;
+import it.halb.roboapp.dataLayer.Repository;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListViewModel extends AndroidViewModel {
 

@@ -10,10 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import it.halb.roboapp.data.local.Regatta;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.RegattaHolder> {
 

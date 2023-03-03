@@ -1,18 +1,17 @@
-package it.halb.roboapp.data;
+package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
-import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 import java.util.concurrent.Executors;
 
-import it.halb.roboapp.data.local.Account;
-import it.halb.roboapp.data.local.AccountDao;
-import it.halb.roboapp.data.local.Database;
-import it.halb.roboapp.data.local.Regatta;
-import it.halb.roboapp.data.local.RegattaDao;
+import it.halb.roboapp.dataLayer.localDataSource.Account;
+import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
+import it.halb.roboapp.dataLayer.localDataSource.Database;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
 
 public class Repository {
     private AccountDao accountDao;

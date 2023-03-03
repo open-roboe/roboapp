@@ -1,10 +1,8 @@
-package it.halb.roboapp.data.local;
+package it.halb.roboapp.dataLayer.localDataSource;
 
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import java.math.BigDecimal;
 
 @Entity(tableName = "regatta_table")
 public class Regatta {
