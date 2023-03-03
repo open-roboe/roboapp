@@ -11,73 +11,74 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * RoboaCreate
+ * PollRoboaUpdate
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
-public class RoboaCreate {
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+public class PollRoboaUpdate {
+  public static final String SERIALIZED_NAME_LAT = "lat";
+  @SerializedName(SERIALIZED_NAME_LAT)
+  private BigDecimal lat;
 
-  public static final String SERIALIZED_NAME_TOKEN = "token";
-  @SerializedName(SERIALIZED_NAME_TOKEN)
-  private String token;
+  public static final String SERIALIZED_NAME_LON = "lon";
+  @SerializedName(SERIALIZED_NAME_LON)
+  private BigDecimal lon;
 
-  public RoboaCreate() {
+  public PollRoboaUpdate() {
   }
 
-  public RoboaCreate name(String name) {
+  public PollRoboaUpdate lat(BigDecimal lat) {
     
-    this.name = name;
+    this.lat = lat;
     return this;
   }
 
    /**
-   * Get name
-   * @return name
+   * Get lat
+   * @return lat
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public String getName() {
-    return name;
+  public BigDecimal getLat() {
+    return lat;
   }
 
 
-  public void setName(String name) {
-    this.name = name;
+  public void setLat(BigDecimal lat) {
+    this.lat = lat;
   }
 
 
-  public RoboaCreate token(String token) {
+  public PollRoboaUpdate lon(BigDecimal lon) {
     
-    this.token = token;
+    this.lon = lon;
     return this;
   }
 
    /**
-   * Get token
-   * @return token
+   * Get lon
+   * @return lon
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public String getToken() {
-    return token;
+  public BigDecimal getLon() {
+    return lon;
   }
 
 
-  public void setToken(String token) {
-    this.token = token;
+  public void setLon(BigDecimal lon) {
+    this.lon = lon;
   }
 
 
@@ -89,22 +90,22 @@ public class RoboaCreate {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RoboaCreate roboaCreate = (RoboaCreate) o;
-    return Objects.equals(this.name, roboaCreate.name) &&
-        Objects.equals(this.token, roboaCreate.token);
+    PollRoboaUpdate pollRoboaUpdate = (PollRoboaUpdate) o;
+    return Objects.equals(this.lat, pollRoboaUpdate.lat) &&
+        Objects.equals(this.lon, pollRoboaUpdate.lon);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, token);
+    return Objects.hash(lat, lon);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RoboaCreate {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
+    sb.append("class PollRoboaUpdate {\n");
+    sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
+    sb.append("    lon: ").append(toIndentedString(lon)).append("\n");
     sb.append("}");
     return sb.toString();
   }

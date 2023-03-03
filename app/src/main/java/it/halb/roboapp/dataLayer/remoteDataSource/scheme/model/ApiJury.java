@@ -11,7 +11,7 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,10 +21,10 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * JuryCreate
+ * ApiJury
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
-public class JuryCreate {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
+public class ApiJury {
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   private String description;
@@ -41,10 +41,10 @@ public class JuryCreate {
   @SerializedName(SERIALIZED_NAME_LON)
   private BigDecimal lon;
 
-  public JuryCreate() {
+  public ApiJury() {
   }
 
-  public JuryCreate description(String description) {
+  public ApiJury description(String description) {
     
     this.description = description;
     return this;
@@ -67,7 +67,7 @@ public class JuryCreate {
   }
 
 
-  public JuryCreate color(Integer color) {
+  public ApiJury color(Integer color) {
     
     this.color = color;
     return this;
@@ -90,7 +90,7 @@ public class JuryCreate {
   }
 
 
-  public JuryCreate lat(BigDecimal lat) {
+  public ApiJury lat(BigDecimal lat) {
     
     this.lat = lat;
     return this;
@@ -100,8 +100,8 @@ public class JuryCreate {
    * Get lat
    * @return lat
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
   public BigDecimal getLat() {
     return lat;
@@ -113,7 +113,7 @@ public class JuryCreate {
   }
 
 
-  public JuryCreate lon(BigDecimal lon) {
+  public ApiJury lon(BigDecimal lon) {
     
     this.lon = lon;
     return this;
@@ -123,8 +123,8 @@ public class JuryCreate {
    * Get lon
    * @return lon
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
   public BigDecimal getLon() {
     return lon;
@@ -144,11 +144,11 @@ public class JuryCreate {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    JuryCreate juryCreate = (JuryCreate) o;
-    return Objects.equals(this.description, juryCreate.description) &&
-        Objects.equals(this.color, juryCreate.color) &&
-        Objects.equals(this.lat, juryCreate.lat) &&
-        Objects.equals(this.lon, juryCreate.lon);
+    ApiJury apiJury = (ApiJury) o;
+    return Objects.equals(this.description, apiJury.description) &&
+        Objects.equals(this.color, apiJury.color) &&
+        Objects.equals(this.lat, apiJury.lat) &&
+        Objects.equals(this.lon, apiJury.lon);
   }
 
   @Override
@@ -159,7 +159,7 @@ public class JuryCreate {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class JuryCreate {\n");
+    sb.append("class ApiJury {\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");

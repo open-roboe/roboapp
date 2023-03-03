@@ -11,7 +11,7 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -23,10 +23,10 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * CourseResponse
+ * ApiCourse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
-public class CourseResponse {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
+public class ApiCourse {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
@@ -69,16 +69,16 @@ public class CourseResponse {
 
   public static final String SERIALIZED_NAME_JURY = "jury";
   @SerializedName(SERIALIZED_NAME_JURY)
-  private JuryResponse jury;
+  private ApiJury jury;
 
   public static final String SERIALIZED_NAME_BUOYS = "buoys";
   @SerializedName(SERIALIZED_NAME_BUOYS)
-  private List<Buoy> buoys = new ArrayList<>();
+  private List<ApiBuoy> buoys = new ArrayList<>();
 
-  public CourseResponse() {
+  public ApiCourse() {
   }
 
-  public CourseResponse name(String name) {
+  public ApiCourse name(String name) {
     
     this.name = name;
     return this;
@@ -101,7 +101,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse type(String type) {
+  public ApiCourse type(String type) {
     
     this.type = type;
     return this;
@@ -124,7 +124,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse compassDegrees(Integer compassDegrees) {
+  public ApiCourse compassDegrees(Integer compassDegrees) {
     
     this.compassDegrees = compassDegrees;
     return this;
@@ -147,7 +147,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse startLineLen(BigDecimal startLineLen) {
+  public ApiCourse startLineLen(BigDecimal startLineLen) {
     
     this.startLineLen = startLineLen;
     return this;
@@ -170,7 +170,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse breakDistance(BigDecimal breakDistance) {
+  public ApiCourse breakDistance(BigDecimal breakDistance) {
     
     this.breakDistance = breakDistance;
     return this;
@@ -193,7 +193,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse courseLength(BigDecimal courseLength) {
+  public ApiCourse courseLength(BigDecimal courseLength) {
     
     this.courseLength = courseLength;
     return this;
@@ -216,7 +216,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse bottomBuoy(Boolean bottomBuoy) {
+  public ApiCourse bottomBuoy(Boolean bottomBuoy) {
     
     this.bottomBuoy = bottomBuoy;
     return this;
@@ -239,7 +239,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse gate(Boolean gate) {
+  public ApiCourse gate(Boolean gate) {
     
     this.gate = gate;
     return this;
@@ -262,7 +262,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse secondMarkDistance(BigDecimal secondMarkDistance) {
+  public ApiCourse secondMarkDistance(BigDecimal secondMarkDistance) {
     
     this.secondMarkDistance = secondMarkDistance;
     return this;
@@ -285,7 +285,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse creationDate(Integer creationDate) {
+  public ApiCourse creationDate(Integer creationDate) {
     
     this.creationDate = creationDate;
     return this;
@@ -295,8 +295,8 @@ public class CourseResponse {
    * Get creationDate
    * @return creationDate
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
   public Integer getCreationDate() {
     return creationDate;
@@ -308,7 +308,7 @@ public class CourseResponse {
   }
 
 
-  public CourseResponse jury(JuryResponse jury) {
+  public ApiCourse jury(ApiJury jury) {
     
     this.jury = jury;
     return this;
@@ -321,23 +321,23 @@ public class CourseResponse {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public JuryResponse getJury() {
+  public ApiJury getJury() {
     return jury;
   }
 
 
-  public void setJury(JuryResponse jury) {
+  public void setJury(ApiJury jury) {
     this.jury = jury;
   }
 
 
-  public CourseResponse buoys(List<Buoy> buoys) {
+  public ApiCourse buoys(List<ApiBuoy> buoys) {
     
     this.buoys = buoys;
     return this;
   }
 
-  public CourseResponse addBuoysItem(Buoy buoysItem) {
+  public ApiCourse addBuoysItem(ApiBuoy buoysItem) {
     this.buoys.add(buoysItem);
     return this;
   }
@@ -349,12 +349,12 @@ public class CourseResponse {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public List<Buoy> getBuoys() {
+  public List<ApiBuoy> getBuoys() {
     return buoys;
   }
 
 
-  public void setBuoys(List<Buoy> buoys) {
+  public void setBuoys(List<ApiBuoy> buoys) {
     this.buoys = buoys;
   }
 
@@ -367,19 +367,19 @@ public class CourseResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CourseResponse courseResponse = (CourseResponse) o;
-    return Objects.equals(this.name, courseResponse.name) &&
-        Objects.equals(this.type, courseResponse.type) &&
-        Objects.equals(this.compassDegrees, courseResponse.compassDegrees) &&
-        Objects.equals(this.startLineLen, courseResponse.startLineLen) &&
-        Objects.equals(this.breakDistance, courseResponse.breakDistance) &&
-        Objects.equals(this.courseLength, courseResponse.courseLength) &&
-        Objects.equals(this.bottomBuoy, courseResponse.bottomBuoy) &&
-        Objects.equals(this.gate, courseResponse.gate) &&
-        Objects.equals(this.secondMarkDistance, courseResponse.secondMarkDistance) &&
-        Objects.equals(this.creationDate, courseResponse.creationDate) &&
-        Objects.equals(this.jury, courseResponse.jury) &&
-        Objects.equals(this.buoys, courseResponse.buoys);
+    ApiCourse apiCourse = (ApiCourse) o;
+    return Objects.equals(this.name, apiCourse.name) &&
+        Objects.equals(this.type, apiCourse.type) &&
+        Objects.equals(this.compassDegrees, apiCourse.compassDegrees) &&
+        Objects.equals(this.startLineLen, apiCourse.startLineLen) &&
+        Objects.equals(this.breakDistance, apiCourse.breakDistance) &&
+        Objects.equals(this.courseLength, apiCourse.courseLength) &&
+        Objects.equals(this.bottomBuoy, apiCourse.bottomBuoy) &&
+        Objects.equals(this.gate, apiCourse.gate) &&
+        Objects.equals(this.secondMarkDistance, apiCourse.secondMarkDistance) &&
+        Objects.equals(this.creationDate, apiCourse.creationDate) &&
+        Objects.equals(this.jury, apiCourse.jury) &&
+        Objects.equals(this.buoys, apiCourse.buoys);
   }
 
   @Override
@@ -390,7 +390,7 @@ public class CourseResponse {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CourseResponse {\n");
+    sb.append("class ApiCourse {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
     sb.append("    compassDegrees: ").append(toIndentedString(compassDegrees)).append("\n");

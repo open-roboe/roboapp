@@ -1,9 +1,9 @@
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.api;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.api;
 
 import java.util.List;
 
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.RoboaCreate;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.RoboaResponse;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.RoboaCreate;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.RoboaResponse;
 import retrofit2.Call;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;

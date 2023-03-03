@@ -11,74 +11,73 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * PollUserUpdate
+ * AuthToken
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
-public class PollUserUpdate {
-  public static final String SERIALIZED_NAME_LAT = "lat";
-  @SerializedName(SERIALIZED_NAME_LAT)
-  private BigDecimal lat;
+public class AuthToken {
+  public static final String SERIALIZED_NAME_ACCESS_TOKEN = "access_token";
+  @SerializedName(SERIALIZED_NAME_ACCESS_TOKEN)
+  private String accessToken;
 
-  public static final String SERIALIZED_NAME_LON = "lon";
-  @SerializedName(SERIALIZED_NAME_LON)
-  private BigDecimal lon;
+  public static final String SERIALIZED_NAME_TOKEN_TYPE = "token_type";
+  @SerializedName(SERIALIZED_NAME_TOKEN_TYPE)
+  private String tokenType;
 
-  public PollUserUpdate() {
+  public AuthToken() {
   }
 
-  public PollUserUpdate lat(BigDecimal lat) {
+  public AuthToken accessToken(String accessToken) {
     
-    this.lat = lat;
+    this.accessToken = accessToken;
     return this;
   }
 
    /**
-   * Get lat
-   * @return lat
+   * Get accessToken
+   * @return accessToken
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public BigDecimal getLat() {
-    return lat;
+  public String getAccessToken() {
+    return accessToken;
   }
 
 
-  public void setLat(BigDecimal lat) {
-    this.lat = lat;
+  public void setAccessToken(String accessToken) {
+    this.accessToken = accessToken;
   }
 
 
-  public PollUserUpdate lon(BigDecimal lon) {
+  public AuthToken tokenType(String tokenType) {
     
-    this.lon = lon;
+    this.tokenType = tokenType;
     return this;
   }
 
    /**
-   * Get lon
-   * @return lon
+   * Get tokenType
+   * @return tokenType
   **/
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public BigDecimal getLon() {
-    return lon;
+  public String getTokenType() {
+    return tokenType;
   }
 
 
-  public void setLon(BigDecimal lon) {
-    this.lon = lon;
+  public void setTokenType(String tokenType) {
+    this.tokenType = tokenType;
   }
 
 
@@ -90,22 +89,22 @@ public class PollUserUpdate {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PollUserUpdate pollUserUpdate = (PollUserUpdate) o;
-    return Objects.equals(this.lat, pollUserUpdate.lat) &&
-        Objects.equals(this.lon, pollUserUpdate.lon);
+    AuthToken authToken = (AuthToken) o;
+    return Objects.equals(this.accessToken, authToken.accessToken) &&
+        Objects.equals(this.tokenType, authToken.tokenType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(lat, lon);
+    return Objects.hash(accessToken, tokenType);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PollUserUpdate {\n");
-    sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
-    sb.append("    lon: ").append(toIndentedString(lon)).append("\n");
+    sb.append("class AuthToken {\n");
+    sb.append("    accessToken: ").append(toIndentedString(accessToken)).append("\n");
+    sb.append("    tokenType: ").append(toIndentedString(tokenType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

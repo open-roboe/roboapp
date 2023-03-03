@@ -6,12 +6,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.api.RoboaApi;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.api.AccountApi;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.api.CourseApi;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.api.PollingApi;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.AuthToken;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.UserResponse;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.api.RoboaApi;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.api.AccountApi;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.api.CourseApi;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.api.PollingApi;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserResponse;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;

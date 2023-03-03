@@ -11,66 +11,40 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.math.BigDecimal;
 import java.util.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * BuoyJury
+ * JuryUpdate
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-29T15:35:34.288146Z[Etc/UTC]")
-public class BuoyJury {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private String id;
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
+public class JuryUpdate {
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
-  private String description = "";
+  private String description;
 
   public static final String SERIALIZED_NAME_COLOR = "color";
   @SerializedName(SERIALIZED_NAME_COLOR)
-  private Integer color = 0;
+  private Integer color;
 
   public static final String SERIALIZED_NAME_LAT = "lat";
   @SerializedName(SERIALIZED_NAME_LAT)
-  private Integer lat;
+  private BigDecimal lat;
 
   public static final String SERIALIZED_NAME_LON = "lon";
   @SerializedName(SERIALIZED_NAME_LON)
-  private Integer lon;
+  private BigDecimal lon;
 
-  public BuoyJury() {
+  public JuryUpdate() {
   }
 
-  public BuoyJury id(String id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getId() {
-    return id;
-  }
-
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-
-  public BuoyJury description(String description) {
+  public JuryUpdate description(String description) {
     
     this.description = description;
     return this;
@@ -93,7 +67,7 @@ public class BuoyJury {
   }
 
 
-  public BuoyJury color(Integer color) {
+  public JuryUpdate color(Integer color) {
     
     this.color = color;
     return this;
@@ -116,7 +90,7 @@ public class BuoyJury {
   }
 
 
-  public BuoyJury lat(Integer lat) {
+  public JuryUpdate lat(BigDecimal lat) {
     
     this.lat = lat;
     return this;
@@ -126,20 +100,20 @@ public class BuoyJury {
    * Get lat
    * @return lat
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-  public Integer getLat() {
+  public BigDecimal getLat() {
     return lat;
   }
 
 
-  public void setLat(Integer lat) {
+  public void setLat(BigDecimal lat) {
     this.lat = lat;
   }
 
 
-  public BuoyJury lon(Integer lon) {
+  public JuryUpdate lon(BigDecimal lon) {
     
     this.lon = lon;
     return this;
@@ -149,15 +123,15 @@ public class BuoyJury {
    * Get lon
    * @return lon
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-  public Integer getLon() {
+  public BigDecimal getLon() {
     return lon;
   }
 
 
-  public void setLon(Integer lon) {
+  public void setLon(BigDecimal lon) {
     this.lon = lon;
   }
 
@@ -170,24 +144,22 @@ public class BuoyJury {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BuoyJury buoyJury = (BuoyJury) o;
-    return Objects.equals(this.id, buoyJury.id) &&
-        Objects.equals(this.description, buoyJury.description) &&
-        Objects.equals(this.color, buoyJury.color) &&
-        Objects.equals(this.lat, buoyJury.lat) &&
-        Objects.equals(this.lon, buoyJury.lon);
+    JuryUpdate juryUpdate = (JuryUpdate) o;
+    return Objects.equals(this.description, juryUpdate.description) &&
+        Objects.equals(this.color, juryUpdate.color) &&
+        Objects.equals(this.lat, juryUpdate.lat) &&
+        Objects.equals(this.lon, juryUpdate.lon);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, description, color, lat, lon);
+    return Objects.hash(description, color, lat, lon);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BuoyJury {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class JuryUpdate {\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");

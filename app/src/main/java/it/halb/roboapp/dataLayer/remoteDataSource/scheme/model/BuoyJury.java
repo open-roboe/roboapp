@@ -11,44 +11,43 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.math.BigDecimal;
 import java.util.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * BuoyCreate
+ * BuoyJury
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
-public class BuoyCreate {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-29T15:35:34.288146Z[Etc/UTC]")
+public class BuoyJury {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
+  private String id;
 
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
-  private String description;
+  private String description = "";
 
   public static final String SERIALIZED_NAME_COLOR = "color";
   @SerializedName(SERIALIZED_NAME_COLOR)
-  private Integer color;
+  private Integer color = 0;
 
   public static final String SERIALIZED_NAME_LAT = "lat";
   @SerializedName(SERIALIZED_NAME_LAT)
-  private BigDecimal lat;
+  private Integer lat;
 
   public static final String SERIALIZED_NAME_LON = "lon";
   @SerializedName(SERIALIZED_NAME_LON)
-  private BigDecimal lon;
+  private Integer lon;
 
-  public BuoyCreate() {
+  public BuoyJury() {
   }
 
-  public BuoyCreate id(Integer id) {
+  public BuoyJury id(String id) {
     
     this.id = id;
     return this;
@@ -61,17 +60,17 @@ public class BuoyCreate {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public Integer getId() {
+  public String getId() {
     return id;
   }
 
 
-  public void setId(Integer id) {
+  public void setId(String id) {
     this.id = id;
   }
 
 
-  public BuoyCreate description(String description) {
+  public BuoyJury description(String description) {
     
     this.description = description;
     return this;
@@ -94,7 +93,7 @@ public class BuoyCreate {
   }
 
 
-  public BuoyCreate color(Integer color) {
+  public BuoyJury color(Integer color) {
     
     this.color = color;
     return this;
@@ -117,7 +116,7 @@ public class BuoyCreate {
   }
 
 
-  public BuoyCreate lat(BigDecimal lat) {
+  public BuoyJury lat(Integer lat) {
     
     this.lat = lat;
     return this;
@@ -130,17 +129,17 @@ public class BuoyCreate {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public BigDecimal getLat() {
+  public Integer getLat() {
     return lat;
   }
 
 
-  public void setLat(BigDecimal lat) {
+  public void setLat(Integer lat) {
     this.lat = lat;
   }
 
 
-  public BuoyCreate lon(BigDecimal lon) {
+  public BuoyJury lon(Integer lon) {
     
     this.lon = lon;
     return this;
@@ -153,12 +152,12 @@ public class BuoyCreate {
   @javax.annotation.Nonnull
   @ApiModelProperty(required = true, value = "")
 
-  public BigDecimal getLon() {
+  public Integer getLon() {
     return lon;
   }
 
 
-  public void setLon(BigDecimal lon) {
+  public void setLon(Integer lon) {
     this.lon = lon;
   }
 
@@ -171,12 +170,12 @@ public class BuoyCreate {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BuoyCreate buoyCreate = (BuoyCreate) o;
-    return Objects.equals(this.id, buoyCreate.id) &&
-        Objects.equals(this.description, buoyCreate.description) &&
-        Objects.equals(this.color, buoyCreate.color) &&
-        Objects.equals(this.lat, buoyCreate.lat) &&
-        Objects.equals(this.lon, buoyCreate.lon);
+    BuoyJury buoyJury = (BuoyJury) o;
+    return Objects.equals(this.id, buoyJury.id) &&
+        Objects.equals(this.description, buoyJury.description) &&
+        Objects.equals(this.color, buoyJury.color) &&
+        Objects.equals(this.lat, buoyJury.lat) &&
+        Objects.equals(this.lon, buoyJury.lon);
   }
 
   @Override
@@ -187,7 +186,7 @@ public class BuoyCreate {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BuoyCreate {\n");
+    sb.append("class BuoyJury {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");

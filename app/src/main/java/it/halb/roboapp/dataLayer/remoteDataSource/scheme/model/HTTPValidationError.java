@@ -11,46 +11,56 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * RoboaGet
+ * HTTPValidationError
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
-public class RoboaGet {
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+public class HTTPValidationError {
+  public static final String SERIALIZED_NAME_DETAIL = "detail";
+  @SerializedName(SERIALIZED_NAME_DETAIL)
+  private List<ValidationError> detail = null;
 
-  public RoboaGet() {
+  public HTTPValidationError() {
   }
 
-  public RoboaGet name(String name) {
+  public HTTPValidationError detail(List<ValidationError> detail) {
     
-    this.name = name;
+    this.detail = detail;
+    return this;
+  }
+
+  public HTTPValidationError addDetailItem(ValidationError detailItem) {
+    if (this.detail == null) {
+      this.detail = new ArrayList<>();
+    }
+    this.detail.add(detailItem);
     return this;
   }
 
    /**
-   * Get name
-   * @return name
+   * Get detail
+   * @return detail
   **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
 
-  public String getName() {
-    return name;
+  public List<ValidationError> getDetail() {
+    return detail;
   }
 
 
-  public void setName(String name) {
-    this.name = name;
+  public void setDetail(List<ValidationError> detail) {
+    this.detail = detail;
   }
 
 
@@ -62,20 +72,20 @@ public class RoboaGet {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    RoboaGet roboaGet = (RoboaGet) o;
-    return Objects.equals(this.name, roboaGet.name);
+    HTTPValidationError htTPValidationError = (HTTPValidationError) o;
+    return Objects.equals(this.detail, htTPValidationError.detail);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(detail);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class RoboaGet {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class HTTPValidationError {\n");
+    sb.append("    detail: ").append(toIndentedString(detail)).append("\n");
     sb.append("}");
     return sb.toString();
   }

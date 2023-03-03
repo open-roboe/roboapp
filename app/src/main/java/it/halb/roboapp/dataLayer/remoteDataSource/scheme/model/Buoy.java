@@ -11,7 +11,7 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,17 +21,21 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * JuryUpdate
+ * Buoy
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
-public class JuryUpdate {
+public class Buoy {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
+
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
-  private String description;
+  private String description = "";
 
   public static final String SERIALIZED_NAME_COLOR = "color";
   @SerializedName(SERIALIZED_NAME_COLOR)
-  private Integer color;
+  private Integer color = 0;
 
   public static final String SERIALIZED_NAME_LAT = "lat";
   @SerializedName(SERIALIZED_NAME_LAT)
@@ -41,10 +45,37 @@ public class JuryUpdate {
   @SerializedName(SERIALIZED_NAME_LON)
   private BigDecimal lon;
 
-  public JuryUpdate() {
+  public static final String SERIALIZED_NAME_COURSE_ID = "course_id";
+  @SerializedName(SERIALIZED_NAME_COURSE_ID)
+  private String courseId;
+
+  public Buoy() {
   }
 
-  public JuryUpdate description(String description) {
+  public Buoy id(Integer id) {
+    
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * Get id
+   * @return id
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
+
+  public Integer getId() {
+    return id;
+  }
+
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+
+  public Buoy description(String description) {
     
     this.description = description;
     return this;
@@ -67,7 +98,7 @@ public class JuryUpdate {
   }
 
 
-  public JuryUpdate color(Integer color) {
+  public Buoy color(Integer color) {
     
     this.color = color;
     return this;
@@ -90,7 +121,7 @@ public class JuryUpdate {
   }
 
 
-  public JuryUpdate lat(BigDecimal lat) {
+  public Buoy lat(BigDecimal lat) {
     
     this.lat = lat;
     return this;
@@ -100,8 +131,8 @@ public class JuryUpdate {
    * Get lat
    * @return lat
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
 
   public BigDecimal getLat() {
     return lat;
@@ -113,7 +144,7 @@ public class JuryUpdate {
   }
 
 
-  public JuryUpdate lon(BigDecimal lon) {
+  public Buoy lon(BigDecimal lon) {
     
     this.lon = lon;
     return this;
@@ -123,8 +154,8 @@ public class JuryUpdate {
    * Get lon
    * @return lon
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
 
   public BigDecimal getLon() {
     return lon;
@@ -136,6 +167,29 @@ public class JuryUpdate {
   }
 
 
+  public Buoy courseId(String courseId) {
+    
+    this.courseId = courseId;
+    return this;
+  }
+
+   /**
+   * Get courseId
+   * @return courseId
+  **/
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
+
+  public String getCourseId() {
+    return courseId;
+  }
+
+
+  public void setCourseId(String courseId) {
+    this.courseId = courseId;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -144,26 +198,30 @@ public class JuryUpdate {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    JuryUpdate juryUpdate = (JuryUpdate) o;
-    return Objects.equals(this.description, juryUpdate.description) &&
-        Objects.equals(this.color, juryUpdate.color) &&
-        Objects.equals(this.lat, juryUpdate.lat) &&
-        Objects.equals(this.lon, juryUpdate.lon);
+    Buoy buoy = (Buoy) o;
+    return Objects.equals(this.id, buoy.id) &&
+        Objects.equals(this.description, buoy.description) &&
+        Objects.equals(this.color, buoy.color) &&
+        Objects.equals(this.lat, buoy.lat) &&
+        Objects.equals(this.lon, buoy.lon) &&
+        Objects.equals(this.courseId, buoy.courseId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, color, lat, lon);
+    return Objects.hash(id, description, color, lat, lon, courseId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class JuryUpdate {\n");
+    sb.append("class Buoy {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
     sb.append("    lon: ").append(toIndentedString(lon)).append("\n");
+    sb.append("    courseId: ").append(toIndentedString(courseId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

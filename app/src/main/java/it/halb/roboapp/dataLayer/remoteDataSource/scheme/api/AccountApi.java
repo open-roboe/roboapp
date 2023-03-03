@@ -1,8 +1,8 @@
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.api;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.api;
 
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.AuthToken;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.UserCreate;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.UserResponse;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserCreate;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

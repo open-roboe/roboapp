@@ -11,7 +11,7 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,10 +21,10 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * ApiBuoy
+ * BuoyCreate
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-02-01T12:48:53.094523Z[Etc/UTC]")
-public class ApiBuoy {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
+public class BuoyCreate {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
@@ -45,10 +45,10 @@ public class ApiBuoy {
   @SerializedName(SERIALIZED_NAME_LON)
   private BigDecimal lon;
 
-  public ApiBuoy() {
+  public BuoyCreate() {
   }
 
-  public ApiBuoy id(Integer id) {
+  public BuoyCreate id(Integer id) {
     
     this.id = id;
     return this;
@@ -71,7 +71,7 @@ public class ApiBuoy {
   }
 
 
-  public ApiBuoy description(String description) {
+  public BuoyCreate description(String description) {
     
     this.description = description;
     return this;
@@ -94,7 +94,7 @@ public class ApiBuoy {
   }
 
 
-  public ApiBuoy color(Integer color) {
+  public BuoyCreate color(Integer color) {
     
     this.color = color;
     return this;
@@ -117,7 +117,7 @@ public class ApiBuoy {
   }
 
 
-  public ApiBuoy lat(BigDecimal lat) {
+  public BuoyCreate lat(BigDecimal lat) {
     
     this.lat = lat;
     return this;
@@ -127,8 +127,8 @@ public class ApiBuoy {
    * Get lat
    * @return lat
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
 
   public BigDecimal getLat() {
     return lat;
@@ -140,7 +140,7 @@ public class ApiBuoy {
   }
 
 
-  public ApiBuoy lon(BigDecimal lon) {
+  public BuoyCreate lon(BigDecimal lon) {
     
     this.lon = lon;
     return this;
@@ -150,8 +150,8 @@ public class ApiBuoy {
    * Get lon
    * @return lon
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @javax.annotation.Nonnull
+  @ApiModelProperty(required = true, value = "")
 
   public BigDecimal getLon() {
     return lon;
@@ -171,12 +171,12 @@ public class ApiBuoy {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ApiBuoy apiBuoy = (ApiBuoy) o;
-    return Objects.equals(this.id, apiBuoy.id) &&
-        Objects.equals(this.description, apiBuoy.description) &&
-        Objects.equals(this.color, apiBuoy.color) &&
-        Objects.equals(this.lat, apiBuoy.lat) &&
-        Objects.equals(this.lon, apiBuoy.lon);
+    BuoyCreate buoyCreate = (BuoyCreate) o;
+    return Objects.equals(this.id, buoyCreate.id) &&
+        Objects.equals(this.description, buoyCreate.description) &&
+        Objects.equals(this.color, buoyCreate.color) &&
+        Objects.equals(this.lat, buoyCreate.lat) &&
+        Objects.equals(this.lon, buoyCreate.lon);
   }
 
   @Override
@@ -187,7 +187,7 @@ public class ApiBuoy {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ApiBuoy {\n");
+    sb.append("class BuoyCreate {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");

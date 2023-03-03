@@ -1,9 +1,9 @@
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.api;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.api;
 
 
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.PollResponse;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.PollRoboaUpdate;
-import it.halb.roboapp.dataLayer.remoteDataSource.definition.model.PollUserUpdate;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.PollResponse;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.PollRoboaUpdate;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.PollUserUpdate;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;

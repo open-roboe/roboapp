@@ -11,7 +11,7 @@
  */
 
 
-package it.halb.roboapp.dataLayer.remoteDataSource.definition.model;
+package it.halb.roboapp.dataLayer.remoteDataSource.scheme.model;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,14 +21,10 @@ import java.util.Objects;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Buoy
+ * JuryResponse
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-01-31T17:04:24.839244Z[Etc/UTC]")
-public class Buoy {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
+public class JuryResponse {
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)
   private String description = "";
@@ -45,37 +41,10 @@ public class Buoy {
   @SerializedName(SERIALIZED_NAME_LON)
   private BigDecimal lon;
 
-  public static final String SERIALIZED_NAME_COURSE_ID = "course_id";
-  @SerializedName(SERIALIZED_NAME_COURSE_ID)
-  private String courseId;
-
-  public Buoy() {
+  public JuryResponse() {
   }
 
-  public Buoy id(Integer id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * Get id
-   * @return id
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public Integer getId() {
-    return id;
-  }
-
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public Buoy description(String description) {
+  public JuryResponse description(String description) {
     
     this.description = description;
     return this;
@@ -98,7 +67,7 @@ public class Buoy {
   }
 
 
-  public Buoy color(Integer color) {
+  public JuryResponse color(Integer color) {
     
     this.color = color;
     return this;
@@ -121,7 +90,7 @@ public class Buoy {
   }
 
 
-  public Buoy lat(BigDecimal lat) {
+  public JuryResponse lat(BigDecimal lat) {
     
     this.lat = lat;
     return this;
@@ -144,7 +113,7 @@ public class Buoy {
   }
 
 
-  public Buoy lon(BigDecimal lon) {
+  public JuryResponse lon(BigDecimal lon) {
     
     this.lon = lon;
     return this;
@@ -167,29 +136,6 @@ public class Buoy {
   }
 
 
-  public Buoy courseId(String courseId) {
-    
-    this.courseId = courseId;
-    return this;
-  }
-
-   /**
-   * Get courseId
-   * @return courseId
-  **/
-  @javax.annotation.Nonnull
-  @ApiModelProperty(required = true, value = "")
-
-  public String getCourseId() {
-    return courseId;
-  }
-
-
-  public void setCourseId(String courseId) {
-    this.courseId = courseId;
-  }
-
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -198,30 +144,26 @@ public class Buoy {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Buoy buoy = (Buoy) o;
-    return Objects.equals(this.id, buoy.id) &&
-        Objects.equals(this.description, buoy.description) &&
-        Objects.equals(this.color, buoy.color) &&
-        Objects.equals(this.lat, buoy.lat) &&
-        Objects.equals(this.lon, buoy.lon) &&
-        Objects.equals(this.courseId, buoy.courseId);
+    JuryResponse juryResponse = (JuryResponse) o;
+    return Objects.equals(this.description, juryResponse.description) &&
+        Objects.equals(this.color, juryResponse.color) &&
+        Objects.equals(this.lat, juryResponse.lat) &&
+        Objects.equals(this.lon, juryResponse.lon);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, description, color, lat, lon, courseId);
+    return Objects.hash(description, color, lat, lon);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Buoy {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class JuryResponse {\n");
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    color: ").append(toIndentedString(color)).append("\n");
     sb.append("    lat: ").append(toIndentedString(lat)).append("\n");
     sb.append("    lon: ").append(toIndentedString(lon)).append("\n");
-    sb.append("    courseId: ").append(toIndentedString(courseId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
