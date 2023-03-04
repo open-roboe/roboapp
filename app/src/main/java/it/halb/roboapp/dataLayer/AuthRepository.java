@@ -2,6 +2,7 @@ package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
@@ -9,6 +10,11 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
+import it.halb.roboapp.dataLayer.remoteDataSource.LoginCallback;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthRepository {
     private final ApiClient apiClient;
@@ -34,7 +40,35 @@ public class AuthRepository {
         return account;
     }
 
-    public void login(){
+    public void login(@NonNull String username, @NonNull String password, @NonNull LoginCallback loginCallback){
+        apiClient.getAccountApi().loginApiAccountAuthPost(
+                username,
+                password,
+                "password",
+                null,
+                null,
+                null
+        ).enqueue(new Callback<AuthToken>() {
+            @Override
+            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+                if(response.isSuccessful() && response.body() != null){
+                    String token = response.body().getAccessToken();
+                    //update the auth token for the current api client session
+                    apiClient.setAuthToken(token);
+                    //TODO: set retrofit data
+                    loginCallback.onSuccess();
+                }
+                else{
+                    //TODO: get error details
+                    loginCallback.onError(response.code(), "");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthToken> call, Throwable t) {
+                loginCallback.onError(0, "network_error");
+            }
+        });
         //TODO. parameters: username, password, callback
         //on success: save user data, call callback success
 

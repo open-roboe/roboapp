@@ -42,9 +42,9 @@ public class ApiClient {
      * If you want to change baseUrl or jwt, destroy this client and instantiate a new one
      *
      * @param baseUrl Must be a valid url, ending with a slash
-     * @param jwt oauth token, received from a previous oauth flow
+     * @param authToken OAuth token, received from a previous authentication flow
      */
-    public ApiClient(@NonNull String baseUrl, @Nullable String jwt){
+    public ApiClient(@NonNull String baseUrl, @Nullable String authToken){
         //validate the baseUrl string
         if(!isValidUrl(baseUrl))
             throw new IllegalArgumentException("Invalid baseurl");
@@ -52,12 +52,22 @@ public class ApiClient {
         //initialize oauth retrofit interceptor
         oauth = new OauthHttBearerInterceptor("Bearer");
 
-        //configure oauth jwt token if there is a non null jwt token
-        if(jwt != null)
-            oauth.setBearerToken(jwt);
+        //initialize auth token
+        setAuthToken(authToken);
 
         //initialize retrofit
         initializeRetrofit(baseUrl);
+    }
+
+    /**
+     * configure OAuth token if it is a non null string.
+     * calling this method after initialization will change the auth token for all the successive
+     * api calls in the session
+     * @param authToken the auth token. With the current api backend this is a jwt, but it could be any string
+     */
+    public void setAuthToken(@Nullable String authToken){
+        if(authToken != null)
+            oauth.setBearerToken(authToken);
     }
 
     private void initializeRetrofit(@NonNull String baseUrl){
