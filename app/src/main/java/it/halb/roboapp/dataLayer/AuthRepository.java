@@ -4,32 +4,22 @@ import android.app.Application;
 
 import androidx.lifecycle.LiveData;
 
-import java.util.List;
-import java.util.concurrent.Executors;
-
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
-import it.halb.roboapp.dataLayer.localDataSource.Regatta;
-import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
 
-public class Repository {
+public class AuthRepository {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
-    private final RegattaDao regattaDao;
     private final LiveData<Account> account;
-    private final LiveData<List<Regatta>> regattas;
 
-    //TODO: transform into singleton
-    public Repository(Application application){
+    public AuthRepository(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
-        regattaDao = database.regattaDao();
         account = accountDao.getAccount();
-        regattas = regattaDao.getAllRegattas();
         //init data used by remote data source
         ApiSharedPreference apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
         String apiBaseUrl = apiSharedPreference.getApiBaseUrl();
@@ -40,22 +30,22 @@ public class Repository {
         apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
-    public void insertAccount(Account account){
-        Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
-    }
     public LiveData<Account> getAccount(){
         return account;
     }
 
-    public LiveData<List<Regatta>> getAllRegattas(){
-        return regattas;
-    }
+    public void login(){
+        //TODO. parameters: username, password, callback
+        //on success: save user data, call callback success
 
-    public void deleteRegatta(Regatta regatta){
-        Executors.newSingleThreadExecutor().execute(() -> regattaDao.delete(regatta));
-    }
+        //this could be a good idea: when a login is successful, make a call to
+        //retrieve regattas, as a final test that everything is ok.
+        //this has the bonus that when we redirect to the regattas page,
+        //they have already been loaded so there wont be flashes of empty list
 
-    public void insertRegatta(Regatta regatta){
-        Executors.newSingleThreadExecutor().execute(() -> regattaDao.insert(regatta));
+        //a better pattern could be load the list fragment, and show a placeholder
+        //if this is the first time it has been shown. But it requires more design work
+        //and complexity
+
     }
 }
