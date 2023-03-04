@@ -10,9 +10,4 @@
         android:name="it.halb.roboapp.RegattaListFragment"
         android:label="fragment_course_list"
         tools:layout="@layout/fragment_regatta_list" />
-    <fragment
-        android:id="@+id/loginFragment"
-        android:name="it.halb.roboapp.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
 </navigation>
