@@ -13,4 +13,7 @@
     <string name="regatta_list_no_regattas_description">Regattas are interactive sailing courses that you can design and manage in real time with others. Create a new regatta with the new regatta button</string>
     <string name="snackbar_regatta_deleted_text">1 Regatta deleted</string>
     <string name="snackbar_regatta_deleted_undo">Undo delete</string>
+    <string name="login_form_validation_username_required">Username required</string>
+    <string name="login_form_validation_password_required">Password required</string>
+    <string name="login_form_validation_password_too_short">Password too short</string>
 </resources>

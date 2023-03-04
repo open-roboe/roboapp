@@ -27,10 +27,23 @@ public class LoginFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //ViewModel initialization
         LoginViewModel model = new ViewModelProvider(this).get(LoginViewModel.class);
-
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setLoginViewModel(model);
+
+        //ViewModel listeners
+        model.getUsernameError().observe(getViewLifecycleOwner(), error ->{
+            binding.textInputUsername.setError(error);
+        });
+        model.getPasswordError().observe(getViewLifecycleOwner(), error ->{
+            binding.textInputPassword.setError(error);
+        });
+
+        //view listeners
+        binding.buttonLogin.setOnClickListener(v -> {
+            model.login();
+        });
 
     }
 }

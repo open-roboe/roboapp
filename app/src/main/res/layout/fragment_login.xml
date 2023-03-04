@@ -68,7 +68,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="text"
-                        android:text="@={loginViewModel.username}"
+                        android:onTextChanged="@{loginViewModel::usernameTextChanged}"
+                        android:text="@{loginViewModel.username}"
                         app:layout_constraintWidth_max="488dp" />
 
                 </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +82,7 @@
                     android:hint="@string/textfield_hint_password"
                     app:endIconMode="password_toggle"
                     app:errorEnabled="true"
-                    app:layout_constraintBottom_toTopOf="@+id/button"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.333"
                     app:layout_constraintStart_toStartOf="parent">
@@ -90,23 +91,24 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="textPassword"
-                        android:text="@={loginViewModel.password}" />
+                        android:onTextChanged="@{loginViewModel::passwordTextChanged}"
+                        android:text="@{loginViewModel.password}" />
 
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
-                    android:id="@+id/button"
+                    android:id="@+id/buttonLogin"
                     style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="24dp"
                     android:text="@string/fragment_login_button"
-                    app:layout_constraintBottom_toTopOf="@+id/button2"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonAppGuide"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/buttonAppGuide"
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -114,13 +116,13 @@
                     android:layout_marginBottom="32dp"
                     android:text="@string/fragment_login_app_guide_button"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/button3"
+                    app:layout_constraintEnd_toStartOf="@+id/buttonEditServer"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintHorizontal_chainStyle="spread"
                     app:layout_constraintStart_toStartOf="parent" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/buttonEditServer"
                     style="@style/Widget.Material3.Button.TextButton.Icon"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -129,8 +131,8 @@
                     app:icon="@drawable/baseline_edit_24"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/button2"
-                    app:layout_constraintTop_toTopOf="@+id/button2" />
+                    app:layout_constraintStart_toEndOf="@+id/buttonAppGuide"
+                    app:layout_constraintTop_toTopOf="@+id/buttonAppGuide" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
