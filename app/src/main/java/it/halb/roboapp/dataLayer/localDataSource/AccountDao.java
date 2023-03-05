@@ -14,8 +14,8 @@ public interface AccountDao {
     @Update
     void update(Account account);
 
-    @Delete
-    void delete(Account account);
+    @Query("DELETE FROM account_table")
+    void delete();
 
     @Query("SELECT * FROM account_table LIMIT 1")
     LiveData<Account> getAccount();

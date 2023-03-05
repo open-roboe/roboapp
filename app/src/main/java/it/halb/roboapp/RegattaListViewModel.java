@@ -24,8 +24,8 @@ public class RegattaListViewModel extends AndroidViewModel {
         allRegattas = repository.getAllRegattas();
     }
 
-    public String getTest(){
-        return "tesst";
+    public void testLogout(){
+        repository.logout();
     }
 
     public LiveData<List<Regatta>> getAllRegattas(){

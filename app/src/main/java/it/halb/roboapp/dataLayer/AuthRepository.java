@@ -72,18 +72,6 @@ public class AuthRepository {
                 loginCallback.onError(0, "network_error");
             }
         });
-        //TODO. parameters: username, password, callback
-        //on success: save user data, call callback success
-
-        //this could be a good idea: when a login is successful, make a call to
-        //retrieve regattas, as a final test that everything is ok.
-        //this has the bonus that when we redirect to the regattas page,
-        //they have already been loaded so there wont be flashes of empty list
-
-        //a better pattern could be load the list fragment, and show a placeholder
-        //if this is the first time it has been shown. But it requires more design work
-        //and complexity
-
     }
 
     /**
@@ -123,8 +111,6 @@ public class AuthRepository {
                 account.setAuthToken(
                         apiClient.getAuthToken()
                 );
-                Log.d("AUTH REPO", "loadAccount success authtoken " + apiClient.getAuthToken());
-                Log.d("AUTH REPO", "loadAccount success username " + account.getUsername());
                 //update the local data source with the account data
                 Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
                 //update the callback if exists
@@ -134,17 +120,13 @@ public class AuthRepository {
 
             @Override
             public void onError(int code, String detail) {
-                Log.d("AUTH REPO", "loadAccount error");
                 if(callback != null)
                     callback.onError(code, detail);
             }
 
             @Override
             public void onAuthError() {
-                Log.d("AUTH REPO", "loadAccount auth error");
-                Executors.newSingleThreadExecutor().execute(() -> accountDao.delete(
-                        account.getValue()
-                ));
+                Executors.newSingleThreadExecutor().execute(accountDao::delete);
             }
         });
     }

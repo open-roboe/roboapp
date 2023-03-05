@@ -42,9 +42,7 @@ public class LoginFragment extends Fragment {
             binding.textInputPassword.setError(error);
         });
         model.getAccount().observe(getViewLifecycleOwner(), account -> {
-            Log.d("LOGIN FRAGMENT", "account changed");
             if(account != null){
-                Log.d("LOGIN FRAGMENT", "account exists");
                 //there is an account! move to main activity
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);

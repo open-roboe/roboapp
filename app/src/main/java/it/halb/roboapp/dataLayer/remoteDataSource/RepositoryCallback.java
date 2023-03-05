@@ -4,7 +4,7 @@ public interface RepositoryCallback<T>{
 
     /**
      * override this method to handle request success
-     * @param data The response data returned by the succesfful operation
+     * @param data The response data returned by the successful operation
      */
     void onSuccess(T data);
 

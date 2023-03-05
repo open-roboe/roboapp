@@ -64,7 +64,9 @@ public class RegattaListFragment extends Fragment {
         binding.fakeSearchBar.setOnClickListener(v -> {
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
-                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {})
+                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
+                        model.testLogout();
+                    })
                     .show();
         });
 

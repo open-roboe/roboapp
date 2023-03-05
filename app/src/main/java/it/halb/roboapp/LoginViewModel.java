@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
+
+import java.util.concurrent.TransferQueue;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Account;
@@ -20,7 +23,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     private final LiveData<Account> account;
 
-    private boolean loading = false;
+    private final MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
 
     private final AuthRepository authRepository;
 
@@ -57,13 +60,13 @@ public class LoginViewModel extends AndroidViewModel {
         resetDisplayedErrors();
     }
 
-    public boolean isLoading(){
-        return loading;
+    public LiveData<Boolean> getCanClick(){
+        return Transformations.map(loading, loading -> !loading);
     }
 
     public void login(){
         //ignore login button clicks when a login request is already in progress
-        if(loading) return;
+        if(Boolean.TRUE.equals(loading.getValue())) return;
         //handle null data
         String usernameString = username.getValue();
         String passwordString = password.getValue();
@@ -72,18 +75,18 @@ public class LoginViewModel extends AndroidViewModel {
         //start the login process
         resetDisplayedErrors();
         if(validateForm(usernameString, passwordString)){
-            loading = true;
+            loading.setValue(true);
             authRepository.login(usernameString, passwordString, new RepositoryCallback<Void>() {
                 @Override
                 public void onSuccess(Void data) {
-                    loading = false;
+                    loading.setValue(false);
                     //if the login was successful, the parent fragment will notice and redirect
                     //to the main activity. No need to handle it from here
                 }
 
                 @Override
                 public void onError(int code, String detail) {
-                    loading = false;
+                    loading.setValue(false);
                     usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
                     passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
                 }

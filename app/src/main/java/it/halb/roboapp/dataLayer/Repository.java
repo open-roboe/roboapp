@@ -40,6 +40,10 @@ public class Repository {
         apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
+    public void logout(){
+        Executors.newSingleThreadExecutor().execute(accountDao::delete);
+    }
+
     public void insertAccount(Account account){
         Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
     }
