@@ -49,7 +49,6 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintBottom_toTopOf="@+id/textInputUsername"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.498"
                     app:layout_constraintStart_toStartOf="parent" />
 
 
@@ -84,7 +83,6 @@
                     app:errorEnabled="true"
                     app:layout_constraintBottom_toTopOf="@+id/buttonLogin"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.333"
                     app:layout_constraintStart_toStartOf="parent">
 
                     <com.google.android.material.textfield.TextInputEditText

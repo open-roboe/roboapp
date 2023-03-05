@@ -1,4 +1,4 @@
-package it.halb.roboapp.dataLayer.remoteDataSource;
+package it.halb.roboapp.dataLayer;
 
 public interface RepositoryCallback<T>{
 

@@ -1,7 +1,6 @@
 package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,7 +14,6 @@ import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallback;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
-import it.halb.roboapp.dataLayer.remoteDataSource.RepositoryCallback;
 import it.halb.roboapp.dataLayer.remoteDataSource.converters.AccountConverter;
 import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
 import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserResponse;

@@ -8,11 +8,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
-import java.util.concurrent.TransferQueue;
-
 import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Account;
-import it.halb.roboapp.dataLayer.remoteDataSource.RepositoryCallback;
+import it.halb.roboapp.dataLayer.RepositoryCallback;
 
 public class LoginViewModel extends AndroidViewModel {
     private final MutableLiveData<String> username = new MutableLiveData<>("");
