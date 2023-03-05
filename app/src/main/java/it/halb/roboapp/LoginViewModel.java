@@ -8,7 +8,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
-import it.halb.roboapp.dataLayer.remoteDataSource.LoginCallback;
+import it.halb.roboapp.dataLayer.localDataSource.Account;
+import it.halb.roboapp.dataLayer.remoteDataSource.RepositoryCallback;
 
 public class LoginViewModel extends AndroidViewModel {
     private final MutableLiveData<String> username = new MutableLiveData<>("");
@@ -17,6 +18,8 @@ public class LoginViewModel extends AndroidViewModel {
     private final MutableLiveData<String> usernameError = new MutableLiveData<>("");
     private final MutableLiveData<String> passwordError = new MutableLiveData<>("");
 
+    private final LiveData<Account> account;
+
     private boolean loading = false;
 
     private final AuthRepository authRepository;
@@ -24,6 +27,11 @@ public class LoginViewModel extends AndroidViewModel {
     public LoginViewModel(@NonNull Application application) {
         super(application);
         authRepository = new AuthRepository(application);
+        account = authRepository.getAccount();
+    }
+
+    public LiveData<Account> getAccount(){
+        return account;
     }
 
     public LiveData<String> getUsernameError(){
@@ -65,15 +73,19 @@ public class LoginViewModel extends AndroidViewModel {
         resetDisplayedErrors();
         if(validateForm(usernameString, passwordString)){
             loading = true;
-            authRepository.login(usernameString, passwordString, new LoginCallback() {
+            authRepository.login(usernameString, passwordString, new RepositoryCallback<Void>() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(Void data) {
                     loading = false;
+                    //if the login was successful, the parent fragment will notice and redirect
+                    //to the main activity. No need to handle it from here
                 }
 
                 @Override
                 public void onError(int code, String detail) {
                     loading = false;
+                    usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+                    passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
                 }
             });
         }
@@ -88,7 +100,7 @@ public class LoginViewModel extends AndroidViewModel {
         else if(password.length() < 1){
             passwordError.setValue(getApplication().getString(R.string.login_form_validation_password_required));
         }
-        else if(password.length() < 8){
+        else if(password.length() < 4){
             passwordError.setValue(getApplication().getString(R.string.login_form_validation_password_too_short));
         }else{
             isValid = true;

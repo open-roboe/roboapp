@@ -1,5 +1,6 @@
 package it.halb.roboapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +40,16 @@ public class LoginFragment extends Fragment {
         });
         model.getPasswordError().observe(getViewLifecycleOwner(), error ->{
             binding.textInputPassword.setError(error);
+        });
+        model.getAccount().observe(getViewLifecycleOwner(), account -> {
+            Log.d("LOGIN FRAGMENT", "account changed");
+            if(account != null){
+                Log.d("LOGIN FRAGMENT", "account exists");
+                //there is an account! move to main activity
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
         });
 
         //view listeners

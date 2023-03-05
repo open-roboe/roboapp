@@ -70,6 +70,10 @@ public class ApiClient {
             oauth.setBearerToken(authToken);
     }
 
+    public String getAuthToken(){
+        return oauth.getBearerToken();
+    }
+
     private void initializeRetrofit(@NonNull String baseUrl){
         //initialize logging interceptor
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();

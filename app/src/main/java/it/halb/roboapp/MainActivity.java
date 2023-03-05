@@ -19,10 +19,10 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AuthActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
+                finish();
             }
-            //If no auth is required, and this is the first time the code runs, launch main application
-            else if(!model.isFirstLaunch()){
-                model.setLaunched();
+            //If no auth is required, launch main application by inflating the view
+            else{
                 setContentView(R.layout.activity_main);
             }
         });

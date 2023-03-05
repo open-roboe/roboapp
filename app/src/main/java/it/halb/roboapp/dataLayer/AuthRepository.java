@@ -1,17 +1,24 @@
 package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
+
+import java.util.concurrent.Executors;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallback;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
-import it.halb.roboapp.dataLayer.remoteDataSource.LoginCallback;
+import it.halb.roboapp.dataLayer.remoteDataSource.RepositoryCallback;
+import it.halb.roboapp.dataLayer.remoteDataSource.converters.AccountConverter;
 import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
+import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,11 +43,7 @@ public class AuthRepository {
         apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
-    public LiveData<Account> getAccount(){
-        return account;
-    }
-
-    public void login(@NonNull String username, @NonNull String password, @NonNull LoginCallback loginCallback){
+    public void login(@NonNull String username, @NonNull String password, @NonNull RepositoryCallback<Void> loginCallback){
         apiClient.getAccountApi().loginApiAccountAuthPost(
                 username,
                 password,
@@ -50,13 +53,13 @@ public class AuthRepository {
                 null
         ).enqueue(new Callback<AuthToken>() {
             @Override
-            public void onResponse(Call<AuthToken> call, Response<AuthToken> response) {
+            public void onResponse(@NonNull Call<AuthToken> call, @NonNull Response<AuthToken> response) {
                 if(response.isSuccessful() && response.body() != null){
                     String token = response.body().getAccessToken();
                     //update the auth token for the current api client session
                     apiClient.setAuthToken(token);
-                    //TODO: set retrofit data
-                    loginCallback.onSuccess();
+                    //perform other api calls to set up the account
+                    postLoginSetup(loginCallback);
                 }
                 else{
                     //TODO: get error details
@@ -65,7 +68,7 @@ public class AuthRepository {
             }
 
             @Override
-            public void onFailure(Call<AuthToken> call, Throwable t) {
+            public void onFailure(@NonNull Call<AuthToken> call, @NonNull Throwable t) {
                 loginCallback.onError(0, "network_error");
             }
         });
@@ -82,4 +85,68 @@ public class AuthRepository {
         //and complexity
 
     }
+
+    /**
+     * Perform some api calls to set up the account after a successful authentication
+     */
+    private void postLoginSetup(@NonNull RepositoryCallback<Void> callback){
+        loadAccount(new RepositoryCallback<Account>() {
+            @Override
+            public void onSuccess(Account data) {
+
+                callback.onSuccess(null);
+            }
+
+            @Override
+            public void onError(int code, String detail) {
+                callback.onError(code, detail);
+            }
+        });
+    }
+
+    public LiveData<Account> getAccount(){
+        return account;
+    }
+
+    /**
+     * Perform an api request to get the account data. when it succeeds, the livedata returned by
+     * getAccount will update.
+     * The success of this operation can be checked with the Repository callback onSuccess or onError methods
+     */
+    public void loadAccount(@Nullable RepositoryCallback<Account> callback){
+        apiClient.getAccountApi().getLoggedUserApiAccountGet().enqueue(new ApiCallback<UserResponse>() {
+            @Override
+            public void onSuccess(UserResponse data) {
+                //convert the api response to a local data source object
+                AccountConverter converter = new AccountConverter();
+                Account account = converter.convertFromDto(data);
+                account.setAuthToken(
+                        apiClient.getAuthToken()
+                );
+                Log.d("AUTH REPO", "loadAccount success authtoken " + apiClient.getAuthToken());
+                Log.d("AUTH REPO", "loadAccount success username " + account.getUsername());
+                //update the local data source with the account data
+                Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
+                //update the callback if exists
+                if(callback != null)
+                    callback.onSuccess(account);
+            }
+
+            @Override
+            public void onError(int code, String detail) {
+                Log.d("AUTH REPO", "loadAccount error");
+                if(callback != null)
+                    callback.onError(code, detail);
+            }
+
+            @Override
+            public void onAuthError() {
+                Log.d("AUTH REPO", "loadAccount auth error");
+                Executors.newSingleThreadExecutor().execute(() -> accountDao.delete(
+                        account.getValue()
+                ));
+            }
+        });
+    }
+
 }
