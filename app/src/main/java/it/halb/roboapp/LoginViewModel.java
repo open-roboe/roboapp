@@ -10,7 +10,6 @@ import androidx.lifecycle.Transformations;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Account;
-import it.halb.roboapp.dataLayer.RepositoryCallback;
 
 public class LoginViewModel extends AndroidViewModel {
     private final MutableLiveData<String> username = new MutableLiveData<>("");
@@ -62,6 +61,7 @@ public class LoginViewModel extends AndroidViewModel {
         return Transformations.map(loading, loading -> !loading);
     }
 
+
     public void login(){
         //ignore login button clicks when a login request is already in progress
         if(Boolean.TRUE.equals(loading.getValue())) return;
@@ -74,21 +74,21 @@ public class LoginViewModel extends AndroidViewModel {
         resetDisplayedErrors();
         if(validateForm(usernameString, passwordString)){
             loading.setValue(true);
-            authRepository.login(usernameString, passwordString, new RepositoryCallback<Void>() {
-                @Override
-                public void onSuccess(Void data) {
-                    loading.setValue(false);
-                    //if the login was successful, the parent fragment will notice and redirect
-                    //to the main activity. No need to handle it from here
-                }
+            authRepository.login(
+                    usernameString,
+                    passwordString,
+                    // Handle login success
+                    account -> {
+                        loading.setValue(false);
+                    },
+                    // Handle login error
+                    (code, details) -> {
+                        loading.setValue(false);
+                        usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+                        passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+                    }
+            );
 
-                @Override
-                public void onError(int code, String detail) {
-                    loading.setValue(false);
-                    usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
-                    passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
-                }
-            });
         }
     }
 

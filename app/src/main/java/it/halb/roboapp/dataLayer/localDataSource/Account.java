@@ -4,6 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Account stores the account information of the current logged user.
+ * These information are very useful. for example: You can read account.isRaceOfficer
+ * to decide if you want to enable some features in the UI that only race officers can use.
+ *
+ * Internally, the account LiveData is used to decide when to show the login activity:
+ * If account is null, a redirect to the login activity is initiated.
+ *
+ */
 @Entity(tableName = "account_table")
 public class Account {
     @PrimaryKey
