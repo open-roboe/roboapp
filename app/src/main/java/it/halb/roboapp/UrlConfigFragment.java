@@ -34,18 +34,18 @@ public class UrlConfigFragment extends BottomSheetDialogFragment {
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setUrlConfigViewModel(model);
 
-        //viewmodel listeners
+        //viewModel listeners
         model.getUrlError().observe(getViewLifecycleOwner(), error ->{
+            binding.textInputUrl.setError(error);
         });
 
         //view listeners
         binding.buttonApplyChanges.setOnClickListener(v -> {
-            if(model.save()){
-                Navigation.findNavController(view).popBackStack();
-            }
+            if(model.save())
+                this.dismiss();
         });
         binding.buttonCancel.setOnClickListener(v -> {
-            Navigation.findNavController(view).popBackStack();
+            this.dismiss();
         });
     }
 }

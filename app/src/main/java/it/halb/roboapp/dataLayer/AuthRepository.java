@@ -142,9 +142,10 @@ public class AuthRepository {
      * @param url the base url for the api endpoint
      * @return whether the operation was successful. if false, the url was invalid
      */
-    public boolean setApiBaseUrl(@NonNull String url){
-        if(ApiClient.isValidUrl(url)){
+    public boolean setApiBaseUrl(@Nullable String url){
+        if(url != null && ApiClient.isValidUrl(url)){
             apiSharedPreference.setApiBaseUrl(url);
+            //TODO: transform autherpository into a singleton, add a reinitializeRetrofit() method, call it from here
             return true;
         }
         return false;

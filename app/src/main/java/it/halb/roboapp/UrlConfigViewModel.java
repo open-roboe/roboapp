@@ -14,6 +14,8 @@ public class UrlConfigViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> urlError = new MutableLiveData<>("");
     private final MutableLiveData<String> url = new MutableLiveData<>("");
+    private final MutableLiveData<Boolean> somethingToSave = new MutableLiveData<>(false);
+    private final String initialUrl;
     private final AuthRepository authRepository;
 
     public LiveData<String> getUrlError(){
@@ -24,19 +26,28 @@ public class UrlConfigViewModel extends AndroidViewModel {
         return url;
     }
 
+    public LiveData<Boolean> getSomethingToSave(){
+        return somethingToSave;
+    }
+
     public UrlConfigViewModel(@NonNull Application application) {
         super(application);
         authRepository = new AuthRepository(application);
-        url.setValue(authRepository.getApiBaseUrl());
+        String fetchedUrl = authRepository.getApiBaseUrl();
+        url.setValue(fetchedUrl);
+        initialUrl = fetchedUrl;
     }
 
     public void urlTextChanged(CharSequence s, int start, int before, int count){
         url.setValue(s.toString());
         urlError.setValue("");
+        somethingToSave.setValue(
+                !s.toString().equals(initialUrl)
+        );
     }
 
     public boolean save(){
-        boolean success = authRepository.setApiBaseUrl(url.toString());
+        boolean success = authRepository.setApiBaseUrl(url.getValue());
         if(!success)
             urlError.setValue("Invalid URL. all urls must end with /");
         return success;
