@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import it.halb.roboapp.databinding.FragmentLoginBinding;
 
 public class LoginFragment extends Fragment {
@@ -40,6 +42,10 @@ public class LoginFragment extends Fragment {
         });
         model.getPasswordError().observe(getViewLifecycleOwner(), error ->{
             binding.textInputPassword.setError(error);
+        });
+        model.getGenericError().observe(getViewLifecycleOwner(), error ->{
+            if(error != null && error.length() > 0)
+                Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
         });
         model.getAccount().observe(getViewLifecycleOwner(), account -> {
             if(account != null){

@@ -17,6 +17,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> usernameError = new MutableLiveData<>("");
     private final MutableLiveData<String> passwordError = new MutableLiveData<>("");
+    private final MutableLiveData<String> genericError = new MutableLiveData<>("");
 
     private final LiveData<Account> account;
 
@@ -33,14 +34,15 @@ public class LoginViewModel extends AndroidViewModel {
     public LiveData<Account> getAccount(){
         return account;
     }
-
     public LiveData<String> getUsernameError(){
         return usernameError;
     }
     public LiveData<String> getPasswordError(){
         return passwordError;
     }
-
+    public LiveData<String> getGenericError() {
+        return genericError;
+    }
     public LiveData<String> getUsername(){
         return username;
     }
@@ -84,11 +86,21 @@ public class LoginViewModel extends AndroidViewModel {
                     // Handle login error
                     (code, details) -> {
                         loading.setValue(false);
-                        usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
-                        passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+                        handleLoginErrors(code, details);
                     }
             );
 
+        }
+    }
+
+    private void handleLoginErrors(int code, String details){
+        if(code == 400){
+            usernameError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+            passwordError.setValue(getApplication().getString(R.string.login_form_validation_invalid_credentials));
+        }else{
+            //We are not applying i18n to this string, this is not a best practice anyway
+            String text = "Unexpected error: HTTP ";
+            genericError.setValue(text + String.valueOf(code) + " " + details);
         }
     }
 
@@ -112,6 +124,7 @@ public class LoginViewModel extends AndroidViewModel {
     private void resetDisplayedErrors(){
         usernameError.setValue(null);
         passwordError.setValue(null);
+        genericError.setValue(null);
     }
 
 

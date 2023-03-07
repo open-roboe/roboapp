@@ -36,6 +36,15 @@ TODO
 
 ## elementi di ui complessi
 
+Quando si implementa un design la maggior parte del tempo è spesa a capire come
+si implementano elementi comlpessi, come liste di dati, navbar, popup, eccetera.
+
+Le guide che seguono spiegano come implementare alcuni di questi elementi all'interno della roboapp.
+
+### navigare da una schermata ad un altra
+
+TODO
+
 ### Implementare liste di dati
 
 https://developer.android.com/develop/ui/views/layout/recyclerview
@@ -54,6 +63,9 @@ la schermata sotto. [TODO: IMG]
 
 [Queso video](https://www.youtube.com/watch?v=91kHVOYQM0s&list=PLSrm9z4zp4mHilvsfUM3jeCYFV3fTAS3J&index=10) mostra chiaramente i passaggi
 
+All'interno di un BottomSheetFragment non si può navigare ad altre schermate.
+L'unica operazione permessa è chiudere il bottomsheetfragment. Per farlo basta eseguire
+`dismiss()`
 
 ### coordinator layout:
 
