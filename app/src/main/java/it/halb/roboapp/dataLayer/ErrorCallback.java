@@ -3,6 +3,7 @@ package it.halb.roboapp.dataLayer;
 /**
  * Communicates error responses from an asynchronous Repository operation
  */
+@FunctionalInterface
  public interface ErrorCallback {
     /**
      * Handle repository operation errors

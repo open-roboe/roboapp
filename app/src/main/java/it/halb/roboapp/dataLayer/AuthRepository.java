@@ -26,6 +26,7 @@ public class AuthRepository {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
     private final LiveData<Account> account;
+    private final ApiSharedPreference apiSharedPreference;
 
     public AuthRepository(Application application){
         //init local datasource
@@ -33,7 +34,7 @@ public class AuthRepository {
         accountDao = database.accountDao();
         account = accountDao.getAccount();
         //init data used by remote data source
-        ApiSharedPreference apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
+        apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
         String apiBaseUrl = apiSharedPreference.getApiBaseUrl();
         String authToken = null;
         if(account.getValue() != null)
@@ -132,6 +133,21 @@ public class AuthRepository {
                     Executors.newSingleThreadExecutor().execute(accountDao::delete);
                 }
         ));
+    }
+
+
+    /**
+     * Set the api base url for the api endpoint. This is a synchronous operation
+     *
+     * @param url the base url for the api endpoint
+     * @return whether the operation was successful. if false, the url was invalid
+     */
+    public boolean setApiBaseUrl(@NonNull String url){
+        if(ApiClient.isValidUrl(url)){
+            apiSharedPreference.setApiBaseUrl(url);
+            return true;
+        }
+        return false;
     }
 
 }
