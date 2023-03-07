@@ -13,14 +13,14 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallbackLambda;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
+import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.converters.AccountConverter;
 
 public class AuthRepository {
     private ApiClient apiClient;
     private final AccountDao accountDao;
     private final LiveData<Account> account;
-    private final ApiSharedPreference apiSharedPreference;
+    private final SharedPreferenceUtil sharedPreferenceUtil;
 
     private static AuthRepository instance;
 
@@ -30,13 +30,13 @@ public class AuthRepository {
         accountDao = database.accountDao();
         account = accountDao.getAccount();
         //init data used by remote data source
-        apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
+        sharedPreferenceUtil = new SharedPreferenceUtil(application);
         //init remote data source
         initApiClient();
     }
 
     private void initApiClient(){
-        String apiBaseUrl = apiSharedPreference.getApiBaseUrl();
+        String apiBaseUrl = sharedPreferenceUtil.getApiBaseUrl();
         String authToken = null;
         if(account.getValue() != null)
             authToken = account.getValue().getAuthToken();
@@ -153,7 +153,7 @@ public class AuthRepository {
     public boolean setApiBaseUrl(@Nullable String url){
         if(url != null && ApiClient.isValidUrl(url)){
             //save the new url
-            apiSharedPreference.setApiBaseUrl(url);
+            sharedPreferenceUtil.setApiBaseUrl(url);
             //reload api client, to apply the url changes
             initApiClient();
             return true;
@@ -168,7 +168,7 @@ public class AuthRepository {
      */
     @NonNull
     public String getApiBaseUrl(){
-        return apiSharedPreference.getApiBaseUrl();
+        return sharedPreferenceUtil.getApiBaseUrl();
     }
 
 }

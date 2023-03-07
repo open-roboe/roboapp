@@ -12,7 +12,7 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
+import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
 public class Repository {
@@ -31,8 +31,8 @@ public class Repository {
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
         //init data used by remote data source
-        ApiSharedPreference apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
-        String apiBaseUrl = apiSharedPreference.getApiBaseUrl();
+        SharedPreferenceUtil sharedPreferenceUtil = new SharedPreferenceUtil(application);
+        String apiBaseUrl = sharedPreferenceUtil.getApiBaseUrl();
         String authToken = null;
         if(account.getValue() != null)
             authToken = account.getValue().getAuthToken();

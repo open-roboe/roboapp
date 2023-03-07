@@ -1,5 +1,7 @@
 package it.halb.roboapp.dataLayer.localDataSource;
 
+import static it.halb.roboapp.util.Constants.ROBOAPP_DATABASE_NAME;
+
 import android.content.Context;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,7 @@ public abstract class Database extends RoomDatabase {
     @NonNull
     public static synchronized Database getInstance(Context context){
         if(instance == null){
-            instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, "database")
+            instance = Room.databaseBuilder(context.getApplicationContext(), Database.class, ROBOAPP_DATABASE_NAME)
                     .fallbackToDestructiveMigration()
                     .build();
         }
