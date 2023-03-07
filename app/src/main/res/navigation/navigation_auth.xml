@@ -8,5 +8,14 @@
         android:id="@+id/loginFragment"
         android:name="it.halb.roboapp.LoginFragment"
         tools:layout="@layout/fragment_login"
-        android:label="LoginFragment" />
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_urlConfigFragment"
+            app:destination="@id/urlConfigFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/urlConfigFragment"
+        android:name="it.halb.roboapp.UrlConfigFragment"
+        tools:layout="@layout/fragment_url_config"
+        android:label="UrlConfigFragment" />
 </navigation>

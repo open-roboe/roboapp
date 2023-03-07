@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,6 +53,9 @@ public class LoginFragment extends Fragment {
         //view listeners
         binding.buttonLogin.setOnClickListener(v -> {
             model.login();
+        });
+        binding.buttonEditServer.setOnClickListener(v ->{
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_urlConfigFragment);
         });
 
     }

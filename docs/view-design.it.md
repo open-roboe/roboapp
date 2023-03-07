@@ -41,6 +41,20 @@ TODO
 https://developer.android.com/develop/ui/views/layout/recyclerview
 https://developer.android.com/reference/androidx/recyclerview/widget/ListAdapter
 
+### Bottom sheet
+
+Bottom sheet è una normale schermata, che però si apre dal basso, coprendo parzialmente
+la schermata sotto. [TODO: IMG]
+
+è molto facile da implementare:
+
+- Prima di tutto si implementa una normale schermata, [come spiegato qui](./fragment-v-vm.it.md)
+- Nel navgraph, si trova la sezione che descrive la schermata e si sostituisce il tag `fragment` con un tag `dialog`
+- Si modifica il fragment della schermata: la classe fragment deve estendere `BottomSheetFragment` anzichè `Fragment`
+
+[Queso video](https://www.youtube.com/watch?v=91kHVOYQM0s&list=PLSrm9z4zp4mHilvsfUM3jeCYFV3fTAS3J&index=10) mostra chiaramente i passaggi
+
+
 ### coordinator layout:
 
 https://saulmm.github.io/mastering-coordinator
