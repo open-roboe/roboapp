@@ -16,7 +16,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public MainViewModel(@NonNull Application application) {
         super(application);
-        AuthRepository authRepository = new AuthRepository(application);
+        AuthRepository authRepository = AuthRepository.getInstance(application);
         account = authRepository.getAccount();
     }
 

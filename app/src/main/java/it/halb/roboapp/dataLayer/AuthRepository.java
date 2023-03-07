@@ -23,24 +23,38 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AuthRepository {
-    private final ApiClient apiClient;
+    private ApiClient apiClient;
     private final AccountDao accountDao;
     private final LiveData<Account> account;
     private final ApiSharedPreference apiSharedPreference;
 
-    public AuthRepository(Application application){
+    private static AuthRepository instance;
+
+    private AuthRepository(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
         account = accountDao.getAccount();
         //init data used by remote data source
         apiSharedPreference = new ApiSharedPreference(application.getApplicationContext());
+        //init remote data source
+        initApiClient();
+    }
+
+    private void initApiClient(){
         String apiBaseUrl = apiSharedPreference.getApiBaseUrl();
         String authToken = null;
         if(account.getValue() != null)
             authToken = account.getValue().getAuthToken();
         //init remote data source
         apiClient = new ApiClient(apiBaseUrl, authToken);
+    }
+
+    public static AuthRepository getInstance(Application application){
+        if(instance == null){
+            instance = new AuthRepository(application);
+        }
+        return instance;
     }
 
     /**
@@ -144,8 +158,10 @@ public class AuthRepository {
      */
     public boolean setApiBaseUrl(@Nullable String url){
         if(url != null && ApiClient.isValidUrl(url)){
+            //save the new url
             apiSharedPreference.setApiBaseUrl(url);
-            //TODO: transform autherpository into a singleton, add a reinitializeRetrofit() method, call it from here
+            //reload api client, to apply the url changes
+            initApiClient();
             return true;
         }
         return false;

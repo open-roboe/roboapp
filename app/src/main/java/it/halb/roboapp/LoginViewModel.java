@@ -27,7 +27,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
-        authRepository = new AuthRepository(application);
+        authRepository = AuthRepository.getInstance(application);
         account = authRepository.getAccount();
     }
 

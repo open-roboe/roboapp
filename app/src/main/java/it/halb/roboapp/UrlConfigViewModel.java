@@ -32,7 +32,7 @@ public class UrlConfigViewModel extends AndroidViewModel {
 
     public UrlConfigViewModel(@NonNull Application application) {
         super(application);
-        authRepository = new AuthRepository(application);
+        authRepository = AuthRepository.getInstance(application);
         String fetchedUrl = authRepository.getApiBaseUrl();
         url.setValue(fetchedUrl);
         initialUrl = fetchedUrl;
