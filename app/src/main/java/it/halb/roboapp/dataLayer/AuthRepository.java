@@ -11,16 +11,10 @@ import java.util.concurrent.Executors;
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallback;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallbackLambda;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
 import it.halb.roboapp.dataLayer.remoteDataSource.converters.AccountConverter;
-import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.AuthToken;
-import it.halb.roboapp.dataLayer.remoteDataSource.scheme.model.UserResponse;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class AuthRepository {
     private ApiClient apiClient;

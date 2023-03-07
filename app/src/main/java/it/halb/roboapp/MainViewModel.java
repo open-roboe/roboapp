@@ -12,8 +12,6 @@ import it.halb.roboapp.dataLayer.localDataSource.Account;
 public class MainViewModel extends AndroidViewModel {
     private final LiveData<Account> account;
 
-    private boolean isFirstLaunch = true;
-
     public MainViewModel(@NonNull Application application) {
         super(application);
         AuthRepository authRepository = AuthRepository.getInstance(application);
@@ -24,11 +22,4 @@ public class MainViewModel extends AndroidViewModel {
         return account;
     }
 
-    public boolean isFirstLaunch(){
-        return isFirstLaunch;
-    }
-
-    public void setLaunched(){
-        isFirstLaunch = false;
-    }
 }
