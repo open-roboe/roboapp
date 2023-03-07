@@ -102,8 +102,10 @@ public class AuthRepository {
      * @param errorCallback This callback will be executed if the operation failed
      */
     public void loadAccount(@Nullable SuccessCallback<Account> successCallback, @Nullable ErrorCallback errorCallback){
-        //prepare api response logic
-        ApiCallbackLambda<UserResponse> callback = new ApiCallbackLambda<>(
+        //perform api request
+        apiClient.getAccountApi().getLoggedUserApiAccountGet(
+                /* no parameters required for this method */
+        ).enqueue(new ApiCallbackLambda<>(
                 //success
                 data -> {
                     //convert the api response to a local data source object
@@ -129,9 +131,7 @@ public class AuthRepository {
                 () -> {
                     Executors.newSingleThreadExecutor().execute(accountDao::delete);
                 }
-        );
-        //perform api request
-        apiClient.getAccountApi().getLoggedUserApiAccountGet().enqueue(callback);
+        ));
     }
 
 }

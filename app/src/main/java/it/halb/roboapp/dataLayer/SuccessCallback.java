@@ -1,5 +1,8 @@
 package it.halb.roboapp.dataLayer;
 
+/**
+ * Communicates successful responses from an asynchronous Repository operation
+ */
 public interface SuccessCallback<T> {
     /**
      * Handle repository operation success.

@@ -1,6 +1,9 @@
 package it.halb.roboapp.dataLayer;
 
-public interface ErrorCallback {
+/**
+ * Communicates error responses from an asynchronous Repository operation
+ */
+ public interface ErrorCallback {
     /**
      * Handle repository operation errors
      * code 0 is a network error, and its detail string is "network_error"
