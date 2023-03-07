@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
@@ -31,5 +33,19 @@ public class UrlConfigFragment extends BottomSheetDialogFragment {
         UrlConfigViewModel model = new ViewModelProvider(this).get(UrlConfigViewModel.class);
         binding.setLifecycleOwner(getViewLifecycleOwner());
         binding.setUrlConfigViewModel(model);
+
+        //viewmodel listeners
+        model.getUrlError().observe(getViewLifecycleOwner(), error ->{
+        });
+
+        //view listeners
+        binding.buttonApplyChanges.setOnClickListener(v -> {
+            if(model.save()){
+                Navigation.findNavController(view).popBackStack();
+            }
+        });
+        binding.buttonCancel.setOnClickListener(v -> {
+            Navigation.findNavController(view).popBackStack();
+        });
     }
 }

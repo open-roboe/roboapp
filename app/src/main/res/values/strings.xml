@@ -17,4 +17,8 @@
     <string name="login_form_validation_password_required">Password required</string>
     <string name="login_form_validation_password_too_short">Password too short</string>
     <string name="login_form_validation_invalid_credentials">Invalid credentials</string>
+    <string name="fragment_url_config_title">Api server base URL</string>
+    <string name="textfield_hint_api_url">Api URL</string>
+    <string name="button_apply_changes">Apply changes</string>
+    <string name="button_cancel">Cancel</string>
 </resources>

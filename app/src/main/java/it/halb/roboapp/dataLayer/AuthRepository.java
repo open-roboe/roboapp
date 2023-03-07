@@ -150,4 +150,14 @@ public class AuthRepository {
         return false;
     }
 
+    /**
+     * This is a synchronous operation
+     *
+     * @return the url string used for all the api requests
+     */
+    @NonNull
+    public String getApiBaseUrl(){
+        return apiSharedPreference.getApiBaseUrl();
+    }
+
 }
