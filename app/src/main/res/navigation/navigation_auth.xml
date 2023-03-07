@@ -6,7 +6,7 @@
     app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/loginFragment"
-        android:name="it.halb.roboapp.LoginFragment"
+        android:name="it.halb.roboapp.ui.auth.LoginFragment"
         tools:layout="@layout/fragment_login"
         android:label="LoginFragment" >
         <action
@@ -15,7 +15,7 @@
     </fragment>
     <dialog
         android:id="@+id/urlConfigFragment"
-        android:name="it.halb.roboapp.UrlConfigFragment"
+        android:name="it.halb.roboapp.ui.auth.UrlConfigFragment"
         tools:layout="@layout/fragment_url_config"
         android:label="UrlConfigFragment" />
 </navigation>

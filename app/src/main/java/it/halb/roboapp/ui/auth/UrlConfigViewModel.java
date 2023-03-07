@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.auth;
 
 import android.app.Application;
 

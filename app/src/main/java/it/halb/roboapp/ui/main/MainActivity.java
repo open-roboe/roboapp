@@ -1,10 +1,13 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.main;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import it.halb.roboapp.R;
+import it.halb.roboapp.ui.auth.AuthActivity;
 
 public class MainActivity extends AppCompatActivity {
 

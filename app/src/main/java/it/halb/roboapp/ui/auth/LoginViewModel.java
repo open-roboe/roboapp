@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.auth;
 
 import android.app.Application;
 
@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 

@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.main;
 
 import android.app.Application;
 

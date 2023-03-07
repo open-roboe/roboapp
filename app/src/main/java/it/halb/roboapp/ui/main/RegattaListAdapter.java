@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.RegattaHolder> {

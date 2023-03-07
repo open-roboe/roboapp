@@ -5,7 +5,7 @@
     <data>
         <variable
             name="urlConfigViewModel"
-            type="it.halb.roboapp.UrlConfigViewModel" />
+            type="it.halb.roboapp.ui.auth.UrlConfigViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

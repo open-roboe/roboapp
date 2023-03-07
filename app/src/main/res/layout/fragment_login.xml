@@ -5,7 +5,7 @@
     <data>
         <variable
             name="loginViewModel"
-            type="it.halb.roboapp.LoginViewModel" />
+            type="it.halb.roboapp.ui.auth.LoginViewModel" />
     </data>
 
     <ScrollView
