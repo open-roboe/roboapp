@@ -12,6 +12,7 @@ import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallback;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallbackLambda;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiSharedPreference;
 import it.halb.roboapp.dataLayer.remoteDataSource.converters.AccountConverter;
@@ -72,33 +73,23 @@ public class AuthRepository {
                       @NonNull ErrorCallback errorCallback){
         //perform login api request
         apiClient.getAccountApi().loginApiAccountAuthPost(
-                username,
-                password,
-                "password",
-                null,
-                null,
-                null
-        ).enqueue(new Callback<AuthToken>() {
-            @Override
-            public void onResponse(@NonNull Call<AuthToken> call, @NonNull Response<AuthToken> response) {
-                if(response.isSuccessful() && response.body() != null){
-                    String token = response.body().getAccessToken();
-                    //update the auth token for the current api client session
+                username, password,
+                "password", null, null, null
+        ).enqueue(new ApiCallbackLambda<>(
+                //success
+                data -> {
+                    if(data == null){
+                        errorCallback.error(1, "unexpected_state");
+                        return;
+                    }
+                    String token = data.getAccessToken();
                     apiClient.setAuthToken(token);
-                    //perform another api call to set up the account livedata object
                     loadAccount(successCallback, errorCallback);
-                }
-                else{
-                    //TODO: get error details
-                    errorCallback.error(response.code(), "");
-                }
-            }
+                },
 
-            @Override
-            public void onFailure(@NonNull Call<AuthToken> call, @NonNull Throwable t) {
-                errorCallback.error(0, "network_error");
-            }
-        });
+                //error
+                errorCallback::error
+        ));
     }
 
     /**
@@ -111,33 +102,36 @@ public class AuthRepository {
      * @param errorCallback This callback will be executed if the operation failed
      */
     public void loadAccount(@Nullable SuccessCallback<Account> successCallback, @Nullable ErrorCallback errorCallback){
-        apiClient.getAccountApi().getLoggedUserApiAccountGet().enqueue(new ApiCallback<UserResponse>() {
-            @Override
-            public void onSuccess(UserResponse data) {
-                //convert the api response to a local data source object
-                AccountConverter converter = new AccountConverter();
-                Account account = converter.convertFromDto(data);
-                account.setAuthToken(
-                        apiClient.getAuthToken()
-                );
-                //update the local data source with the account data
-                Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
-                //update the callback if exists
-                if(successCallback != null)
-                    successCallback.success(account);
-            }
+        //prepare api response logic
+        ApiCallbackLambda<UserResponse> callback = new ApiCallbackLambda<>(
+                //success
+                data -> {
+                    //convert the api response to a local data source object
+                    AccountConverter converter = new AccountConverter();
+                    Account account = converter.convertFromDto(data);
+                    account.setAuthToken(
+                            apiClient.getAuthToken()
+                    );
+                    //update the local data source with the account data
+                    Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
+                    //update the callback if exists
+                    if(successCallback != null)
+                        successCallback.success(account);
+                },
 
-            @Override
-            public void onError(int code, String detail) {
-                if(errorCallback != null)
-                    errorCallback.error(code, detail);
-            }
+                //error
+                (code, detail) -> {
+                    if(errorCallback != null)
+                        errorCallback.error(code, detail);
+                },
 
-            @Override
-            public void onAuthError() {
-                Executors.newSingleThreadExecutor().execute(accountDao::delete);
-            }
-        });
+                //auth error
+                () -> {
+                    Executors.newSingleThreadExecutor().execute(accountDao::delete);
+                }
+        );
+        //perform api request
+        apiClient.getAccountApi().getLoggedUserApiAccountGet().enqueue(callback);
     }
 
 }
