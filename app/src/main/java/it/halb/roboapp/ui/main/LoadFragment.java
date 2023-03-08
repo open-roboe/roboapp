@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 
+import it.halb.roboapp.RegattaFollowService;
 import it.halb.roboapp.databinding.FragmentLoadBinding;
 import it.halb.roboapp.util.Permissions;
 
@@ -69,6 +70,10 @@ public class LoadFragment extends Fragment {
      */
     public void startFollow(){
         //launch service
+
+        requireActivity().startService(
+                new Intent(requireActivity(), RegattaFollowService.class)
+        );
 
         //navigate no map activity, without navhistory
             //https://stackoverflow.com/questions/50514758/how-to-clear-navigation-stack-after-navigating-to-another-fragment-in-android

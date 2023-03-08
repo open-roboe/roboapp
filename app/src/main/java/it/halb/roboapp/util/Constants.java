@@ -10,4 +10,8 @@ public class Constants {
     // Room database
     public static final String ROBOAPP_DATABASE_NAME = "roboapp_database";
     public static final int ROBOAPP_DATABASE_VERSION = 1;
+
+    // foreground service
+    public static final String NOTIFICATION_CHANNEL_ID = "roboapp_foreground_channel";
+    public static final int NOTIFICATION_ID = 42;
 }
