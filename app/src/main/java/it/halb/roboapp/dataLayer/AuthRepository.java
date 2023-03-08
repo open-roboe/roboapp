@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 
-import java.util.concurrent.Executors;
-
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
@@ -124,7 +122,7 @@ public class AuthRepository {
                             apiClient.getAuthToken()
                     );
                     //update the local data source with the account data
-                    Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
+                    Database.databaseWriteExecutor.execute(() -> accountDao.insert(account));
                     //update the callback if exists
                     if(successCallback != null)
                         successCallback.success(account);
@@ -138,7 +136,7 @@ public class AuthRepository {
 
                 //auth error
                 () -> {
-                    Executors.newSingleThreadExecutor().execute(accountDao::delete);
+                    Database.databaseWriteExecutor.execute(accountDao::delete);
                 }
         ));
     }

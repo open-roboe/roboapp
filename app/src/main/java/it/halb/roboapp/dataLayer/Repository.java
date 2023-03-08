@@ -5,7 +5,6 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
-import java.util.concurrent.Executors;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
@@ -41,11 +40,11 @@ public class Repository {
     }
 
     public void logout(){
-        Executors.newSingleThreadExecutor().execute(accountDao::delete);
+        Database.databaseWriteExecutor.execute(accountDao::delete);
     }
 
     public void insertAccount(Account account){
-        Executors.newSingleThreadExecutor().execute(() -> accountDao.insert(account));
+        Database.databaseWriteExecutor.execute(() -> accountDao.insert(account));
     }
     public LiveData<Account> getAccount(){
         return account;
@@ -56,10 +55,10 @@ public class Repository {
     }
 
     public void deleteRegatta(Regatta regatta){
-        Executors.newSingleThreadExecutor().execute(() -> regattaDao.delete(regatta));
+        Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
     }
 
     public void insertRegatta(Regatta regatta){
-        Executors.newSingleThreadExecutor().execute(() -> regattaDao.insert(regatta));
+        Database.databaseWriteExecutor.execute(() -> regattaDao.insert(regatta));
     }
 }
