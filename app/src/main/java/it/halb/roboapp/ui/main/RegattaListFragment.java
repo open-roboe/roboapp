@@ -1,19 +1,18 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.main;
 
 import static it.halb.roboapp.R.string.snackbar_regatta_deleted_text;
 
-import android.content.res.Resources;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.ThemeUtils;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.DiffUtil;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,12 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Objects;
-
+import it.halb.roboapp.R;
+import it.halb.roboapp.RunningRegattaService;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 
 public class RegattaListFragment extends Fragment {
@@ -62,6 +60,11 @@ public class RegattaListFragment extends Fragment {
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
+            //test
+            NavHostFragment.findNavController(this).navigate(
+                    RegattaListFragmentDirections.actionCourseListToLoadFragment("name")
+            );
+
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
                     .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
@@ -69,6 +72,10 @@ public class RegattaListFragment extends Fragment {
                     })
                     .show();
         });
+
+        // stop the followService, since we are not following any regatta
+        requireActivity().stopService(new Intent(getContext(), RunningRegattaService.class));
+        //TODO: remove all follow room objects
 
         //recyclerview touch gestures
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
@@ -85,6 +92,7 @@ public class RegattaListFragment extends Fragment {
                 );
                 //adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
+
 
             /**
              * Draw a red background under the item when an item is wiped to the side

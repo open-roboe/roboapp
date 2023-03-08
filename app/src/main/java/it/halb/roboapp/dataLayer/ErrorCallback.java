@@ -1,7 +1,7 @@
 package it.halb.roboapp.dataLayer;
 
 /**
- * Communicates error responses from an asynchronous Repository operation
+ * Communicates error responses from an asynchronous regattaRepository operation
  */
 @FunctionalInterface
  public interface ErrorCallback {

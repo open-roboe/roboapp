@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.main;
 
 import android.app.Application;
 import android.util.Log;
@@ -10,22 +10,25 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.Random;
 
-import it.halb.roboapp.dataLayer.Repository;
+import it.halb.roboapp.dataLayer.AuthRepository;
+import it.halb.roboapp.dataLayer.regattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListViewModel extends AndroidViewModel {
 
     private final LiveData<List<Regatta>> allRegattas;
-    private final Repository repository;
+    private final regattaRepository regattaRepository;
+    private final AuthRepository authRepository;
 
     public RegattaListViewModel(@NonNull Application application) {
         super(application);
-        repository = new Repository(application);
-        allRegattas = repository.getAllRegattas();
+        regattaRepository = new regattaRepository(application);
+        authRepository = AuthRepository.getInstance(application);
+        allRegattas = regattaRepository.getAllRegattas();
     }
 
     public void testLogout(){
-        repository.logout();
+        authRepository.logout();
     }
 
     public LiveData<List<Regatta>> getAllRegattas(){
@@ -33,13 +36,17 @@ public class RegattaListViewModel extends AndroidViewModel {
     }
 
     public void deleteRegatta(Regatta regatta){
-        repository.deleteRegatta(regatta);
+        regattaRepository.deleteRegatta(
+                regatta,
+                data->{},
+                (code, detail)->{}
+        );
     }
 
     public void fakeInsert(){
         Log.d("FAKEINSERT", "cliecked");
         Random rand = new Random();
         String name = "name" + String.valueOf(rand.nextInt());
-        repository.insertRegatta(new Regatta(name, "type", 123));
+        regattaRepository.insertRegatta(new Regatta(name, "type", 123));
     }
 }

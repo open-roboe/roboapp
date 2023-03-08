@@ -21,4 +21,12 @@
     <string name="textfield_hint_api_url">Api URL</string>
     <string name="button_apply_changes">Apply changes</string>
     <string name="button_cancel">Cancel</string>
+    <string name="location_permissions_required_title">Location permissions required</string>
+    <string name="location_permissions_required_description">Your real time location will be shown on the map, and shared in real time to simplifiy the management of the regatta</string>
+    <string name="button_edit_permissions">Edit permissions</string>
+    <string name="button_back">Back</string>
+    <string name="notification_title">Regatta running</string>
+    <string name="notification_text">regatta details</string>
+    <string name="notification_channel_name">regattas</string>
+    <string name="notification_channel_description">Immediate updates on navigation and running regattas</string>
 </resources>

@@ -12,14 +12,17 @@ package it.halb.roboapp.dataLayer.remoteDataSource;
  */
 public class ApiCallbackLambda<T> extends ApiCallback<T> {
 
+    @FunctionalInterface
     public interface Success<T>{
         void success(T data);
     }
 
+    @FunctionalInterface
     public interface Error{
         void error(int code, String detail);
     }
 
+    @FunctionalInterface
     public interface AuthError{
         void authError();
     }

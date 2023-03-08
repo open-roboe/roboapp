@@ -1,4 +1,4 @@
-package it.halb.roboapp;
+package it.halb.roboapp.ui.auth;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +15,9 @@ import android.view.ViewGroup;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.databinding.FragmentLoginBinding;
+import it.halb.roboapp.ui.main.MainActivity;
 
 public class LoginFragment extends Fragment {
     private FragmentLoginBinding binding;
