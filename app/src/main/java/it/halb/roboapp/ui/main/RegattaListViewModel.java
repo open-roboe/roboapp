@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 import java.util.Random;
 
+import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.regattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
@@ -17,15 +18,17 @@ public class RegattaListViewModel extends AndroidViewModel {
 
     private final LiveData<List<Regatta>> allRegattas;
     private final regattaRepository regattaRepository;
+    private final AuthRepository authRepository;
 
     public RegattaListViewModel(@NonNull Application application) {
         super(application);
         regattaRepository = new regattaRepository(application);
+        authRepository = AuthRepository.getInstance(application);
         allRegattas = regattaRepository.getAllRegattas();
     }
 
     public void testLogout(){
-        regattaRepository.logout();
+        authRepository.logout();
     }
 
     public LiveData<List<Regatta>> getAllRegattas(){

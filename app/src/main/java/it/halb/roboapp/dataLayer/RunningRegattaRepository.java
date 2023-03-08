@@ -46,7 +46,7 @@ public class RunningRegattaRepository {
      * @param regatta the regatta that you want to run
      */
     public void DeclareRegattaToRun(Regatta regatta){
-
+        //mock
     }
 
     /**
@@ -63,7 +63,7 @@ public class RunningRegattaRepository {
      * It updates the running regatta information.
      */
     public void poll(){
-
+        //mock update only status
     }
 
 }

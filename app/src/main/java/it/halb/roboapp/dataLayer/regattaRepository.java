@@ -11,7 +11,6 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallbackLambda;
 import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
@@ -38,22 +37,6 @@ public class regattaRepository {
             authToken = account.getValue().getAuthToken();
         //init remote data source
         apiClient = new ApiClient(apiBaseUrl, authToken);
-    }
-
-    /**
-     * Use AuthRepository.logout() instead
-     */
-    @Deprecated
-    public void logout(){
-        Database.databaseWriteExecutor.execute(accountDao::delete);
-    }
-
-    /**
-     * Use AuthRepository.getAccount() instead
-     */
-    @Deprecated
-    public LiveData<Account> getAccount(){
-        return account;
     }
 
     /**
