@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
  * offering a typesafe interface to the SharedPreferences API
  */
 public class SharedPreferenceUtil {
-    //TODO: pull this from gradle config
+
     private final Application application;
 
     public SharedPreferenceUtil(@NonNull Application application){
