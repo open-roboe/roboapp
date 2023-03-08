@@ -4,6 +4,7 @@ import static it.halb.roboapp.util.Constants.NOTIFICATION_CHANNEL_ID;
 import static it.halb.roboapp.util.Constants.NOTIFICATION_ID;
 import static it.halb.roboapp.util.Constants.POLLING_DELAY_MILLIS;
 
+import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,7 +19,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-public class RegattaFollowService extends Service {
+public class RunningRegattaService extends Service {
 
     private Handler pollingHandler;
 
@@ -32,6 +33,9 @@ public class RegattaFollowService extends Service {
         @Override
         public void run() {
             Log.d("POLLING", "poll!");
+            Application application = getApplication();
+            //TODO init repository, (probably outside of here), and call repository.poll()
+
             pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
         }
     };

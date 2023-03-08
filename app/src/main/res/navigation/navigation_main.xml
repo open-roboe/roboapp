@@ -18,5 +18,9 @@
         android:id="@+id/loadFragment"
         android:name="it.halb.roboapp.ui.main.LoadFragment"
         tools:layout="@layout/fragment_load"
-        android:label="LoadFragment" />
+        android:label="LoadFragment" >
+        <argument
+            android:name="runRegattaName"
+            app:argType="string" />
+    </fragment>
 </navigation>

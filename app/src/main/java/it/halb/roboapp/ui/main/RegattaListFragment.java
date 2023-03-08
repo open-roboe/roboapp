@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 
 import it.halb.roboapp.R;
-import it.halb.roboapp.RegattaFollowService;
+import it.halb.roboapp.RunningRegattaService;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 
 public class RegattaListFragment extends Fragment {
@@ -70,7 +70,7 @@ public class RegattaListFragment extends Fragment {
         });
 
         // stop the followService, since we are not following any regatta
-        requireActivity().stopService(new Intent(getContext(), RegattaFollowService.class));
+        requireActivity().stopService(new Intent(getContext(), RunningRegattaService.class));
         //TODO: remove all follow room objects
 
         //recyclerview touch gestures

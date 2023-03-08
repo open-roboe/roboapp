@@ -15,10 +15,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 
-import it.halb.roboapp.RegattaFollowService;
+import it.halb.roboapp.RunningRegattaService;
 import it.halb.roboapp.databinding.FragmentLoadBinding;
 import it.halb.roboapp.util.Permissions;
 
+/**
+ * This is the entry point for a running regatta.
+ * Before navigating to this fragment, make sure that you called declareRegattaToRun
+ *
+ */
 public class LoadFragment extends Fragment {
 
     private FragmentLoadBinding binding;
@@ -33,6 +38,11 @@ public class LoadFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        //TODO: enable safeargs plugin, require regatta name as argument. call declareRegattaToRun() from here,
+        // then on success call the permissionmanager code
+        // https://developer.android.com/guide/navigation/navigation-pass-data#groovy
+        // right now, people must remember to call declareRegattaToRun before navigating here
+
         //viewModel initialization
         LoadViewModel model = new ViewModelProvider(this).get(LoadViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
@@ -42,19 +52,13 @@ public class LoadFragment extends Fragment {
         Permissions.manageLocationPermissions(
                 this,
                 //permissions granted
-                this::startFollowService,
+                this::startRunningRegattaService,
                 //permission denied
                 () -> {
                     binding.permissionsLayout.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.INVISIBLE);
                 }
         );
-
-        //viewModel listener
-            //TODO: add listener for followedRegatta.
-            //when followedregatta != null, trigger navigation to mapactivity, without history
-            //https://stackoverflow.com/questions/50514758/how-to-clear-navigation-stack-after-navigating-to-another-fragment-in-android
-            //NavHostFragment.findNavController(this).navigate();
 
         //view listeners
         binding.buttonBack.setOnClickListener(v -> {
@@ -70,14 +74,9 @@ public class LoadFragment extends Fragment {
     }
 
 
-    /**
-     * start the regattaFollow foreground service.
-     * TODO: find a way to configure the regatta that the service must follow
-     *
-     */
-    public void startFollowService(){
+    public void startRunningRegattaService(){
         requireActivity().startService(
-                new Intent(requireActivity(), RegattaFollowService.class)
+                new Intent(requireActivity(), RunningRegattaService.class)
         );
     }
 }

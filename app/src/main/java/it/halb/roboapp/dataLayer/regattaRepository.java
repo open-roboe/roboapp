@@ -60,7 +60,7 @@ public class regattaRepository {
      * Return a LiveData list of all the regattas. To update this list, call loadAllRegattas()
      *
      * Note that a Regatta object does not include the associated buoys, boats, or roboas.
-     * If you want to get that data you must use the ActiveRegatta repository
+     * If you want to get that data you must use the RunningRegattaRepository repository
      *
      */
     public LiveData<List<Regatta>> getAllRegattas(){
@@ -73,19 +73,24 @@ public class regattaRepository {
      * updated with the new data. Use the method getAllRegattas() to get the Livedata List.
      */
     public void loadAllRegattas(SuccessCallback<List<Regatta>> successCallback, ErrorCallback errorCallback){
+        //mock
+        successCallback.success(getAllRegattas().getValue());
     }
 
     /**
      * TODO
      */
     public void deleteRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
+        //mock
         Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
     }
 
     /**
      * TODO
+     * parameters: (Regatta, List<Buoy> Jury, successCallback, errorCallback)
      */
     public void insertRegatta(Regatta regatta){
+        //mock
         Database.databaseWriteExecutor.execute(() -> regattaDao.insert(regatta));
     }
 }
