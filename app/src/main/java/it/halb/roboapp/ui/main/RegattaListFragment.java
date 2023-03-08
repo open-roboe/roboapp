@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,6 +60,7 @@ public class RegattaListFragment extends Fragment {
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.action_courseList_to_loadFragment);
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
                     .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
@@ -86,6 +88,7 @@ public class RegattaListFragment extends Fragment {
                 );
                 //adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
+
 
             /**
              * Draw a red background under the item when an item is wiped to the side

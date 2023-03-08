@@ -1,63 +1,63 @@
 package it.halb.roboapp.ui.main;
 
-import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 
 
-import it.halb.roboapp.R;
+import it.halb.roboapp.databinding.FragmentLoadBinding;
 import it.halb.roboapp.util.Permissions;
 
 public class LoadFragment extends Fragment {
 
+    private FragmentLoadBinding binding;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_load, container, false);
+        binding = FragmentLoadBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        //viewmodel initialization
+        LoadViewModel model = new ViewModelProvider(this).get(LoadViewModel.class);
+        binding.setLifecycleOwner(this.getViewLifecycleOwner());
+        binding.setLoadViewModel(model);
 
-        //the permissions we need
-        String[] PERMISSIONS = {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-        };
+        //permissions management
+        Permissions.manageLocationPermissions(
+                this,
+                //permissions granted
+                this::startFollow,
+                //permission denied
+                () -> {
+                    binding.permissionsLayout.setVisibility(View.VISIBLE);
+                    binding.progressBar.setVisibility(View.INVISIBLE);
+                }
+        );
 
-        // Register the permissions callback, which handles the user's response to the system permissions dialog
-        //https://stackoverflow.com/a/68347506/9169799
-        ActivityResultLauncher<String[]> requestPermissionLauncher =
-                registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-                    boolean areAllGranted = true;
-                    for(Boolean b : result.values()) {
-                        areAllGranted = areAllGranted && b;
-                    }
-
-                    if(areAllGranted) {
-                        startFollow();
-                    }
-                });
-
-        //check if we have the permissions we need
-        if(Permissions.hasPermission(requireActivity(), PERMISSIONS)){
-            //all good, launch service
-            startFollow();
-        }
-        else{
-            //ask permissions
-            requestPermissionLauncher.launch(PERMISSIONS);
-        }
+        //view listeners
+        binding.buttonBack.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).popBackStack();
+        });
+        binding.buttonEditPermissions.setOnClickListener(v -> {
+            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", requireActivity().getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        });
 
     }
 
