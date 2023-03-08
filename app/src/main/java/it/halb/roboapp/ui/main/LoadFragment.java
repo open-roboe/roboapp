@@ -38,7 +38,10 @@ public class LoadFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //TODO: enable safeargs plugin, require regatta name as argument. call declareRegattaToRun() from here,
+        //require regattaName parameter, that is passed with every navigation
+        String regattaName = LoadFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
+
+        //TODO: call declareRegattaToRun() from here,
         // then on success call the permissionmanager code
         // https://developer.android.com/guide/navigation/navigation-pass-data#groovy
         // right now, people must remember to call declareRegattaToRun before navigating here
