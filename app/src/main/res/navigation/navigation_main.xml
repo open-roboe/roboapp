@@ -9,5 +9,14 @@
         android:id="@+id/courseList"
         android:name="it.halb.roboapp.ui.main.RegattaListFragment"
         android:label="fragment_course_list"
-        tools:layout="@layout/fragment_regatta_list" />
+        tools:layout="@layout/fragment_regatta_list" >
+        <action
+            android:id="@+id/action_courseList_to_loadFragment"
+            app:destination="@id/loadFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadFragment"
+        android:name="it.halb.roboapp.ui.main.LoadFragment"
+        tools:layout="@layout/fragment_load"
+        android:label="LoadFragment" />
 </navigation>

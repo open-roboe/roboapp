@@ -2,6 +2,7 @@ package it.halb.roboapp.ui.main;
 
 import static it.halb.roboapp.R.string.snackbar_regatta_deleted_text;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.view.ViewGroup;
 import com.google.android.material.snackbar.Snackbar;
 
 import it.halb.roboapp.R;
+import it.halb.roboapp.RegattaFollowService;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 
 public class RegattaListFragment extends Fragment {
@@ -64,6 +66,10 @@ public class RegattaListFragment extends Fragment {
                     })
                     .show();
         });
+
+        // stop the followService, since we are not following any regatta
+        requireActivity().stopService(new Intent(getContext(), RegattaFollowService.class));
+        //TODO: remove all follow room objects
 
         //recyclerview touch gestures
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
