@@ -32,7 +32,8 @@ public class LoadFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //viewmodel initialization
+
+        //viewModel initialization
         LoadViewModel model = new ViewModelProvider(this).get(LoadViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setLoadViewModel(model);
@@ -41,13 +42,19 @@ public class LoadFragment extends Fragment {
         Permissions.manageLocationPermissions(
                 this,
                 //permissions granted
-                this::startFollow,
+                this::startFollowService,
                 //permission denied
                 () -> {
                     binding.permissionsLayout.setVisibility(View.VISIBLE);
                     binding.progressBar.setVisibility(View.INVISIBLE);
                 }
         );
+
+        //viewModel listener
+            //TODO: add listener for followedRegatta.
+            //when followedregatta != null, trigger navigation to mapactivity, without history
+            //https://stackoverflow.com/questions/50514758/how-to-clear-navigation-stack-after-navigating-to-another-fragment-in-android
+            //NavHostFragment.findNavController(this).navigate();
 
         //view listeners
         binding.buttonBack.setOnClickListener(v -> {
@@ -64,20 +71,13 @@ public class LoadFragment extends Fragment {
 
 
     /**
-     * start the regatta follow service, navigate to maps activity.
+     * start the regattaFollow foreground service.
+     * TODO: find a way to configure the regatta that the service must follow
      *
-     * Careful: Call this method only when the app has access to all the permissions required
      */
-    public void startFollow(){
-        //launch service
-
+    public void startFollowService(){
         requireActivity().startService(
                 new Intent(requireActivity(), RegattaFollowService.class)
         );
-
-        //navigate no map activity, without navhistory
-            //https://stackoverflow.com/questions/50514758/how-to-clear-navigation-stack-after-navigating-to-another-fragment-in-android
-            //NavHostFragment.findNavController(this).navigate();
-
     }
 }

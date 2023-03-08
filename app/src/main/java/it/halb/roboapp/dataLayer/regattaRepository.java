@@ -11,10 +11,11 @@ import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiCallbackLambda;
 import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
-public class Repository {
+public class regattaRepository {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
@@ -22,7 +23,7 @@ public class Repository {
     private final LiveData<List<Regatta>> regattas;
 
     //TODO: transform into singleton
-    public Repository(Application application){
+    public regattaRepository(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
@@ -39,25 +40,51 @@ public class Repository {
         apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
+    /**
+     * Use AuthRepository.logout() instead
+     */
+    @Deprecated
     public void logout(){
         Database.databaseWriteExecutor.execute(accountDao::delete);
     }
 
-    public void insertAccount(Account account){
-        Database.databaseWriteExecutor.execute(() -> accountDao.insert(account));
-    }
+    /**
+     * Use AuthRepository.getAccount() instead
+     */
+    @Deprecated
     public LiveData<Account> getAccount(){
         return account;
     }
 
+    /**
+     * Return a LiveData list of all the regattas. To update this list, call loadAllRegattas()
+     *
+     * Note that a Regatta object does not include the associated buoys, boats, or roboas.
+     * If you want to get that data you must use the ActiveRegatta repository
+     *
+     */
     public LiveData<List<Regatta>> getAllRegattas(){
         return regattas;
     }
 
-    public void deleteRegatta(Regatta regatta){
+    /**
+     * TODO
+     * Perform an api request to get the list of all the regattas. When it succeeds, the Livedata allRegattas list is
+     * updated with the new data. Use the method getAllRegattas() to get the Livedata List.
+     */
+    public void loadAllRegattas(SuccessCallback<List<Regatta>> successCallback, ErrorCallback errorCallback){
+    }
+
+    /**
+     * TODO
+     */
+    public void deleteRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
         Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
     }
 
+    /**
+     * TODO
+     */
     public void insertRegatta(Regatta regatta){
         Database.databaseWriteExecutor.execute(() -> regattaDao.insert(regatta));
     }

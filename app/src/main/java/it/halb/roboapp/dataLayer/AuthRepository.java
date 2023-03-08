@@ -99,6 +99,16 @@ public class AuthRepository {
         ));
     }
 
+
+    /**
+     * Log the user out, by deleting the Account object.
+     *
+     * an empty account object will cause an immediate redirect to the login activity
+     */
+    public void logout(){
+        Database.databaseWriteExecutor.execute(accountDao::delete);
+    }
+
     /**
      * Perform an api request to get the user data. When it succeeds, the Livedata Account object is
      * updated with the user data. Use the method getAccount() to get the account Livedata object.
@@ -135,9 +145,7 @@ public class AuthRepository {
                 },
 
                 //auth error
-                () -> {
-                    Database.databaseWriteExecutor.execute(accountDao::delete);
-                }
+                this::logout
         ));
     }
 

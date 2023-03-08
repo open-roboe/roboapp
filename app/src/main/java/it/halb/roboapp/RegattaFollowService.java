@@ -2,6 +2,7 @@ package it.halb.roboapp;
 
 import static it.halb.roboapp.util.Constants.NOTIFICATION_CHANNEL_ID;
 import static it.halb.roboapp.util.Constants.NOTIFICATION_ID;
+import static it.halb.roboapp.util.Constants.POLLING_DELAY_MILLIS;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -9,14 +10,32 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
-import it.halb.roboapp.ui.main.MainActivity;
-
 public class RegattaFollowService extends Service {
+
+    private Handler pollingHandler;
+
+    /**
+     * This runnable is the core of the service:
+     * It runs periodically, calling the repository to update
+     * the user position and fetching the regatta information
+     *
+     */
+    private final Runnable pollingRunnable = new Runnable() {
+        @Override
+        public void run() {
+            Log.d("POLLING", "poll!");
+            pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
+        }
+    };
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -41,8 +60,6 @@ public class RegattaFollowService extends Service {
         }
 
         //define the action for the notification click
-        Intent clickIntent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingClickIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
         // set the notification content
@@ -57,6 +74,19 @@ public class RegattaFollowService extends Service {
         //start a foreground service, with the notification defined above
         startForeground(NOTIFICATION_ID, builder.build());
 
+        //initialize the polling loop
+        initializePolling();
+
         return super.onStartCommand(intent, flags, startId);
     }
+
+    private void initializePolling(){
+        if(pollingHandler == null){
+            pollingHandler = new Handler(Looper.getMainLooper());
+            pollingHandler.postDelayed(pollingRunnable, POLLING_DELAY_MILLIS);
+        }
+    }
+
+
+
 }

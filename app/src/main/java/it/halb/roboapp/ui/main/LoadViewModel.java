@@ -11,4 +11,5 @@ public class LoadViewModel extends AndroidViewModel {
     public LoadViewModel(@NonNull Application application) {
         super(application);
     }
+
 }

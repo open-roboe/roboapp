@@ -14,4 +14,7 @@ public class Constants {
     // foreground service
     public static final String NOTIFICATION_CHANNEL_ID = "roboapp_foreground_channel";
     public static final int NOTIFICATION_ID = 42;
+
+    public static final int POLLING_DELAY_MILLIS = 5 * 1000;
+
 }
