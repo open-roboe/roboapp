@@ -89,7 +89,8 @@ Iniziamo col definire un layout vuoto
 
 ```
 
-Questo layout è particolare: tutto è contenuto dentro un tag <layout>, che serve ad attivare il [databinding](https://developer.android.com/topic/libraries/data-binding) dentro al tag layout, il tag <data> definisce la variabile pulsanteViewModel, che permette di accedere ai dati del nostro viewModel
+Questo layout è particolare: tutto è contenuto dentro un tag `<layout>`, che serve ad attivare il [databinding](https://developer.android.com/topic/libraries/data-binding). 
+Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel che permette di accedere ai dati del nostro viewModel
 
 ```xml
     <data>
@@ -98,8 +99,45 @@ Questo layout è particolare: tutto è contenuto dentro un tag <layout>, che ser
             type="it.halb.roboapp.ui.main.PulsanteViewModel" />
     </data>
  ```
+ 
+ Modifichiamo il nostro layout per aggiungere una textiview e un pulsante
+ 
+ 
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="loadViewModel"
+            type="it.halb.roboapp.ui.main.LoadViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <!-- Metti qui il tuo layout -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{pulsanteViewModel.counter}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
+
+            <Button
+                android:id="@+id/button4"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Incrementa contatore" />
+
+        
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+```
     
-    
+
 
 ### Fragment
 Inizializziamo e coleghiamo tutto TODO
