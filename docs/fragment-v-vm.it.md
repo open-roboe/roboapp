@@ -22,19 +22,52 @@ Una schermata ha spesso bisogno di salvare da qualche parte dei dati che servono
 
 Per questo tipo di dati si utilizza il viewModel. Scriviamo il nostro:
 
-[Codice completo]
+```java
+
+// file: PulsanteViewModel.java
+
+package it.halb.roboapp.ui.main;
+
+import android.app.Application;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.AndroidViewModel;
+
+public class PulsanteViewModel extends AndroidViewModel {
+
+    private final MutableLiveData<Integer> counter = new MutableLiveData<>(0);
+    
+        
+    public LoadViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public LiveData<Integer> getCounter(){
+        return counter;
+    }
+
+    public void incrementCounter(){
+        Integer currentValue = counter.getValue();
+        if(currentValue == null) currentValue = 0;
+
+        counter.setValue(currentValue + 1);
+    }
+
+
+}
+
+
+```
 
 Il costruttore per ora è vuoto, ma lo teniamo. Lo useremo quando servirà comunicare con le repository.
 
 
 ### View
-impostiamo databinding con viewmodel TODO
 
-In questo esempio non ha importanza il design della view. Normalmente però le cose
-sono piu complesse, e specificate in dettaglio in figma.
-[Questa guida](./view-design.it.md) spiega come implementare il design in una view, inclusi gli elementi descritti in figma.
+In questo esempio non ha importanza il design della view, vogliamo solamente un pulsante. Normalmente però il design da implementare è definito in Figma, e serve seguire i passaggi della [Guida per il design](./view-design.it.md)
 
-[Codice completo]
+Iniziamo col definire un layout vuoto
+
+[TODO layout vuoto]
 
 A differenza di un normale layout, il nostro 
 
