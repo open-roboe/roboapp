@@ -67,9 +67,39 @@ In questo esempio non ha importanza il design della view, vogliamo solamente un 
 
 Iniziamo col definire un layout vuoto
 
-[TODO layout vuoto]
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="loadViewModel"
+            type="it.halb.roboapp.ui.main.LoadViewModel" />
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+        <!-- Metti qui il tuo layout -->
+        
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
 
-A differenza di un normale layout, il nostro 
+```
+
+Questo layout è particolare: tutto è contenuto dentro un tag <layout>, che serve ad attivare il [databinding](https://developer.android.com/topic/libraries/data-binding) dentro al tag layout, il tag <data> definisce la variabile pulsanteViewModel, che permette di accedere ai dati del nostro viewModel
+
+```xml
+    <data>
+        <variable
+            name="pulsanteViewModel"
+            type="it.halb.roboapp.ui.main.PulsanteViewModel" />
+    </data>
+ ```
+    
+    
 
 ### Fragment
 Inizializziamo e coleghiamo tutto TODO
