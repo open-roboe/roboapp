@@ -1,6 +1,9 @@
 
 # design
 
+Il design dell'applicazione è definito su [Questo progetto Figma](https://www.figma.com/file/HPiW882us98ExlP1A4v5It/Roboapp_Material3?node-id=53296%3A27527&t=15ZGVmNAZ8gUA7NO-1)
+
+
 ## Consigli generali
 
 Utilizzare Constraintlayout per organizzare i vari elementi di una pagina.
@@ -24,15 +27,18 @@ Un altro trucco che spesso risolve problemi: `Build > Clean project` oppure
 
 ## Usare gli elementi in figma
 
-TODO
+Implementare in android studio il design su figma non è immediato.
 
-## navbar
+Diversi elementi come TextInput, navbar, etch si implementano in un modo specifico. 
+Non basta trascinare un TextInput dalla lista di elementi di android studio, perchè quelli sono elementi Materia design 2.
 
-TODO
+Quindi come si fa?
 
-## bottombar
+- cliccare sull'elemento in figma per scoprire il nome (a volte è accurato, a volte no, ma rende l'idea abbastanza)
+- cercare il nome dell'elemento sulla [Guida material3](https://m3.material.io/components). Ad esempio, l'input di testo è in [questa pagina](https://m3.material.io/components/text-fields/overview)
+- All'interno della pagina, nella sezione Resources, trovare il link alla pagina di documentazione MDC-Android. Ad esempio, per L'input di testo la documentazione è [questa](https://github.com/material-components/material-components-android/blob/master/docs/components/TextField.md)
+- Usare la guida e gli esempi nella documentazione MDC-Android per implementare l'elemento in android studio. Nota che alcuni elementi non sono supportati dala nostra versione, e semplicemente non possono essere usati
 
-TODO
 
 ## elementi di ui complessi
 
@@ -66,8 +72,4 @@ la schermata sotto. [TODO: IMG]
 All'interno di un BottomSheetFragment non si può navigare ad altre schermate.
 L'unica operazione permessa è chiudere il bottomsheetfragment. Per farlo basta eseguire
 `dismiss()`
-
-### coordinator layout:
-
-https://saulmm.github.io/mastering-coordinator
 
