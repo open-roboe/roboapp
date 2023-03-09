@@ -34,6 +34,10 @@ Non basta trascinare un TextInput dalla lista di elementi di android studio, per
 
 Quindi come si fa?
 
+Se l'elemento è gia stato implementao da qualche parte nell'app, si può copiare da li. Nota che quando si copia un elemento l'ID va cambiato.
+
+Altrimenti, si può consultare la documentazione, tramite questa tarantella:
+
 - cliccare sull'elemento in figma per scoprire il nome (a volte è accurato, a volte no, ma rende l'idea abbastanza)
 - cercare il nome dell'elemento sulla [Guida material3](https://m3.material.io/components). Ad esempio, l'input di testo è in [questa pagina](https://m3.material.io/components/text-fields/overview)
 - All'interno della pagina, nella sezione Resources, trovare il link alla pagina di documentazione MDC-Android. Ad esempio, per L'input di testo la documentazione è [questa](https://github.com/material-components/material-components-android/blob/master/docs/components/TextField.md)
