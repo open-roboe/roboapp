@@ -101,7 +101,7 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
     </data>
  ```
  
- Modifichiamo il nostro layout per aggiungere una textiview e un pulsante
+ Ora modifichiamo il nostro layout per aggiungere una textiview e un pulsante che utilizzano databinding
  
  
 ```xml
@@ -136,6 +136,9 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
+
+La cosa interessante è il campo `android:text="@{pulsanteViewModel.counter}"` all'interno del tag TextView
+Per imparare i dettagli puoi leggere la documentazione sul [databinding](https://developer.android.com/topic/libraries/data-binding). 
 ```
     
 
