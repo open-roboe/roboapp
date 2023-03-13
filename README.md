@@ -12,3 +12,5 @@ Queste guide coprono tutto quello che serve sapere per mettere mano all'app, sen
 - [Come si crea una schermata](./docs/fragment-v-vm.it.md)
 
 - [Come si utilizzano le repository](./docs/repository.it.md)
+
+- [Come si implementa il design, Figma, Navigazione, sbatti vari](./docs/view-design.it.md)
