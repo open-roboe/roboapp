@@ -84,7 +84,6 @@ Iniziamo col definire un layout vuoto, in un file `fragment_pulsante.xml`
         
         <!-- Metti qui il tuo layout -->
         
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
