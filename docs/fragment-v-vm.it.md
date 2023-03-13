@@ -71,7 +71,8 @@ Iniziamo col definire un layout vuoto
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>
     <data>
         <variable
             name="loadViewModel"
@@ -140,7 +141,9 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
 
 
 ### Fragment
-Inizializziamo e coleghiamo tutto TODO
+
+Il fragment unisce la view (sinonimo di layout xml) e il viewmodel.
+
 
 ### aggiungiamo la schermata alla navigazione
 
@@ -148,4 +151,5 @@ In android studio, apri il file `res/navigation/navigation_main.xml`
 Per aprire l'editor grafico delle navigazioni.
 
 premi il tasto + in alto a sinistra, e cerca il nome del fragment che hai creato, per aggiungerlo alle schermate dell'applicazione
+
 
