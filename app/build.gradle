@@ -56,7 +56,8 @@ dependencies {
     // version where the annoying preview render bug does not happen
     // The following comment line is a special android studio syntax that suppresses the outdated warning
     //noinspection GradleDependency
-    implementation 'com.google.android.material:material:1.5.0'
+    //NOTE: the issue seems to be solved with the latest version of android studio
+    implementation 'com.google.android.material:material:1.8.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.5.3'
     implementation 'androidx.navigation:navigation-ui:2.5.3'
