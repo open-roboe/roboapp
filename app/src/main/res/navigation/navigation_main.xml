@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_courseList_to_loadFragment"
             app:destination="@id/loadFragment" />
+        <action
+            android:id="@+id/action_courseList_to_createRegattaFragment"
+            app:destination="@id/createRegattaFragment" />
     </fragment>
     <fragment
         android:id="@+id/loadFragment"
@@ -22,5 +25,14 @@
         <argument
             android:name="runRegattaName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/createRegattaFragment"
+        android:name="it.halb.roboapp.ui.main.CreateRegattaFragment"
+        android:label="CreateRegattaFragment"
+        tools:layout="@layout/fragment_create_regatta">
+        <action
+            android:id="@+id/action_createRegattaFragment_to_loadFragment"
+            app:destination="@id/loadFragment" />
     </fragment>
 </navigation>

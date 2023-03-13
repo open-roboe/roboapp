@@ -73,6 +73,12 @@ public class RegattaListFragment extends Fragment {
                     .show();
         });
 
+        binding.floatingActionButton.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(
+                    RegattaListFragmentDirections.actionCourseListToCreateRegattaFragment()
+            );
+        });
+
         // stop the followService, since we are not following any regatta
         requireActivity().stopService(new Intent(getContext(), RunningRegattaService.class));
         //TODO: remove all follow room objects
