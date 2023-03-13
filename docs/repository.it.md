@@ -25,15 +25,18 @@ Contiene i metodi per modificare una regata, creare una regata, o eliminare una 
 
 ## RunningRegattaRepository
 
-Questta repository serve a gestire la regata attiva al momento, e permette di ottenere
-la lista di boe, roboe, barche, e altre info sulla regata attualmente selezionata.
+Questta repository serve a gestire la regata in corso al momento, e permette di ottenere
+la lista di boe, roboe, barche, e altre info su questa regata.
 
-è una repository particolare, perchè può essere usata solamente all'interno delle schermate:
+è una repository particolare, perchè può essere usata solamente all'interno delle schermate associate ad una "regata in corso":
 
 - MapFragment
 - BuoyInfoFragment
 - BoatInfoFragment
 - RoboaInfoFragment
+
+Nota che il concetto di "regata in corso"
+All'interno del codice è tradotto come "running regatta", e significa [TODO: spiegare]
 
 [TODO: link a docs runningregattarepository]
 
