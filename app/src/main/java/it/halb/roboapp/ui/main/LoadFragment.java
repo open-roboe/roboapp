@@ -81,8 +81,7 @@ public class LoadFragment extends Fragment {
         requireActivity().startService(
                 new Intent(requireActivity(), RunningRegattaService.class)
         );
-        NavHostFragment.findNavController(this).navigate(
-                LoadFragmentDirections.actionLoadFragmentToMainMapFragment()
-        );
+        Intent intent = new Intent(this.getContext(), MainMapActivity.class);
+        startActivity(intent);
     }
 }
