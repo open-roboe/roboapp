@@ -133,19 +133,81 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
                 android:text="Incrementa contatore" />
 
         
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
+```
+
 La cosa interessante è il campo `android:text="@{pulsanteViewModel.counter}"` all'interno del tag TextView
 Per imparare i dettagli puoi leggere la documentazione sul [databinding](https://developer.android.com/topic/libraries/data-binding). 
-```
+
     
 
 
 ### Fragment
 
 Il fragment unisce la view (sinonimo di layout xml) e il viewmodel.
+
+```java
+
+//file: PulsanteFragment.java
+
+public class PulsanteFragment extends Fragment {
+    private FragmentLoginBinding binding;
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        return binding.getRoot();
+    }
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //ViewModel initialization
+        PulsanteViewModel model = new ViewModelProvider(this).get(PulsanteViewModel.class);
+        binding.setLifecycleOwner(this.getViewLifecycleOwner());
+        binding.setPulsanteViewModel(model);
+
+        //ViewModel listeners
+        model.getUsernameError().observe(getViewLifecycleOwner(), error ->{
+            binding.textInputUsername.setError(error);
+        });
+        model.getPasswordError().observe(getViewLifecycleOwner(), error ->{
+            binding.textInputPassword.setError(error);
+        });
+        model.getGenericError().observe(getViewLifecycleOwner(), error ->{
+            if(error != null && error.length() > 0)
+                Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
+        });
+        model.getAccount().observe(getViewLifecycleOwner(), account -> {
+            if(account != null){
+                //there is an account! move to main activity
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+        //view listeners
+        binding.buttonLogin.setOnClickListener(v -> {
+            model.login();
+        });
+        binding.buttonEditServer.setOnClickListener(v ->{
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_urlConfigFragment);
+        });
+
+    }
+}
+
+
+
+
+```
+
 
 
 ### aggiungiamo la schermata alla navigazione
