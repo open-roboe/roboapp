@@ -29,4 +29,10 @@
     <string name="notification_text">regatta details</string>
     <string name="notification_channel_name">regattas</string>
     <string name="notification_channel_description">Immediate updates on navigation and running regattas</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="map">Mappa</string>
+    <string name="buoy">Boe</string>
+    <string name="robuoy">Roboe</string>
+    <string name="Boat">Barche</string>
 </resources>

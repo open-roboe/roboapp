@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/mapFragment"
+        android:enabled="true"
+
+        android:title="@string/map" />
+
+    <item
+        android:id="@+id/buoyInfo"
+        android:enabled="true"
+
+        android:title="@string/buoy" />
+
+    <item
+        android:id="@+id/robuoyInfo"
+        android:enabled="true"
+
+        android:title="@string/robuoy" />
+
+    <item
+        android:id="@+id/boatInfo"
+        android:enabled="true"
+
+        android:title="@string/Boat" />
+
+</menu>

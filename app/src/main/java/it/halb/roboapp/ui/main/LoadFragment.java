@@ -20,7 +20,7 @@ import it.halb.roboapp.databinding.FragmentLoadBinding;
 import it.halb.roboapp.util.Permissions;
 
 /**
- * This is the entry point for a running regatta.
+ * This is the entry point for a running regatta
  * Before navigating to this fragment, make sure that you called declareRegattaToRun
  *
  */
@@ -80,6 +80,9 @@ public class LoadFragment extends Fragment {
     public void startRunningRegattaService(){
         requireActivity().startService(
                 new Intent(requireActivity(), RunningRegattaService.class)
+        );
+        NavHostFragment.findNavController(this).navigate(
+                LoadFragmentDirections.actionLoadFragmentToMainMapFragment()
         );
     }
 }
