@@ -65,7 +65,7 @@ Il costruttore per ora è vuoto, ma lo teniamo. Lo useremo quando servirà comun
 
 In questo esempio non ha importanza il design della view, vogliamo solamente un pulsante. Normalmente però il design da implementare è definito in Figma, e serve seguire i passaggi della [Guida per il design](./view-design.it.md)
 
-Iniziamo col definire un layout vuoto
+Iniziamo col definire un layout vuoto, in un file `fragment_pulsante.xml`
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
@@ -126,7 +126,7 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
                 android:textAppearance="@style/TextAppearance.AppCompat.Display3" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buttonIncrement"
                 android:layout_margin="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,13 +153,13 @@ Il fragment unisce la view (sinonimo di layout xml) e il viewmodel.
 //file: PulsanteFragment.java
 
 public class PulsanteFragment extends Fragment {
-    private FragmentLoginBinding binding;
+    private FragmenPulsanteBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding = FragmentPulsanteBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -173,38 +173,20 @@ public class PulsanteFragment extends Fragment {
         binding.setPulsanteViewModel(model);
 
         //ViewModel listeners
-        model.getUsernameError().observe(getViewLifecycleOwner(), error ->{
-            binding.textInputUsername.setError(error);
+        model.getCounter().observe(getViewLifecycleOwner(), counter ->{
+            //questo codice si esegue quando cambia il livedata counter.
+            Log.d("ESEMPIO", "counter livedata changed");
         });
-        model.getPasswordError().observe(getViewLifecycleOwner(), error ->{
-            binding.textInputPassword.setError(error);
-        });
-        model.getGenericError().observe(getViewLifecycleOwner(), error ->{
-            if(error != null && error.length() > 0)
-                Snackbar.make(view, error, Snackbar.LENGTH_SHORT).show();
-        });
-        model.getAccount().observe(getViewLifecycleOwner(), account -> {
-            if(account != null){
-                //there is an account! move to main activity
-                Intent intent = new Intent(getContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        });
+  
 
         //view listeners
-        binding.buttonLogin.setOnClickListener(v -> {
-            model.login();
-        });
-        binding.buttonEditServer.setOnClickListener(v ->{
-            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_urlConfigFragment);
+        binding.buttonIncrement.setOnClickListener(v -> {
+            //questo codice si esegue quando viene premuto il pulsante con id "buttonIncrement"
+            model.incrementCounter();
         });
 
     }
 }
-
-
-
 
 ```
 
