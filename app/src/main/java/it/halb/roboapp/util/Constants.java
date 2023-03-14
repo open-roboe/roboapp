@@ -17,20 +17,20 @@ public class Constants {
 
     public static final int POLLING_DELAY_MILLIS = 5 * 1000;
 
-    public static final int GateMarkDx = 7;
-    public static final int GateMarkSx = 6;
-    public static final int BottomMark = 5;
-    public static final int BreakMark = 4;
-    public static final int SecondUpMark = 3;
-    public static final int UpMark = 2;
-    public static final int StartMark = 1;
+    //Buoys Type
 
-    public static final int MidLineStart = 0;
+    public static final String GateMarkDx = "GATE MARK DX";
+    public static final String GateMarkSx = "GATE MARK SX";
+    public static final String BottomMark = "BOTTOM MARK";
+    public static final String BreakMark = "BREAK MARK";
+    public static final String SecondUpMark = "SECOND UP WIND MARK";
+    public static final String UpMark = "UP WIND MARK";
+    public static final String StartMark = "START MARK";
 
-    public static final int TriangleMark = 10;
+    public static final String MidLineStart = "MID LINE START";
 
-    public static final int[] allBouy = {TriangleMark,StartMark,UpMark,SecondUpMark,BreakMark,
-            BottomMark,GateMarkSx,GateMarkDx};
+    public static final String TriangleMark = "TRIANGLE MARK";
+
 
 
 

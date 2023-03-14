@@ -4,28 +4,31 @@ package it.halb.roboapp.dataLayer.localDataSource;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 
+import com.google.android.gms.maps.model.LatLng;
+
 @Entity(tableName = "buoy_table",primaryKeys = {"regattaName", "id"})
 public class Buoy {
     @NonNull
     private String regattaName;
     @NonNull
-    private int id;
+    private String id;
     private double latitude;
     private double longitude;
-    private String description;
 
-public Buoy(int id, double latitude, double longitude, String description) {
+
+public Buoy(@NonNull String id, @NonNull String regattaName, double latitude, double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.description = description;
+        this.regattaName = regattaName;
     }
 
-    public int getId() {
+    @NonNull
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -54,11 +57,16 @@ public Buoy(int id, double latitude, double longitude, String description) {
         this.longitude = longitude;
     }
 
-    public String getDescription() {
-        return description;
+
+    public void setPosition(LatLng position)
+    {
+        this.setLatitude(position.latitude);
+        this.setLongitude(position.longitude);
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public LatLng getPosition()
+    {
+        return new LatLng(this.getLatitude(),this.getLongitude());
     }
+
 }

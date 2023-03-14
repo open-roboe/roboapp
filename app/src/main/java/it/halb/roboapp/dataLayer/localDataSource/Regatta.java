@@ -5,15 +5,17 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.google.android.gms.maps.model.LatLng;
+
 @Entity(tableName = "regatta_table")
 public class Regatta {
     @PrimaryKey
     @NonNull
     private String name;
     private String type;
-    private int creationDate;
+    private final int creationDate;
 
-    private double windDirection;
+    private int windDirection;
 
     private double startLineLen;
 
@@ -32,7 +34,9 @@ public class Regatta {
     private double latitude;
 
 
-    public Regatta(@NonNull String name, String type, int creationDate, double windDirection, double startLineLen, double breakDistance, double courseLength, double secondMarkDistance, boolean bottonBuoy, boolean gate) {
+    public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
+                   double startLineLen, double breakDistance, double courseLength,
+                   double secondMarkDistance, boolean bottonBuoy, boolean gate) {
         this.name = name;
         this.type = type;
         this.creationDate = creationDate;
@@ -74,11 +78,11 @@ public class Regatta {
     }
 
 
-    public double getWindDirection() {
+    public int getWindDirection() {
         return windDirection;
     }
 
-    public void setWindDirection(double windDirection) {
+    public void setWindDirection(int windDirection) {
         this.windDirection = windDirection;
     }
 
@@ -144,6 +148,17 @@ public class Regatta {
 
     public void setLatitude(double latitude) {
         this.latitude = latitude;
+    }
+
+    public void setLatLng (LatLng position)
+    {
+        this.setLatitude(position.latitude);
+        this.setLongitude(position.longitude);
+    }
+
+    public LatLng getPosition()
+    {
+        return new LatLng(this.getLatitude(),this.getLongitude());
     }
 
 

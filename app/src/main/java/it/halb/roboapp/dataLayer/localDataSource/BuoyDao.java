@@ -11,7 +11,6 @@ import java.util.List;
 
 @Dao
 public interface BuoyDao {
-
     @Insert
     void insert(Buoy buoy);
 
