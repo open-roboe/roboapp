@@ -25,7 +25,9 @@
 
         <service
             android:name=".RunningRegattaService"
-            android:foregroundServiceType="location" />
+            android:foregroundServiceType="location"
+            android:stopWithTask="true"
+            />
 
         <activity
             android:name=".ui.auth.AuthActivity"
