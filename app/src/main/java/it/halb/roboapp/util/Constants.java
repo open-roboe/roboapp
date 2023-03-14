@@ -17,4 +17,21 @@ public class Constants {
 
     public static final int POLLING_DELAY_MILLIS = 5 * 1000;
 
+    public static final int GateMarkDx = 7;
+    public static final int GateMarkSx = 6;
+    public static final int BottomMark = 5;
+    public static final int BreakMark = 4;
+    public static final int SecondUpMark = 3;
+    public static final int UpMark = 2;
+    public static final int StartMark = 1;
+
+    public static final int MidLineStart = 0;
+
+    public static final int TriangleMark = 10;
+
+    public static final int[] allBouy = {TriangleMark,StartMark,UpMark,SecondUpMark,BreakMark,
+            BottomMark,GateMarkSx,GateMarkDx};
+
+
+
 }
