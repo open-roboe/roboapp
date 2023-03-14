@@ -16,8 +16,6 @@ import it.halb.roboapp.R;
 
 public class MainMapActivity extends AppCompatActivity {
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
