@@ -14,9 +14,7 @@ public class BuoyFactory {
     private static List<Buoy> buoys;
     private static LatLng mid;
 
-    public static List<Buoy> regattaStick(Regatta race, LatLng position) {
-
-        race.setLatLng(position);
+    public static List<Buoy> regattaStick(Regatta race) {
 
         double left = windDirection(race.getWindDirection(), -90);
 
@@ -45,9 +43,8 @@ public class BuoyFactory {
     }
 
     //distanze tutte in Km
-    public static List<Buoy> regattaTriangle(Regatta race, LatLng position) {
+    public static List<Buoy> regattaTriangle(Regatta race) {
 
-        race.setLatLng(position);
 
         double left = windDirection(race.getWindDirection(), -90);
 
@@ -95,7 +92,6 @@ public class BuoyFactory {
         } else if (newDegree < 0) {
             newDegree = (short) (newDegree + 360);
         }
-
         return newDegree;
     }
 

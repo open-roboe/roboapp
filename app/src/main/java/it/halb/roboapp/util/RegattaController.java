@@ -68,10 +68,6 @@ public class RegattaController {
             }
 
         }
-
-
-
-
         Buoy StartBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.StartMark);
         Buoy upBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.UpMark);
         Buoy midLineBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.MidLineStart);
@@ -111,6 +107,18 @@ public class RegattaController {
         }
 
 
+    }
+
+    public void setMap(GoogleMap map) {
+        this.map = map;
+    }
+
+    public void setRegatta(MutableLiveData<Regatta> regatta) {
+        this.regatta = regatta;
+    }
+
+    public void setBuoys(MutableLiveData<List<Buoy>> buoys) {
+        this.buoys = buoys;
     }
 
 
