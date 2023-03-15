@@ -1,6 +1,7 @@
 package it.halb.roboapp.ui.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.button.MaterialButtonToggleGroup;
+
+import it.halb.roboapp.R;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
 
 public class CreateRegattaFragment extends Fragment {
+
+    private String name;
+
+    private String courseAxis;
+
+    private String courseLength;
+
+    private String startLineLength;
     private FragmentCreateRegattaBinding binding;
+
+    private MaterialButtonToggleGroup regattaTypeSegmentedButton;
 
     @Nullable
     @Override
@@ -28,6 +42,21 @@ public class CreateRegattaFragment extends Fragment {
         CreateRegattaViewModel model = new ViewModelProvider(this).get(CreateRegattaViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setCreateRegattaViewModel(model);
+
+        name = binding.textInputRegattaName.getEditText().getText().toString();
+        courseAxis = binding.textInputRegattaCourseAxis.getEditText().getText().toString();
+        courseLength = binding.textInputRegattaCourseLength.getEditText().getText().toString();
+        startLineLength = binding.textInputRegattaStartLineLength.getEditText().getText().toString();
+        regattaTypeSegmentedButton = binding.toggleButton;
+
+        regattaTypeSegmentedButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
+            if (isChecked) {
+                Log.d("CreateRegattaFragment", "onViewCreated: " + checkedId);
+                model.onRegattaTypeChanged(group.indexOfChild(view.findViewById(checkedId)));
+            }
+        });
+
+
     }
 }
 

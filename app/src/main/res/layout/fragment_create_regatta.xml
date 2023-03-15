@@ -9,7 +9,6 @@
             type="it.halb.roboapp.ui.main.CreateRegattaViewModel" />
     </data>
 
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -47,7 +46,7 @@
                         android:id="@+id/textInputRegattaName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
                         android:hint="@string/textfield_hint_regatta_name"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaCourseAxis"
@@ -66,7 +65,7 @@
                         android:id="@+id/textInputRegattaCourseAxis"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
                         android:hint="@string/textfield_hint_regatta_course_axis"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaCourseLength"
@@ -76,7 +75,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="number"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +84,7 @@
                         android:id="@+id/textInputRegattaCourseLength"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
                         android:hint="@string/textfield_hint_regatta_course_length"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaStartLineLength"
@@ -95,7 +94,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="numberDecimal"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +103,7 @@
                         android:id="@+id/textInputRegattaStartLineLength"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
                         android:hint="@string/textfield_hint_regatta_start_line_length"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/toggleButton"
@@ -114,7 +113,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="numberDecimal"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -123,7 +122,10 @@
                         android:id="@+id/toggleButton"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        app:singleSelection="true"
+                        app:selectionRequired="true"
+                        app:checkedButton="@+id/buttonStick"
                         app:layout_constraintBottom_toTopOf="@+id/materialSwitchStacchetto"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent">
@@ -150,7 +152,8 @@
                         android:layout_height="match_parent"
                         android:checked="true"
                         android:text="@string/materialSwitch_stacchetto"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:onClick="@{() -> createRegattaViewModel.setStacchetto()}"
                         app:switchPadding="256dp"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaStacchettoDistance"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -160,7 +163,8 @@
                         android:id="@+id/textInputRegattaStacchettoDistance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:enabled="@{createRegattaViewModel.enableStacchettoDistance}"
                         android:hint="@string/textfield_hint_regatta_stacchetto_distance"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/materialSwitchBolina"
@@ -170,7 +174,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="number"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -181,7 +185,8 @@
                         android:layout_height="match_parent"
                         android:checked="true"
                         android:text="@string/materialSwitch_bolina"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:onClick="@{() -> createRegattaViewModel.setBolina()}"
                         app:switchPadding="288dp"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaBolinaDistance"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -191,7 +196,8 @@
                         android:id="@+id/textInputRegattaBolinaDistance"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:enabled="@{createRegattaViewModel.enableBolinaDistance}"
                         android:hint="@string/textfield_hint_regatta_bolina_distance"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/textInputRegattaBuoyStern"
@@ -201,7 +207,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="text"
+                            android:inputType="number"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -210,7 +216,8 @@
                         android:id="@+id/textInputRegattaBuoyStern"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="24dp"
+                        android:layout_marginBottom="8dp"
+                        android:enabled="@{createRegattaViewModel.enableBuoyStern}"
                         android:hint="@string/textfield_hint_regatta_buoy_stern"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
