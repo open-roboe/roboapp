@@ -61,7 +61,7 @@ public class PulsanteViewModel extends AndroidViewModel {
 Il costruttore per ora è vuoto, ma lo teniamo. Lo useremo quando servirà comunicare con le repository.
 
 
-### View
+### View (Anche chiamata "layout xml")
 
 In questo esempio non ha importanza il design della view, vogliamo solamente un pulsante. Normalmente però il design da implementare è definito in Figma, e serve seguire i passaggi della [Guida per il design](./view-design.it.md)
 
@@ -84,22 +84,15 @@ Iniziamo col definire un layout vuoto, in un file `fragment_pulsante.xml`
         
         <!-- Metti qui il tuo layout -->
         
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 
 ```
 
 Questo layout è particolare: tutto è contenuto dentro un tag `<layout>`, che serve ad attivare il [databinding](https://developer.android.com/topic/libraries/data-binding). 
-Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel che permette di accedere ai dati del nostro viewModel
+Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel che permette di accedere ai dati del nostro viewModel. 
 
-```xml
-    <data>
-        <variable
-            name="pulsanteViewModel"
-            type="it.halb.roboapp.ui.main.PulsanteViewModel" />
-    </data>
- ```
+
  
  Ora modifichiamo il nostro layout per aggiungere una textiview e un pulsante che utilizzano databinding
  

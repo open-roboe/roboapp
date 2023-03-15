@@ -34,5 +34,14 @@
         <action
             android:id="@+id/action_createRegattaFragment_to_loadFragment"
             app:destination="@id/loadFragment" />
+        <action
+            android:id="@+id/action_loadFragment_to_mainMapFragment"
+            app:destination="@id/mainMapFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/mainMapFragment"
+        android:name="it.halb.roboapp.ui.main.MainMapFragment"
+        android:label="fragment_main_map"
+        tools:layout="@layout/fragment_main_map" />
+
 </navigation>

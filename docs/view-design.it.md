@@ -44,6 +44,8 @@ Altrimenti, si può consultare la documentazione, tramite questa tarantella:
 - Usare la guida e gli esempi nella documentazione MDC-Android per implementare l'elemento in android studio. Nota che alcuni elementi non sono supportati dala nostra versione, e semplicemente non possono essere usati
 
 
+> Attenzione: La documentazione che segue è ancora in lavorazione
+
 ## elementi di ui complessi
 
 Quando si implementa un design la maggior parte del tempo è spesa a capire come
