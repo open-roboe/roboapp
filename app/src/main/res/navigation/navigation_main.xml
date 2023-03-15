@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/mainMapFragment"
-        android:name="it.halb.roboapp.ui.main.MainMapFragment"
+        android:name="it.halb.roboapp.ui.main.MainMapActivity"
         android:label="fragment_main_map"
         tools:layout="@layout/fragment_main_map" />
 

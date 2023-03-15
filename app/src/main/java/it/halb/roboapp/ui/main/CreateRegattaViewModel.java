@@ -28,10 +28,6 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     private final String TAG = CreateRegattaViewModel.class.getSimpleName();
 
-    public LiveData<String> getRegattaType() {
-        return regattaType;
-    }
-
     public LiveData<Boolean> getEnableStacchettoDistance() {
         return enableStacchettoDistance;
     }
