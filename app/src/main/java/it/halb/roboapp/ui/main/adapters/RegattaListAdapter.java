@@ -1,4 +1,4 @@
-package it.halb.roboapp.ui.main;
+package it.halb.roboapp.ui.main.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;

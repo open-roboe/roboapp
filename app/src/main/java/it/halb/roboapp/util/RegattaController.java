@@ -46,11 +46,7 @@ public class RegattaController {
         }
         return instance;
     }
-
     public void setCourse() {
-
-
-
         Marker juryMark = map.addMarker(new MarkerOptions()
                 .position(regatta.getValue().getPosition())
                 .title("Jury")
@@ -106,21 +102,10 @@ public class RegattaController {
             map.addPolyline(opt);
         }
 
-
     }
 
     public void setMap(GoogleMap map) {
         this.map = map;
     }
-
-    public void setRegatta(MutableLiveData<Regatta> regatta) {
-        this.regatta = regatta;
-    }
-
-    public void setBuoys(MutableLiveData<List<Buoy>> buoys) {
-        this.buoys = buoys;
-    }
-
-
 
 }
