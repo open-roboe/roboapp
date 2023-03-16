@@ -12,11 +12,12 @@ import androidx.room.RoomDatabase;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@androidx.room.Database(entities = {Account.class, Regatta.class}, version= ROBOAPP_DATABASE_VERSION)
+@androidx.room.Database(entities = {Account.class, Regatta.class,Buoy.class}, version= ROBOAPP_DATABASE_VERSION)
 public abstract class Database extends RoomDatabase {
     private static Database instance;
     public abstract AccountDao accountDao();
     public abstract RegattaDao regattaDao();
+    public abstract BuoyDao buoyDao();
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);

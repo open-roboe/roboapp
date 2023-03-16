@@ -10,18 +10,16 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface RegattaDao {
+public interface BuoyDao {
     @Insert
-    void insert(Regatta regatta);
+    void insert(Buoy buoy);
 
     @Update
-    void update(Regatta regatta);
+    void update(Buoy buoy);
 
     @Delete
-    void delete(Regatta regatta);
+    void delete(Buoy buoy);
 
-    @Query("SELECT * FROM regatta_table LIMIT 50")
-    LiveData<List<Regatta>> getAllRegattas();
-
-
+    @Query("SELECT * FROM buoy_table where regattaName = :regattaName")
+    LiveData<List<Buoy>> getBouy(String regattaName);
 }
