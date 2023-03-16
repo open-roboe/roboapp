@@ -34,5 +34,9 @@
     <string name="map">Mappa</string>
     <string name="buoy">Boe</string>
     <string name="robuoy">Roboe</string>
-    <string name="Boat">Barche</string>
+    <string name="Boat">Boats</string>
+    <string name="click_on_boats">Click on an element to navigate to it</string>
+    <string name="menu_boats">Menù boats</string>
+    <string name="first_item_menu_boats">First item menu boats</string>
+    <string name="second_item_menu_boats">Second item menu boats</string>
 </resources>
