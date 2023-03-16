@@ -1,22 +1,22 @@
 package it.halb.roboapp.ui.main;
 
 import android.app.Application;
-
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
+import java.util.List;
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
 
-import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class BoatInfoViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<Regatta> boats = new MutableLiveData<>();
+    private final LiveData<List<Boat>> boats = new LiveData<List<Boat>>() {};
 
     public BoatInfoViewModel(@NonNull Application application) {
         super(application);
     }
 
-    public MutableLiveData<Regatta> getBoats() {
+    public LiveData<List<Boat>> getBoats() {
         return boats;
     }
 
