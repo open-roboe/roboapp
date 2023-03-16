@@ -22,4 +22,6 @@ public interface RegattaDao {
 
     @Query("SELECT * FROM regatta_table LIMIT 50")
     LiveData<List<Regatta>> getAllRegattas();
+
+
 }
