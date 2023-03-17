@@ -52,4 +52,5 @@
     <string name="buoy">Boe</string>
     <string name="robuoy">Roboe</string>
     <string name="Boat">Assistenza</string>
+    <string name="fragment_create_regatta_button">create</string>
 </resources>

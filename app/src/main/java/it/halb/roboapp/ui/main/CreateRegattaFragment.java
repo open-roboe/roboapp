@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
-import it.halb.roboapp.R;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
 
 public class CreateRegattaFragment extends Fragment {
@@ -28,6 +28,8 @@ public class CreateRegattaFragment extends Fragment {
     private FragmentCreateRegattaBinding binding;
 
     private MaterialButtonToggleGroup regattaTypeSegmentedButton;
+
+    private Button createRegattaButton;
 
     @Nullable
     @Override
@@ -48,12 +50,17 @@ public class CreateRegattaFragment extends Fragment {
         courseLength = binding.textInputRegattaCourseLength.getEditText().getText().toString();
         startLineLength = binding.textInputRegattaStartLineLength.getEditText().getText().toString();
         regattaTypeSegmentedButton = binding.toggleButton;
+        createRegattaButton = binding.buttonCreateRegatta;
 
         regattaTypeSegmentedButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
                 Log.d("CreateRegattaFragment", "onViewCreated: " + checkedId);
                 model.onRegattaTypeChanged(group.indexOfChild(view.findViewById(checkedId)));
             }
+        });
+
+        createRegattaButton.setOnClickListener(v -> {
+            model.createRegatta(name, Integer.parseInt(courseAxis), Double.parseDouble(courseLength), Double.parseDouble(startLineLength));
         });
 
 

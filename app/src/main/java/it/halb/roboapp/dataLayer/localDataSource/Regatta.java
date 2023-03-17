@@ -49,6 +49,23 @@ public class Regatta {
         this.gate = gate;
     }
 
+    public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
+                   double startLineLen, double breakDistance, double courseLength,
+                   double secondMarkDistance, boolean bottonBuoy, boolean gate, double longitude, double latitude) {
+        this.name = name;
+        this.type = type;
+        this.creationDate = creationDate;
+        this.windDirection = windDirection;
+        this.startLineLen = startLineLen;
+        this.breakDistance = breakDistance;
+        this.courseLength = courseLength;
+        this.secondMarkDistance = secondMarkDistance;
+        this.bottonBuoy = bottonBuoy;
+        this.gate = gate;
+        this.longitude = longitude;
+        this.latitude = latitude;
+    }
+
     @Ignore
     public Regatta(@NonNull String name, String type, int creationDate) {
         this.name = name;

@@ -12,6 +12,10 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
+import java.util.Date;
+
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+
 public class CreateRegattaViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> regattaType = new MutableLiveData<>("stick");
@@ -78,5 +82,9 @@ public class CreateRegattaViewModel extends AndroidViewModel {
             enableBolinaDistance.setValue(false);
         }
         Log.d(TAG, "setBolinaNew: " + isBolinaChecked.getValue());
+    }
+
+    public void createRegatta(String name, int courseAxis, double courseLength, double startLineLength) {
+        Regatta regatta = new Regatta(name, regattaType.getValue(), (int)(new Date().getTime()), courseAxis, courseLength, startLineLength, 0, 0);
     }
 }

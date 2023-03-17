@@ -175,6 +175,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
+                            android:onTextChanged="@{() -> createRegattaViewModel.onStacchettoDistanceValueChanged()}"
+                            android:text="@{createRegattaViewModel.stacchettoDistance}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -221,7 +223,7 @@
                         android:hint="@string/textfield_hint_regatta_buoy_stern"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/buttonCreateRegatta"
                         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                         <AutoCompleteTextView
@@ -232,6 +234,19 @@
                             />
 
                     </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/buttonCreateRegatta"
+                        style="@style/Widget.Material3.Button.TonalButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="24dp"
+                        android:text="@string/fragment_create_regatta_button"
+                        android:clickable="@{}"
+                        android:enabled="@{}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
