@@ -1,6 +1,7 @@
 package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -85,12 +86,13 @@ public class RunningRegattaRepository {
      *
      * @param name the name id of the regatta you want to run
      */
-    public void DeclareRegattaToRun(@NonNull String name){
+    public void declareRegattaToRun(@NonNull String name){
         //mock
         regatta = regattaDao.getRegatta(name);
         buoyList = buoyDao.getBuoy(name);
         boatList = null;
         roboaList = null;
+        Log.d("RUNNINGREGATTA", "declared id: "+ name);
     }
 
     /**
@@ -98,7 +100,7 @@ public class RunningRegattaRepository {
      * called by declareRegattaToRun()
      *
      */
-    private void ResetRunningRegatta(){
+    private void resetRunningRegatta(){
 
     }
 
@@ -107,6 +109,7 @@ public class RunningRegattaRepository {
      * It updates the running regatta information.
      */
     public void poll(Double lat, Double lon){
+        Log.d("RUNNINGREGATTA", "received lat: "+ lat + "lon: "+ lon);
         //mock update only status
     }
 
