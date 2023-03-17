@@ -15,6 +15,22 @@ public class Boat {
     private double latitude;
     private double longitude;
 
+    public void setUsername(@NonNull String username) {
+        this.username = username;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @NonNull
     public String getUsername() {
         return username;

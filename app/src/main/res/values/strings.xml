@@ -35,4 +35,8 @@
     <string name="buoy">Boe</string>
     <string name="robuoy">Roboe</string>
     <string name="Boat">Assistenza</string>
+    <string name="first_item_menu_boats">item1</string>
+    <string name="second_item_menu_boats">item2</string>
+    <string name="menu_boats">menu</string>
+    <string name="click_on_boats">DIO Cane nico</string>
 </resources>

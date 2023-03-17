@@ -4,12 +4,14 @@ import static it.halb.roboapp.util.Constants.NOTIFICATION_CHANNEL_ID;
 import static it.halb.roboapp.util.Constants.NOTIFICATION_ID;
 import static it.halb.roboapp.util.Constants.POLLING_DELAY_MILLIS;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -19,9 +21,15 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.Task;
+
 public class RunningRegattaService extends Service {
 
     private Handler pollingHandler;
+    private FusedLocationProviderClient fusedLocationProviderClient;
+
 
     /**
      * This runnable is the core of the service:
@@ -34,7 +42,6 @@ public class RunningRegattaService extends Service {
         public void run() {
             Log.d("POLLING", "poll!");
             Application application = getApplication();
-            //TODO init repository, (probably outside of here), and call repository.poll()
 
             pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
         }
@@ -90,7 +97,4 @@ public class RunningRegattaService extends Service {
             pollingHandler.postDelayed(pollingRunnable, POLLING_DELAY_MILLIS);
         }
     }
-
-
-
 }

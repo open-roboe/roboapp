@@ -85,4 +85,7 @@ dependencies {
     implementation "io.gsonfire:gson-fire:$json_fire_version"
     implementation "jakarta.annotation:jakarta.annotation-api:$jakarta_annotation_version"
 
+    //position
+    implementation 'com.google.android.gms:play-services-location:20.0.0'
+
 }
