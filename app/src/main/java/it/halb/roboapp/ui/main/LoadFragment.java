@@ -51,8 +51,9 @@ public class LoadFragment extends Fragment {
                 this,
                 //permissions granted
                 () ->{
-                    model.declareRegattaToRun(regattaName);
-                    startRunningRegattaService();
+                    model.declareRegattaToRun(regattaName,
+                            v -> startRunningRegattaService()
+                            );
                 },
                 //permission denied
                 () -> {

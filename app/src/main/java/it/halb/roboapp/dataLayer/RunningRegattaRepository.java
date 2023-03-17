@@ -86,13 +86,20 @@ public class RunningRegattaRepository {
      *
      * @param name the name id of the regatta you want to run
      */
-    public void declareRegattaToRun(@NonNull String name){
+    public void declareRegattaToRun(@NonNull String name,
+                                    SuccessCallback<Void> success, ErrorCallback error){
         //mock
         regatta = regattaDao.getRegatta(name);
         buoyList = buoyDao.getBuoy(name);
         boatList = null;
         roboaList = null;
         Log.d("RUNNINGREGATTA", "declared id: "+ name);
+        //TODO:
+        // make api request to specific regatta, same request that poll() will make.
+        // in case of errors call errorcallback
+        // in case of success call successcallback. loadFragment will start the service
+        success.success(null);
+
     }
 
     /**
