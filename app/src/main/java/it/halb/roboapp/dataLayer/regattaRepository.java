@@ -75,11 +75,15 @@ public class regattaRepository {
      * In case of error the local copy will be automatically deleted, and th ErrorCallback will execute.
      */
     public void insertRegatta(
-            Regatta regatta, List<Buoy> buoys,
+            Regatta regatta,
+            List<Buoy> buoys,
             SuccessCallback<Void> successCallback,
             ErrorCallback errorCallback
     ){
         //mock
-        Database.databaseWriteExecutor.execute(() -> regattaDao.insert(regatta));
+        Database.databaseWriteExecutor.execute(() ->{
+            regattaDao.insert(regatta);
+            //TODO: insert all buoys. requires DAO method
+        });
     }
 }
