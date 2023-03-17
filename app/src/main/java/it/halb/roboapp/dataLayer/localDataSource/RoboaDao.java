@@ -1,12 +1,15 @@
 package it.halb.roboapp.dataLayer.localDataSource;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import java.util.List;
 
+
+@Dao
 public interface RoboaDao {
 
     @Insert
@@ -22,5 +25,5 @@ public interface RoboaDao {
     LiveData<List<Roboa>> getAllRoboe();
 
     @Query("SELECT * FROM roboa_table where id = :id")
-    LiveData<Roboa> getBouy(int id);
+    LiveData<Roboa> getBuoy(int id);
 }

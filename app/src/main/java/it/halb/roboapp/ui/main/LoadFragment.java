@@ -41,11 +41,6 @@ public class LoadFragment extends Fragment {
         //require regattaName parameter, that is passed with every navigation
         String regattaName = LoadFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
 
-        //TODO: call declareRegattaToRun() from here,
-        // then on success call the permissionmanager code
-        // https://developer.android.com/guide/navigation/navigation-pass-data#groovy
-        // right now, people must remember to call declareRegattaToRun before navigating here
-
         //viewModel initialization
         LoadViewModel model = new ViewModelProvider(this).get(LoadViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
@@ -55,7 +50,11 @@ public class LoadFragment extends Fragment {
         Permissions.manageLocationPermissions(
                 this,
                 //permissions granted
-                this::startRunningRegattaService,
+                () ->{
+                    model.declareRegattaToRun(regattaName,
+                            v -> startRunningRegattaService()
+                            );
+                },
                 //permission denied
                 () -> {
                     binding.permissionsLayout.setVisibility(View.VISIBLE);

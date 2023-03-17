@@ -114,6 +114,7 @@
             android:text="@string/fab_new_regatta"
             app:icon="@drawable/baseline_add_24"
             app:srcCompat="@drawable/baseline_add_24" />
+        <!--android:onClick="@{() -> regattaListViewModel.fakeInsert()}"-->
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

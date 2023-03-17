@@ -8,6 +8,7 @@ import java.util.List;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
@@ -27,6 +28,7 @@ public class regattaRepository {
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
+
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
         //init data used by remote data source
@@ -69,11 +71,19 @@ public class regattaRepository {
     }
 
     /**
-     * TODO
-     * parameters: (Regatta, List<Buoy> Jury, successCallback, errorCallback)
+     * Create a regatta, both locally and remotely in the api server.
+     * In case of error the local copy will be automatically deleted, and th ErrorCallback will execute.
      */
-    public void insertRegatta(Regatta regatta){
+    public void insertRegatta(
+            Regatta regatta,
+            List<Buoy> buoys,
+            SuccessCallback<Void> successCallback,
+            ErrorCallback errorCallback
+    ){
         //mock
-        Database.databaseWriteExecutor.execute(() -> regattaDao.insert(regatta));
+        Database.databaseWriteExecutor.execute(() ->{
+            regattaDao.insert(regatta);
+            //TODO: insert all buoys. requires DAO method
+        });
     }
 }

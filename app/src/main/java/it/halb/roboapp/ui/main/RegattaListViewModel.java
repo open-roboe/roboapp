@@ -43,10 +43,10 @@ public class RegattaListViewModel extends AndroidViewModel {
         );
     }
 
-    public void fakeInsert(){
+   /* public void fakeInsert(){
         Log.d("FAKEINSERT", "cliecked");
         Random rand = new Random();
         String name = "name" + String.valueOf(rand.nextInt());
         regattaRepository.insertRegatta(new Regatta(name, "type", 123));
-    }
+    }*/
 }

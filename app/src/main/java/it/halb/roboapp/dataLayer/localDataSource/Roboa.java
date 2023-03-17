@@ -70,4 +70,44 @@ public class Roboa {
     {
         return new LatLng(this.getLatitudeDestination(),this.getLongitudeDestination());
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setEta(double eta) {
+        this.eta = eta;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    public void setLatitudeDestination(double latitudeDestination) {
+        this.latitudeDestination = latitudeDestination;
+    }
+
+    public void setLongitudeDestination(double longitudeDestination) {
+        this.longitudeDestination = longitudeDestination;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
 }
