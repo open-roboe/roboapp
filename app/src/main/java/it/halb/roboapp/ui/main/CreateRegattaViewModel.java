@@ -22,9 +22,13 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     private MutableLiveData<Boolean> isStacchettoChecked = new MutableLiveData<>(true);
 
+    private MutableLiveData<String> stacchettoDistance = new MutableLiveData<>("");
+
     private MutableLiveData<Boolean> enableStacchettoDistance = new MutableLiveData<>(true);
 
     private MutableLiveData<Boolean> isBolinaChecked = new MutableLiveData<>(true);
+
+    private MutableLiveData<String> bolinaDistance = new MutableLiveData<>("");
 
     private MutableLiveData<Boolean> enableBolinaDistance = new MutableLiveData<>(true);
 
@@ -36,8 +40,16 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         return enableStacchettoDistance;
     }
 
+    public LiveData<String> getStacchettoDistance() {
+        return stacchettoDistance;
+    }
+
     public LiveData<Boolean> getEnableBolinaDistance() {
         return enableBolinaDistance;
+    }
+
+    public LiveData<String> getBolinaDistance() {
+        return bolinaDistance;
     }
 
     public LiveData<Boolean> getEnableBuoyStern() {
@@ -68,8 +80,13 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         } else {
             isStacchettoChecked.setValue(false);
             enableStacchettoDistance.setValue(false);
+            onStacchettoDistanceValueChanged("0", 0, 0, 0);
         }
         Log.d(TAG, "setStacchettoNew: " + isStacchettoChecked.getValue());
+    }
+
+    public void onStacchettoDistanceValueChanged(CharSequence s, int start, int before, int count) {
+        stacchettoDistance.setValue(s.toString());
     }
 
     public void setBolina() {
@@ -80,11 +97,20 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         } else {
             isBolinaChecked.setValue(false);
             enableBolinaDistance.setValue(false);
+            onBolinaDistanceValueChanged("0", 0, 0, 0);
         }
         Log.d(TAG, "setBolinaNew: " + isBolinaChecked.getValue());
     }
 
+    public void onBolinaDistanceValueChanged(CharSequence s, int start, int before, int count) {
+        bolinaDistance.setValue(s.toString());
+    }
+
     public void createRegatta(String name, int courseAxis, double courseLength, double startLineLength) {
-        Regatta regatta = new Regatta(name, regattaType.getValue(), (int)(new Date().getTime()), courseAxis, courseLength, startLineLength, 0, 0);
+        if (enableBuoyStern.getValue()== false) {
+            boolean bottonBuoy = false;
+            boolean gate = false;
+        }
+        //Regatta regatta = new Regatta(name, regattaType.getValue(), (int)(new Date().getTime()), courseAxis, startLineLength, stacchettoDistance.getValue(), courseLength, bolinaDistance.getValue(), 0, 0);
     }
 }

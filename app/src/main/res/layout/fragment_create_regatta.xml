@@ -210,6 +210,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="number"
+                            android:onTextChanged="@{() -> createRegattaViewModel.onBolinaDistanceValueChanged()}"
+                            android:text="@{createRegattaViewModel.bolinaDistance}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -242,8 +244,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="24dp"
                         android:text="@string/fragment_create_regatta_button"
-                        android:clickable="@{}"
-                        android:enabled="@{}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
