@@ -22,5 +22,5 @@ public interface RoboaDao {
     LiveData<List<Roboa>> getAllRoboe();
 
     @Query("SELECT * FROM roboa_table where id = :id")
-    LiveData<Roboa> getBouy(int id);
+    LiveData<Roboa> getBuoy(int id);
 }

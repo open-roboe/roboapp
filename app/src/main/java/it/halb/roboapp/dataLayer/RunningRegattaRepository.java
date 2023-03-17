@@ -1,30 +1,70 @@
 package it.halb.roboapp.dataLayer;
 
+import android.app.Application;
+
+import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+
+import java.util.List;
+
+import it.halb.roboapp.dataLayer.localDataSource.Account;
+import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
+import it.halb.roboapp.dataLayer.localDataSource.BoatDao;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
+import it.halb.roboapp.dataLayer.localDataSource.BuoyDao;
+import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
+import it.halb.roboapp.dataLayer.localDataSource.Roboa;
+import it.halb.roboapp.dataLayer.localDataSource.RoboaDao;
 
 public class RunningRegattaRepository {
+
+    private final AccountDao accountDao;
+    private final RegattaDao regattaDao;
+
+    private final BuoyDao buoyDao;
+    private final BoatDao boatDao;
+    private final RoboaDao roboaDao;
+
+    private final LiveData<Account> account;
+    private LiveData<Regatta> regatta;
+
+    private LiveData<List<Buoy>> buoyList;
+    private LiveData<List<Boat>> boatList;
+    private LiveData<List<Roboa>> roboaList;
+
+
+    public RunningRegattaRepository(Application application){
+        //init local datasource
+        Database database = Database.getInstance(application);
+        accountDao = database.accountDao();
+        regattaDao = database.regattaDao();
+        buoyDao = database.buoyDao();
+        boatDao = database.BoatDao();
+        roboaDao = database.RoboaDao();
+
+        account = accountDao.getAccount();
+    }
 
     /**
      * Return the regatta currently running
      */
-    public void getRegatta(){
-
+    public LiveData<Regatta> getRegatta(){
+        return regatta;
     }
 
-    public void getAllBuoys(){
-
+    public LiveData<List<Buoy>> getAllBuoys(){
+        return buoyList;
     }
 
-    public void getAllBoats(){
-
+    public LiveData<List<Boat>> getAllBoats(){
+        return boatList;
     }
 
-    public void getJury(){
-
-    }
-
-    public void getAllRoboas(){
-
+    public LiveData<List<Roboa>> getAllRoboas(){
+        return roboaList;
     }
 
     public void getCurrentPosition(){
@@ -43,10 +83,14 @@ public class RunningRegattaRepository {
      *
      * If this operation is successful, you can actually run the regatta by launching the RunningRegattaService
      *
-     * @param regatta the regatta that you want to run
+     * @param name the name id of the regatta you want to run
      */
-    public void DeclareRegattaToRun(Regatta regatta){
+    public void DeclareRegattaToRun(@NonNull String name){
         //mock
+        regatta = regattaDao.getRegatta(name);
+        buoyList = buoyDao.getBuoy(name);
+        boatList = null;
+        roboaList = null;
     }
 
     /**
@@ -62,7 +106,7 @@ public class RunningRegattaRepository {
      * This method is called periodically by the RunningRegattaService.
      * It updates the running regatta information.
      */
-    public void poll(){
+    public void poll(Double lat, Double lon){
         //mock update only status
     }
 
