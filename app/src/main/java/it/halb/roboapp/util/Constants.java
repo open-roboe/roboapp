@@ -17,4 +17,21 @@ public class Constants {
 
     public static final int POLLING_DELAY_MILLIS = 5 * 1000;
 
+    //Buoys Type
+
+    public static final String GateMarkDx = "GATE MARK DX";
+    public static final String GateMarkSx = "GATE MARK SX";
+    public static final String BottomMark = "BOTTOM MARK";
+    public static final String BreakMark = "BREAK MARK";
+    public static final String SecondUpMark = "SECOND UP WIND MARK";
+    public static final String UpMark = "UP WIND MARK";
+    public static final String StartMark = "START MARK";
+
+    public static final String MidLineStart = "MID LINE START";
+
+    public static final String TriangleMark = "TRIANGLE MARK";
+
+
+
+
 }

@@ -27,6 +27,7 @@ import com.google.android.material.snackbar.Snackbar;
 import it.halb.roboapp.R;
 import it.halb.roboapp.RunningRegattaService;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
+import it.halb.roboapp.ui.main.adapters.RegattaListAdapter;
 
 public class RegattaListFragment extends Fragment {
     private FragmentRegattaListBinding binding;
