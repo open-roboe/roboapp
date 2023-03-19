@@ -19,11 +19,11 @@ public interface RoboaDao {
     void update(Roboa roboa);
 
     @Query("DELETE FROM roboa_table")
-    void delete();
+    void deleteAll();
 
     @Query("SELECT * FROM roboa_table LIMIT 50")
-    LiveData<List<Roboa>> getAllRoboe();
+    LiveData<List<Roboa>> getAll();
 
     @Query("SELECT * FROM roboa_table where id = :id")
-    LiveData<Roboa> getBuoy(int id);
+    LiveData<Roboa> getRoboa(int id);
 }
