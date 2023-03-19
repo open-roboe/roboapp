@@ -1,12 +1,14 @@
 package it.halb.roboapp.dataLayer.localDataSource;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import it.halb.roboapp.R;
 
+@Dao
 public interface RunningStatusDao {
     @Insert
     void insert(RunningStatus runningStatus);

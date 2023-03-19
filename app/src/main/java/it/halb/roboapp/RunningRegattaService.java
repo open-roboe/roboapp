@@ -29,7 +29,6 @@ import it.halb.roboapp.util.Permissions;
 public class RunningRegattaService extends Service {
 
     private FusedLocationProviderClient fusedLocationClient;
-
     private Handler pollingHandler;
 
     /**
@@ -46,6 +45,7 @@ public class RunningRegattaService extends Service {
             Application application = getApplication();
             RunningRegattaRepository repository = new RunningRegattaRepository(application);
 
+            //fetch the device location and call the repository
             if( ! Permissions.hasLocationPermissions(application)){
                 repository.setError(getString(R.string.running_regatta_error_location_permission));
             }else{
@@ -69,7 +69,6 @@ public class RunningRegattaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

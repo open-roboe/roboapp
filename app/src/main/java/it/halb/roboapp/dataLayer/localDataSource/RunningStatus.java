@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.PrimaryKey;
 
 @Entity(tableName = "running_status_table")
 public class RunningStatus {
@@ -13,9 +14,11 @@ public class RunningStatus {
     private double lon;
     private int lastUpdate;
 
-    private String runningRegattaName;
+    @PrimaryKey
+    @NonNull
+    private final String runningRegattaName;
 
-    public RunningStatus(String runningRegattaName) {
+    public RunningStatus(@NonNull String runningRegattaName) {
         this.runningRegattaName = runningRegattaName;
     }
 
@@ -52,11 +55,9 @@ public class RunningStatus {
         this.lastUpdate = lastUpdate;
     }
 
+    @NonNull
     public String getRunningRegattaName() {
         return runningRegattaName;
     }
 
-    public void setRunningRegattaName(String runningRegattaName) {
-        this.runningRegattaName = runningRegattaName;
-    }
 }
