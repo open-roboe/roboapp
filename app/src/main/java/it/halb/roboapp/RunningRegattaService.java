@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -28,6 +29,7 @@ import it.halb.roboapp.util.Permissions;
 
 public class RunningRegattaService extends Service {
 
+    private static RunningRegattaService instance = null;
     private FusedLocationProviderClient fusedLocationClient;
     private Handler pollingHandler;
 
@@ -58,8 +60,9 @@ public class RunningRegattaService extends Service {
                                 repository.setError(getString(R.string.running_regatta_error_location_permission)));
             }
 
-            //schedule the next call of run()
-            pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
+            //schedule the next call of run(), if there is a running instance of the service
+            if(instance != null)
+                pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
         }
     };
 
@@ -114,5 +117,18 @@ public class RunningRegattaService extends Service {
             //initialize the location service
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        instance = null;
+        pollingHandler.removeCallbacks(pollingRunnable);
     }
 }
