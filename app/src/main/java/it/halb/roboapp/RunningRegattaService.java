@@ -50,8 +50,10 @@ public class RunningRegattaService extends Service {
                 repository.setError(getString(R.string.running_regatta_error_location_permission));
             }else{
                 fusedLocationClient.getCurrentLocation(LOCATION_PRIORITY, null)
-                        .addOnSuccessListener(location ->
-                                repository.poll(location.getLatitude(), location.getLongitude()))
+                        .addOnSuccessListener(location -> {
+                            if(location != null)
+                                repository.poll(location.getLatitude(), location.getLongitude());
+                        })
                         .addOnFailureListener(e ->
                                 repository.setError(getString(R.string.running_regatta_error_location_permission)));
             }

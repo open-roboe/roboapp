@@ -40,4 +40,5 @@
     <string name="menu_boats">menu</string>
     <string name="click_on_boats">DIO Cane nico</string>
     <string name="running_regatta_error_location_permission">Device location failed</string>
+    <string name="snackbar_info_swipe_to_delete_regatta">Swipe left to delete this regatta</string>
 </resources>
