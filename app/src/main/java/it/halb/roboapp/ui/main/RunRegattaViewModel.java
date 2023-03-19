@@ -4,14 +4,13 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import it.halb.roboapp.dataLayer.ErrorCallback;
 import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 
-public class LoadViewModel extends AndroidViewModel {
+public class RunRegattaViewModel extends AndroidViewModel {
     private final RunningRegattaRepository runningRegatta;
 
-    public LoadViewModel(@NonNull Application application) {
+    public RunRegattaViewModel(@NonNull Application application) {
         super(application);
         runningRegatta = new RunningRegattaRepository(application);
     }

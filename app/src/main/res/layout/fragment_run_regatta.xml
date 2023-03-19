@@ -5,7 +5,7 @@
     <data>
         <variable
             name="loadViewModel"
-            type="it.halb.roboapp.ui.main.LoadViewModel" />
+            type="it.halb.roboapp.ui.main.RunRegattaViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

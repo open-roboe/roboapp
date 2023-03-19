@@ -12,26 +12,25 @@
         tools:layout="@layout/fragment_regatta_list" >
         <action
             android:id="@+id/action_courseList_to_loadFragment"
-            app:destination="@id/loadFragment" />
+            app:destination="@id/runRegattaFragment" />
     </fragment>
     <fragment
-        android:id="@+id/loadFragment"
-        android:name="it.halb.roboapp.ui.main.LoadFragment"
-        tools:layout="@layout/fragment_load"
-        android:label="LoadFragment" >
+        android:id="@+id/runRegattaFragment"
+        android:name="it.halb.roboapp.ui.main.RunRegattaFragment"
+        tools:layout="@layout/fragment_run_regatta"
+        android:label="runRegattaFragment" >
         <argument
             android:name="runRegattaName"
             app:argType="string" />
         <action
             android:id="@+id/action_loadFragment_to_mainMapFragment"
-            app:popUpTo="@id/main_navigation"
-            app:popUpToInclusive="true"
-            app:destination="@id/mainMapFragment" />
+            app:popUpTo="@id/courseList"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
-        android:id="@+id/mainMapFragment"
-        android:name="it.halb.roboapp.ui.main.MainMapFragment"
-        android:label="fragment_main_map"
-        tools:layout="@layout/fragment_main_map" />
+        android:id="@+id/mapFragment"
+        android:name="it.halb.roboapp.ui.main.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" />
 
 </navigation>
