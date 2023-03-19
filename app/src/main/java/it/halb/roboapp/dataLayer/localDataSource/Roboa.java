@@ -5,6 +5,8 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Objects;
+
 @Entity(tableName = "Roboa_table")
 public class Roboa {
 
@@ -22,6 +24,11 @@ public class Roboa {
 
     public Roboa(int id) {
         this.id = id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, status, eta, timeStamp, latitude, longitude, latitudeDestination, longitudeDestination, isActive);
     }
 
     public boolean isActive() {
