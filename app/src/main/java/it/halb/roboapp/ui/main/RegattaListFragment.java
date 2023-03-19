@@ -54,24 +54,36 @@ public class RegattaListFragment extends Fragment {
 
         //viewmodel update listeners
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
-            //Toast.makeText(this.getContext(), "CHANGED", Toast.LENGTH_LONG).show();
-            adapter.submitList(regattas);
             Log.d("REGATTAS_OBSERVE", "changes!");
+            //update the list adapter
+            adapter.submitList(regattas);
+
+            //update placeholder visibility
+            binding.noRegattasPlaceholder.setVisibility(
+                    regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
+            );
         });
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
-            //test
-            NavHostFragment.findNavController(this).navigate(
-                    RegattaListFragmentDirections.actionCourseListToLoadFragment("name")
-            );
+            model.fakeInsert(name ->{
 
+                /*
+                NavHostFragment.findNavController(this).navigate(
+                        RegattaListFragmentDirections.actionCourseListToLoadFragment(name)
+                );
+                 */
+            });
+
+            /*
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
                     .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
                         model.testLogout();
                     })
                     .show();
+
+             */
         });
 
         // stop the followService, since we are not following any regatta
