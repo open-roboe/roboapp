@@ -20,8 +20,8 @@ public interface BoatDao {
     @Query("DELETE FROM boat_table")
     void delete();
 
-    @Query("SELECT * FROM Roboa_table LIMIT 50")
-    LiveData<List<Roboa>> getAllRoboe();
+    @Query("SELECT * FROM boat_table LIMIT 50")
+    LiveData<List<Boat>> getAllBoats();
 
 
 }

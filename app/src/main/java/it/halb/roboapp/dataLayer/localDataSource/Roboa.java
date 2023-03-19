@@ -9,7 +9,6 @@ import com.google.android.gms.maps.model.LatLng;
 public class Roboa {
 
     @PrimaryKey
-    @NonNull
     private int id;
     private String name;
     private String status;
@@ -20,6 +19,10 @@ public class Roboa {
     private double latitudeDestination;
     private double longitudeDestination;
     private boolean isActive;
+
+    public Roboa(int id) {
+        this.id = id;
+    }
 
     public boolean isActive() {
         return isActive;

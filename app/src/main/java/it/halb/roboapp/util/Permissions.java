@@ -24,6 +24,11 @@ public class Permissions {
         void run();
     }
 
+    private static final String[] PERMISSIONS = {
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+    };
+
     /**
      * Use this method before running any logic that requires access to the user location.
      *
@@ -32,12 +37,6 @@ public class Permissions {
      * @param deniedCallback callback that will run if the user denied the permissions
      */
     public static void manageLocationPermissions(Fragment fragment, GrantedCallback grantedCallback, DeniedCallback deniedCallback){
-        //the permissions we need
-        String[] PERMISSIONS = {
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-        };
-
         // Register the permissions callback, which handles the user's response to the system permissions dialog
         //https://stackoverflow.com/a/68347506/9169799
         ActivityResultLauncher<String[]> requestPermissionLauncher =
@@ -53,7 +52,7 @@ public class Permissions {
                 });
 
         //check if we have the permissions we need
-        if(Permissions.hasPermission(fragment.requireActivity(), PERMISSIONS)){
+        if(Permissions.hasLocationPermissions(fragment.requireActivity())){
             grantedCallback.run();
         }
         else{
@@ -62,7 +61,12 @@ public class Permissions {
         }
 
     }
-    private static boolean hasPermission(@NonNull Activity activity, @NonNull String... PERMISSIONS){
+
+    public static boolean hasLocationPermissions(Context activity){
+        return Permissions.hasPermission(activity, PERMISSIONS);
+    }
+
+    private static boolean hasPermission(@NonNull Context activity, @NonNull String... PERMISSIONS){
         for (String permission : PERMISSIONS) {
             if (ActivityCompat.checkSelfPermission(activity, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;

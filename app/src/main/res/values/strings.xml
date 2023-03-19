@@ -39,4 +39,5 @@
     <string name="second_item_menu_boats">item2</string>
     <string name="menu_boats">menu</string>
     <string name="click_on_boats">DIO Cane nico</string>
+    <string name="running_regatta_error_location_permission">Device location failed</string>
 </resources>

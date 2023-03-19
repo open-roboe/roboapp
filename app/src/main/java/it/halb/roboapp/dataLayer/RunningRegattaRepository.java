@@ -120,4 +120,10 @@ public class RunningRegattaRepository {
         //mock update only status
     }
 
+    public void setError(String error_code){
+        //mock
+        //TODO: create runningregatta retrofit model and Dao, containing:
+        //  currenterror, lastupdate, currentlan, currentlat
+    }
+
 }
