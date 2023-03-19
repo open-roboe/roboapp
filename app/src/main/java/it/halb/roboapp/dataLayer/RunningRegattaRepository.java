@@ -87,9 +87,21 @@ public class RunningRegattaRepository {
 
     public LiveData<RunningStatus> getStatus(){ return runningStatus; }
 
+    /**
+     * During its sync process, several things can go wrong.
+     * When something goes wrong it will update the error String livedata with an
+     * internationalized description of the error. Internationalized means that you can
+     * directly print it in the ui
+     *
+     * @return A string containing a localized description of an error
+     */
     public LiveData<String> getError(){
         return Transformations.map(runningStatus, RunningStatus::getError);
     }
+
+    /**
+     * @return the last time the app successfully synced state with the server
+     */
     public LiveData<Date> getLastUpdate(){
         return Transformations.map(runningStatus, r ->{
             return new Date(r.getLastUpdate());
@@ -104,6 +116,9 @@ public class RunningRegattaRepository {
         });
     }
 
+    /**
+     * @return true if the app managed to sync state with the server in the last few seconds
+     */
     public LiveData<Boolean> isInSync(){
         return Transformations.map(runningStatus, r ->{
             long now = System.currentTimeMillis()/1000;

@@ -1,7 +1,6 @@
 package it.halb.roboapp.util;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 
@@ -11,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import it.halb.roboapp.dataLayer.localDataSource.Database;
 
 public class Permissions {
 
@@ -30,7 +28,12 @@ public class Permissions {
     };
 
     /**
-     * Use this method before running any logic that requires access to the user location.
+     * Use this method from inside a fragment before running any logic that requires access to the user location.
+     * It will check for the correct permissions, and actively ask the user to grant them in case
+     * they are not set.
+     *
+     * If you are not in a fragment, you cannot generate the permission popup, and you are limited to passively
+     * checking permissions. You can do that with hasLocationPermissions()
      *
      * @param fragment a reference to the fragment that is calling this method
      * @param grantedCallback callback that will run if the user granted permissions
@@ -62,6 +65,14 @@ public class Permissions {
 
     }
 
+    /**
+     * Use this method before running any logic that requires access to the user location.
+     *
+     * If you are inside a fragment you should use manageLocationPermissions() instead, that
+     * Unlike this method will ask the user to grant the permissions in case they are not set.
+     *
+     * @return true if the app has location permissions
+     */
     public static boolean hasLocationPermissions(Context activity){
         return Permissions.hasPermission(activity, PERMISSIONS);
     }
