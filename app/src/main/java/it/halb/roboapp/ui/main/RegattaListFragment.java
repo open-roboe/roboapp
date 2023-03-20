@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
 
 import it.halb.roboapp.R;
@@ -64,8 +66,13 @@ public class RegattaListFragment extends Fragment {
                     regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
             );
             //update searchbar scroll
-            //TODO
-            //  https://stackoverflow.com/questions/71861633/android-how-to-programatically-add-applayout-scrollflags-scrollexituntilcoll
+            AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) binding.fakeSearchBar.getLayoutParams();
+            p.setScrollFlags(
+                    regattas.size() > 8 ?
+                    AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL :
+                    AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
+            );
+            binding.fakeSearchBar.setLayoutParams(p);
         });
 
         //temporary test
