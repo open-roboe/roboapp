@@ -7,17 +7,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Random;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
+import it.halb.roboapp.dataLayer.ErrorCallback;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.dataLayer.regattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListViewModel extends AndroidViewModel {
+
+    public boolean showSwipeHint = true;
 
     private final MutableLiveData<String> placeholderVisible = new MutableLiveData<>("VISIBLE");
     private final LiveData<List<Regatta>> allRegattas;
@@ -44,6 +46,12 @@ public class RegattaListViewModel extends AndroidViewModel {
                 data->{},
                 (code, detail)->{}
         );
+    }
+
+    public void refresh(SuccessCallback<Void> success, ErrorCallback error){
+        regattaRepository.loadAllRegattas(l -> {
+            success.success(null);
+        }, error);
     }
 
    public void fakeInsert(SuccessCallback<String> success){
