@@ -1,7 +1,5 @@
 package it.halb.roboapp.ui.main;
 
-import static it.halb.roboapp.R.string.snackbar_regatta_deleted_text;
-
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -26,8 +24,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.RunningRegattaService;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 import it.halb.roboapp.ui.main.adapters.RegattaListAdapter;
+import it.halb.roboapp.util.RecyclerItemClickListener;
 
 public class RegattaListFragment extends Fragment {
     private FragmentRegattaListBinding binding;
@@ -54,24 +54,29 @@ public class RegattaListFragment extends Fragment {
 
         //viewmodel update listeners
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
-            //Toast.makeText(this.getContext(), "CHANGED", Toast.LENGTH_LONG).show();
+            //update the list adapter
             adapter.submitList(regattas);
-            Log.d("REGATTAS_OBSERVE", "changes!");
+
+            //update placeholder visibility
+            binding.noRegattasPlaceholder.setVisibility(
+                    regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
+            );
         });
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
-            //test
-            NavHostFragment.findNavController(this).navigate(
-                    RegattaListFragmentDirections.actionCourseListToLoadFragment("name")
-            );
+            model.fakeInsert(name ->{
+            });
 
+            /*
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
                     .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
                         model.testLogout();
                     })
                     .show();
+
+             */
         });
 
         // stop the followService, since we are not following any regatta
@@ -81,6 +86,7 @@ public class RegattaListFragment extends Fragment {
         //recyclerview touch gestures
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT ) {
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -89,9 +95,8 @@ public class RegattaListFragment extends Fragment {
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
                 model.deleteRegatta(
-                        adapter.getRegattaAt( viewHolder.getAdapterPosition())
+                        adapter.getRegattaAt(viewHolder.getAdapterPosition())
                 );
-                //adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
             }
 
 
@@ -126,6 +131,28 @@ public class RegattaListFragment extends Fragment {
         }).attachToRecyclerView(binding.recyclerView);
 
 
+        //touch listener
+        binding.recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+            requireContext(), binding.recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Regatta regatta = adapter.getRegattaAt(position);
+                handleRegattaClick(regatta.getName());
+            }
 
+            @Override
+            public void onLongItemClick(View view, int position) {
+                Snackbar.make(view, R.string.snackbar_info_swipe_to_delete_regatta, Snackbar.LENGTH_SHORT)
+                        .show();
+            }
+        }
+        ));
     }
+
+    private void handleRegattaClick(String regattaName){
+        NavHostFragment.findNavController(this).navigate(
+                RegattaListFragmentDirections.actionCourseListToLoadFragment(regattaName)
+        );
+    }
+
 }

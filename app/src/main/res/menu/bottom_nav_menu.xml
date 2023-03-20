@@ -4,25 +4,25 @@
     <item
         android:id="@+id/mapFragment"
         android:enabled="true"
-
-        android:title="@string/map" />
-
-    <item
-        android:id="@+id/buoyInfo"
-        android:enabled="true"
-
-        android:title="@string/buoy" />
+        android:icon="@drawable/baseline_map_24"
+        android:title="@string/regatta_menu_map" />
 
     <item
-        android:id="@+id/robuoyInfo"
+        android:id="@+id/buoyInfoFragment"
         android:enabled="true"
-
-        android:title="@string/robuoy" />
+        android:icon="@drawable/baseline_circle_24"
+        android:title="@string/regatta_menu_buoy" />
 
     <item
-        android:id="@+id/boatInfo"
+        android:id="@+id/roboaInfoFragment"
+        android:icon="@drawable/baseline_circle_24"
         android:enabled="true"
+        android:title="@string/regatta_menu_roboa" />
 
-        android:title="@string/Boat" />
+    <item
+        android:id="@+id/boatInfoFragment"
+        android:icon="@drawable/baseline_circle_24"
+        android:enabled="true"
+        android:title="@string/regatta_menu_boat" />
 
 </menu>

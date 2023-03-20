@@ -18,10 +18,9 @@ public interface BoatDao {
     void update(Boat boat);
 
     @Query("DELETE FROM boat_table")
-    void delete();
+    void deleteAll();
 
-    @Query("SELECT * FROM Roboa_table LIMIT 50")
-    LiveData<List<Roboa>> getAllRoboe();
-
+    @Query("SELECT * FROM boat_table LIMIT 50")
+    LiveData<List<Boat>> getAll();
 
 }

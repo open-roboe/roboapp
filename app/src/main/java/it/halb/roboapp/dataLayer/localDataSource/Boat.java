@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Objects;
+
 
 @Entity(tableName = "boat_table")
 public class Boat {
@@ -15,6 +17,17 @@ public class Boat {
     private double latitude;
     private double longitude;
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(username, role, latitude, longitude);
+    }
+
+    public Boat(@NonNull String username, String role, double latitude, double longitude) {
+        this.username = username;
+        this.role = role;
+        this.latitude = latitude;
+        this.longitude = longitude;
+    }
     public void setUsername(@NonNull String username) {
         this.username = username;
     }
