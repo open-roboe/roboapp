@@ -33,7 +33,7 @@ public class Regatta {
 
     private double latitude;
 
-
+    @Ignore
     public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
                    double startLineLen, double breakDistance, double courseLength,
                    double secondMarkDistance, boolean bottonBuoy, boolean gate) {
@@ -93,7 +93,6 @@ public class Regatta {
     public int getCreationDate() {
         return creationDate;
     }
-
 
     public int getWindDirection() {
         return windDirection;
@@ -167,16 +166,31 @@ public class Regatta {
         this.latitude = latitude;
     }
 
-    public void setLatLng (LatLng position)
-    {
+    public void setLatLng(LatLng position) {
         this.setLatitude(position.latitude);
         this.setLongitude(position.longitude);
     }
 
-    public LatLng getPosition()
-    {
-        return new LatLng(this.getLatitude(),this.getLongitude());
+    public LatLng getPosition() {
+        return new LatLng(this.getLatitude(), this.getLongitude());
     }
 
-
+    @Override
+    public String toString() {
+        return "Regatta{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", creationDate=" + creationDate +
+                ", windDirection=" + windDirection +
+                ", startLineLen=" + startLineLen +
+                ", breakDistance=" + breakDistance +
+                ", courseLength=" + courseLength +
+                ", secondMarkDistance=" + secondMarkDistance +
+                ", bottonBuoy=" + bottonBuoy +
+                ", gate=" + gate +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
+    }
 }
+

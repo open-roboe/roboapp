@@ -17,14 +17,6 @@ import com.google.android.material.button.MaterialButtonToggleGroup;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
 
 public class CreateRegattaFragment extends Fragment {
-
-    private String name;
-
-    private String courseAxis;
-
-    private String courseLength;
-
-    private String startLineLength;
     private FragmentCreateRegattaBinding binding;
 
     private MaterialButtonToggleGroup regattaTypeSegmentedButton;
@@ -45,12 +37,44 @@ public class CreateRegattaFragment extends Fragment {
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setCreateRegattaViewModel(model);
 
-        name = binding.textInputRegattaName.getEditText().getText().toString();
-        courseAxis = binding.textInputRegattaCourseAxis.getEditText().getText().toString();
-        courseLength = binding.textInputRegattaCourseLength.getEditText().getText().toString();
-        startLineLength = binding.textInputRegattaStartLineLength.getEditText().getText().toString();
         regattaTypeSegmentedButton = binding.toggleButton;
         createRegattaButton = binding.buttonCreateRegatta;
+
+        model.getRegattaNameError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaName.setError(error);
+        });
+
+        model.getCourseAxisError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaCourseAxis.setError(error);
+        });
+
+        model.getCourseLengthError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaCourseLength.setError(error);
+        });
+
+        model.getStartLineLengthError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaStartLineLength.setError(error);
+        });
+
+        model.getStacchettoDistanceError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaStacchettoDistance.setError(error);
+        });
+
+        model.getBolinaDistanceError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaBolinaDistance.setError(error);
+        });
+
+        model.getBuoySternError().observe(getViewLifecycleOwner(), error -> {
+            binding.textInputRegattaBuoyStern.setError(error);
+        });
+
+        model.getEnableStacchettoDistance().observe(getViewLifecycleOwner(), enable -> {
+            binding.textInputRegattaStacchettoDistance.getEditText().setText("");
+        });
+
+        model.getEnableBolinaDistance().observe(getViewLifecycleOwner(), enable -> {
+            binding.textInputRegattaBolinaDistance.getEditText().setText("");
+        });
 
         regattaTypeSegmentedButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
@@ -60,7 +84,7 @@ public class CreateRegattaFragment extends Fragment {
         });
 
         createRegattaButton.setOnClickListener(v -> {
-            model.createRegatta(name, Integer.parseInt(courseAxis), Double.parseDouble(courseLength), Double.parseDouble(startLineLength));
+            model.createRegatta();
         });
 
 

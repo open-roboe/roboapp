@@ -46,6 +46,8 @@
         <item>Single</item>
         <item>Gate</item>
     </array>
+    <string name="textfield_missing_field_error">Required field! Please insert a value</string>
+    <string name="textfield_invalid_field_error">Invalid field! Please insert a valid value</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="map">Mappa</string>
