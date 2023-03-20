@@ -32,9 +32,6 @@
         <activity
             android:name=".ui.auth.AuthActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.main.MainMapActivity"
-            android:exported="false" />
 
         <activity
             android:name=".ui.main.MainActivity"
