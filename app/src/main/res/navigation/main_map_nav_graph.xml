@@ -12,12 +12,12 @@
         android:label="MapFragment" />
     <fragment
         android:id="@+id/buoyInfo"
-        android:name="it.halb.roboapp.ui.main.buoyInfo"
+        android:name="it.halb.roboapp.ui.main.buoyInfoFragment"
         tools:layout="@layout/fragment_buoy_info"
         android:label="buoyInfo" />
     <fragment
         android:id="@+id/robuoyInfo"
-        android:name="it.halb.roboapp.ui.main.RobuoyInfo"
+        android:name="it.halb.roboapp.ui.main.RoboaInfoFragment"
         tools:layout="@layout/fragment_robuoy_info"
         android:label="RobuoyInfo" />
     <fragment

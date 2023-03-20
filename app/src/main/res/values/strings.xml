@@ -31,14 +31,18 @@
     <string name="notification_channel_description">Immediate updates on navigation and running regattas</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="map">Mappa</string>
-    <string name="buoy">Boe</string>
-    <string name="robuoy">Roboe</string>
-    <string name="Boat">Assistenza</string>
+    <string name="regatta_menu_map">Map</string>
+    <string name="regatta_menu_buoy">Buoys</string>
+    <string name="regatta_menu_roboa">BuoyBots</string>
+    <string name="regatta_menu_boat">Assistance</string>
+    <!-- TODO: Remove or change this -->
     <string name="first_item_menu_boats">item1</string>
+    <!-- TODO: Remove or change this -->
     <string name="second_item_menu_boats">item2</string>
+    <!-- TODO: Remove or change this -->
     <string name="menu_boats">menu</string>
-    <string name="click_on_boats">DIO Cane nico</string>
+    <!-- TODO: Remove or change this -->
+    <string name="click_on_boats">cavolo nico</string>
     <string name="running_regatta_error_location_permission">Device location failed</string>
     <string name="snackbar_info_swipe_to_delete_regatta">Swipe left to delete this regatta</string>
 </resources>

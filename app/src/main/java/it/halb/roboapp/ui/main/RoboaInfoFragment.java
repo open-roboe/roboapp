@@ -11,25 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.halb.roboapp.R;
-import it.halb.roboapp.databinding.FragmentBuoyInfoBinding;
-import it.halb.roboapp.databinding.FragmentMapBinding;
+import it.halb.roboapp.databinding.FragmentRobuoyInfoBinding;
 
 
-public class buoyInfo extends Fragment {
+public class RoboaInfoFragment extends Fragment {
 
-    private FragmentBuoyInfoBinding binding;
 
-    public buoyInfo() {
-        // Required empty public constructor
+    private FragmentRobuoyInfoBinding binding;
+
+    public RoboaInfoFragment() {
+
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        binding = FragmentBuoyInfoBinding.inflate(inflater, container, false);
+        binding = FragmentRobuoyInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 

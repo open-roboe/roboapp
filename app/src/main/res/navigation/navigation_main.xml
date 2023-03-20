@@ -32,5 +32,20 @@
         android:name="it.halb.roboapp.ui.main.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
+    <fragment
+        android:id="@+id/boatInfoFragment"
+        android:name="it.halb.roboapp.ui.main.BoatInfoFragment"
+        android:label="BoatInfoFragment"
+        tools:layout="@layout/fragment_boat_info"/>
+    <fragment
+        android:id="@+id/buoyInfoFragment"
+        android:name="it.halb.roboapp.ui.main.buoyInfoFragment"
+        tools:layout="@layout/fragment_buoy_info"
+        android:label="buoyInfoFragment" />
+    <fragment
+        android:id="@+id/roboaInfoFragment"
+        android:name="it.halb.roboapp.ui.main.RoboaInfoFragment"
+        tools:layout="@layout/fragment_robuoy_info"
+        android:label="RoboaInfoFragment" />
 
 </navigation>

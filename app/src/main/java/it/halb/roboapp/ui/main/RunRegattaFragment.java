@@ -39,7 +39,7 @@ public class RunRegattaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //require regattaName parameter, that is passed with every navigation
-        String regattaName = StartRunningRegattaFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
+        String regattaName = RunRegattaFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
 
         //viewModel initialization
         RunRegattaViewModel model = new ViewModelProvider(this).get(RunRegattaViewModel.class);
