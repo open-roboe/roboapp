@@ -1,3 +1,4 @@
+> **Note** There is not an english documentation available yet. Open an issue to request it
 
 Questa è la repository per lo sviluppo della Roboapp android
 
