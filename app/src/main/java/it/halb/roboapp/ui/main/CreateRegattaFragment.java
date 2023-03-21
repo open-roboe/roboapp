@@ -40,31 +40,31 @@ public class CreateRegattaFragment extends Fragment {
         regattaTypeSegmentedButton = binding.toggleButton;
         createRegattaButton = binding.buttonCreateRegatta;
 
-        model.getRegattaNameError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("regattaNameError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
         });
 
-        model.getCourseAxisError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("courseAxisError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseAxis.setError(error);
         });
 
-        model.getCourseLengthError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("courseLengthError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseLength.setError(error);
         });
 
-        model.getStartLineLengthError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("startLineLengthError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStartLineLength.setError(error);
         });
 
-        model.getStacchettoDistanceError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("stacchettoDistanceError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStacchettoDistance.setError(error);
         });
 
-        model.getBolinaDistanceError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("bolinaDistanceError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBolinaDistance.setError(error);
         });
 
-        model.getBuoySternError().observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get("buoySternError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBuoyStern.setError(error);
         });
 

@@ -13,11 +13,30 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.Date;
+import java.util.HashMap;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class CreateRegattaViewModel extends AndroidViewModel {
+
+    public final String REGATTA_NAME = "regattaName";
+
+    public final String COURSE_AXIS = "courseAxis";
+
+    public final String COURSE_LENGTH = "courseLength";
+
+    public final String START_LINE_LENGTH = "startLineLength";
+
+    public final String STACCHETTO_DISTANCE = "stacchettoDistance";
+
+    public final String BOLINA_DISTANCE = "bolinaDistance";
+
+    public final String BUOY_STERN = "buoyStern";
+
+    private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
+
+    private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFieldsErrors = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
     private MutableLiveData<String> regattaName = new MutableLiveData<>("");
 
@@ -57,60 +76,22 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     private final String TAG = CreateRegattaViewModel.class.getSimpleName();
 
-    public LiveData<String> getRegattaName() {
-        return regattaName;
+    private boolean formValid = true;
+
+    public boolean isFormValid() {
+        return formValid;
     }
 
-    public LiveData<String> getCourseAxis() {
-        return courseAxis;
+    public void setFormValid(boolean formValid) {
+        this.formValid = formValid;
     }
 
-    public LiveData<String> getCourseLength() {
-        return courseLength;
+    public LiveData<HashMap<String, MutableLiveData<String>>> getFormFields() {
+        return formFields;
     }
 
-    public LiveData<String> getStartLineLength() {
-        return startLineLength;
-    }
-
-    public LiveData<String> getStacchettoDistance() {
-        return stacchettoDistance;
-    }
-
-    public LiveData<String> getBolinaDistance() {
-        return bolinaDistance;
-    }
-
-    public LiveData<String> getBuoyStern() {
-        return buoyStern;
-    }
-
-    public LiveData<String> getRegattaNameError() {
-        return regattaNameError;
-    }
-
-    public LiveData<String> getCourseAxisError() {
-        return courseAxisError;
-    }
-
-    public LiveData<String> getCourseLengthError() {
-        return courseLengthError;
-    }
-
-    public LiveData<String> getStartLineLengthError() {
-        return startLineLengthError;
-    }
-
-    public LiveData<String> getStacchettoDistanceError() {
-        return stacchettoDistanceError;
-    }
-
-    public LiveData<String> getBolinaDistanceError() {
-        return bolinaDistanceError;
-    }
-
-    public LiveData<String> getBuoySternError() {
-        return buoySternError;
+    public LiveData<HashMap<String, MutableLiveData<String>>> getFormFieldsErrors() {
+        return formFieldsErrors;
     }
 
     public LiveData<Boolean> getEnableStacchettoDistance() {
@@ -128,41 +109,71 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     public CreateRegattaViewModel(@NonNull Application application) {
 
         super(application);
+        populateHashMaps("");
+        populateHashMaps("Error");
+        formFields.getValue().forEach((key, value) -> {
+            Log.d(TAG, "HASHMAP: " + key + " " + value);
+        });
+    }
+
+    private void populateHashMaps(String suffix) {
+        HashMap<String, MutableLiveData<String>> map = new HashMap<>();
+        if (suffix.equals("")) {
+            map = formFields.getValue();
+        }
+        else {
+            map = formFieldsErrors.getValue();
+        }
+
+        map.put("regattaName" + suffix, new MutableLiveData<String>(""));
+        map.put("courseAxis" + suffix, new MutableLiveData<String>(""));
+        map.put("courseLength" + suffix, new MutableLiveData<String>(""));
+        map.put("startLineLength" + suffix, new MutableLiveData<String>(""));
+        map.put("stacchettoDistance" + suffix, new MutableLiveData<String>(""));
+        map.put("bolinaDistance" + suffix, new MutableLiveData<String>(""));
+        map.put("buoyStern" + suffix, new MutableLiveData<String>(""));
+
+        if (suffix.equals("")) {
+            formFields.setValue(map);
+        }
+        else {
+            formFieldsErrors.setValue(map);
+        }
     }
 
     public void onRegattaNameTextChanged(CharSequence s, int start, int before, int count) {
-        regattaName.setValue(s.toString());
-        resetDisplayError(regattaNameError);
+        formFields.getValue().get("regattaName").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("regattaNameError"));
     }
 
     public void onCourseAxisTextChanged(CharSequence s, int start, int before, int count) {
-        courseAxis.setValue(s.toString());
-        resetDisplayError(courseAxisError);
+        formFields.getValue().get("courseAxis").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("courseAxisError"));
     }
 
     public void onCourseLengthTextChanged(CharSequence s, int start, int before, int count) {
-        courseLength.setValue(s.toString());
-        resetDisplayError(courseLengthError);
+        formFields.getValue().get("courseLength").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("courseLengthError"));
     }
 
     public void onStartLineLengthTextChanged(CharSequence s, int start, int before, int count) {
-        startLineLength.setValue(s.toString());
-        resetDisplayError(startLineLengthError);
+        formFields.getValue().get("startLineLength").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("startLineLengthError"));
     }
 
     public void onStacchettoDistanceTextChanged(CharSequence s, int start, int before, int count) {
-        stacchettoDistance.setValue(s.toString());
-        resetDisplayError(stacchettoDistanceError);
+        formFields.getValue().get("stacchettoDistance").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("stacchettoDistanceError"));
     }
 
     public void onBolinaDistanceTextChanged(CharSequence s, int start, int before, int count) {
-        bolinaDistance.setValue(s.toString());
-        resetDisplayError(bolinaDistanceError);
+        formFields.getValue().get("bolinaDistance").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("bolinaDistanceError"));
     }
 
     public void onBuoySternTextChanged(CharSequence s, int start, int before, int count) {
-        buoyStern.setValue(s.toString());
-        resetDisplayError(buoySternError);
+        formFields.getValue().get("buoyStern").setValue(s.toString());
+        resetDisplayError(formFieldsErrors.getValue().get("buoySternError"));
     }
 
     public void onRegattaTypeChanged(int index) {
@@ -173,6 +184,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         else {
             regattaType.setValue("triangle");
             enableBuoyStern.setValue(false);
+            resetDisplayError(formFieldsErrors.getValue().get("buoySternError"));
         }
     }
 
@@ -193,9 +205,9 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     }
 
     public Boolean[] getBuoySternInfo() {
-        Log.d(TAG, "getBuoySternInfo: " + buoyStern.getValue());
+        Log.d(TAG, "getBuoySternInfo: " + formFields.getValue().get("buoyStern").getValue());
         Boolean[] buoySternInfo = new Boolean[2];
-        if (enableBuoyStern.getValue()== false || buoyStern.getValue().equals("")) {
+        if (enableBuoyStern.getValue()== false || formFields.getValue().get("buoyStern").getValue().equals("")) {
             buoySternInfo[0] = false;
             buoySternInfo[1] = false;
         }
@@ -208,18 +220,18 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     public Double[] getOptionalDistances() {
         Double[] optionalDistances = new Double[2];
-        if (stacchettoDistance.getValue().equals("")) {
+        if (formFields.getValue().get("stacchettoDistance").getValue().equals("")) {
             optionalDistances[0] = 0.0;
         }
         else {
-            optionalDistances[0] = Double.parseDouble(stacchettoDistance.getValue());
+            optionalDistances[0] = Double.parseDouble(formFields.getValue().get("stacchettoDistance").getValue());
         }
 
-        if (bolinaDistance.getValue().equals("")) {
+        if (formFields.getValue().get("bolinaDistance").getValue().equals("")) {
             optionalDistances[1] = 0.0;
         }
         else {
-            optionalDistances[1] = Double.parseDouble(bolinaDistance.getValue());
+            optionalDistances[1] = Double.parseDouble(formFields.getValue().get("bolinaDistance").getValue());
         }
         return optionalDistances;
     }
@@ -228,64 +240,61 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         field.setValue("");
     }
 
-    public boolean validateForm() {
-        boolean isValid = true;
-        if (regattaName.getValue().equals("")) {
-            regattaNameError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        }
-        if (courseAxis.getValue().equals("")) {
-            courseAxisError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        } else if (Double.parseDouble(courseAxis.getValue()) <= 0) {
-            courseAxisError.setValue(getApplication().getString(R.string.textfield_invalid_field_error));
-            isValid = false;
-        }
-        if (courseLength.getValue().equals("")) {
-            courseLengthError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        } else if (Double.parseDouble(courseLength.getValue()) <= 0) {
-            courseLengthError.setValue(getApplication().getString(R.string.textfield_invalid_field_error));
-            isValid = false;
-        }
-        if (startLineLength.getValue().equals("")) {
-            startLineLengthError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        }
-        else if (Double.parseDouble(startLineLength.getValue()) <= 0) {
-            startLineLengthError.setValue(getApplication().getString(R.string.textfield_invalid_field_error));
-            isValid = false;
-        }
-        if (enableStacchettoDistance.getValue() == true && stacchettoDistance.getValue().equals("")) {
-            stacchettoDistanceError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        } else if ( enableStacchettoDistance.getValue() == true && Double.parseDouble(stacchettoDistance.getValue()) <= 0) {
-            stacchettoDistanceError.setValue(getApplication().getString(R.string.textfield_invalid_field_error));
-            isValid = false;
-        }
-        if (enableBolinaDistance.getValue() == true && bolinaDistance.getValue().equals("")) {
-            bolinaDistanceError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        }
-        else if (enableBolinaDistance.getValue() == true && Double.parseDouble(bolinaDistance.getValue()) <= 0) {
-            bolinaDistanceError.setValue(getApplication().getString(R.string.textfield_invalid_field_error));
-            isValid = false;
-        }
-        if (enableBuoyStern.getValue() == true && buoyStern.getValue().equals("")) {
-            buoySternError.setValue(getApplication().getString(R.string.textfield_missing_field_error));
-            isValid = false;
-        }
-        return isValid;
+    public void validateForm() {
+        HashMap<String, MutableLiveData<String>> mapFormFields = formFields.getValue();
+        HashMap<String, MutableLiveData<String>> mapFormFieldsErrors = formFieldsErrors.getValue();
+        setFormValid(true);
+
+        mapFormFields.forEach((k, v) -> {
+            if (k.equals("regattaName")) {
+                if (v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                }
+            } else if (k.equals("stacchettoDistance")) {
+                if (enableStacchettoDistance.getValue() == true && v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (enableStacchettoDistance.getValue() == true && Double.parseDouble(v.getValue()) <= 0) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_invalid_field_error));
+                    setFormValid(false);
+                }
+            } else if (k.equals("bolinaDistance")) {
+                if (enableBolinaDistance.getValue() == true && v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (enableBolinaDistance.getValue() == true && Double.parseDouble(v.getValue()) <= 0) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_invalid_field_error));
+                    setFormValid(false);
+                }
+            }else if (k.equals("buoyStern")) {
+                if (enableBuoyStern.getValue() == true && v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                }
+            } else {
+                if (v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (Double.parseDouble(v.getValue()) <= 0) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_invalid_field_error));
+                    setFormValid(false);
+                }
+            }
+        });
     }
+
     public void createRegatta() {
-        if (validateForm()) {
-            Boolean[] buoySternInfo = getBuoySternInfo();
-            Double[] optionalDistances = getOptionalDistances();
+        validateForm();
+        Boolean[] buoySternInfo = getBuoySternInfo();
+        Double[] optionalDistances = getOptionalDistances();
+        if(isFormValid()) {
 
             Log.d(TAG, "createRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
 
-            Regatta regatta = new Regatta(regattaName.getValue(), regattaType.getValue(), (int) (new Date().getTime()), Integer.parseInt(courseAxis.getValue()), Double.parseDouble(startLineLength.getValue()), optionalDistances[0], Double.parseDouble(courseLength.getValue())*1000, optionalDistances[1], buoySternInfo[0], buoySternInfo[1], 0, 0);
+            Regatta regatta = new Regatta(formFields.getValue().get("regattaName").getValue(), regattaType.getValue(), (int) (new Date().getTime()), Integer.parseInt(formFields.getValue().get("courseAxis").getValue()), Double.parseDouble(formFields.getValue().get("startLineLength").getValue()), optionalDistances[0], Double.parseDouble(formFields.getValue().get("courseLength").getValue()) * 1000, optionalDistances[1], buoySternInfo[0], buoySternInfo[1], 0, 0);
             Log.d(TAG, "" + regatta.toString());
         }
     }
+
 }
