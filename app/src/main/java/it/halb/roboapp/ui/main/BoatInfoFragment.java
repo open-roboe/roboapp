@@ -13,6 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
 import it.halb.roboapp.ui.main.adapters.BoatsListAdapter;
 
@@ -56,7 +60,18 @@ public class BoatInfoFragment extends Fragment {
             //TODO: implementare il giusto listener
         });
 
-
+        //test recyclerView
+        Boat a = new Boat();
+        Boat b = new Boat();
+        Boat c = new Boat();
+        a.setUsername("qaaaaaaaa");
+        b.setUsername("bbbbbbbbb");
+        c.setUsername("ccccccccc");
+        ArrayList<Boat> list = new ArrayList<Boat>();
+        list.add(a);
+        list.add(b);
+        list.add(c);
+        adapter.submitList(list);
 
 
 

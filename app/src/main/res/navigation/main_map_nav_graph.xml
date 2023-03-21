@@ -22,9 +22,9 @@
         android:label="RobuoyInfo" />
     <fragment
         android:id="@+id/boatInfo"
-        android:name="it.halb.roboapp.ui.main.BoatInfo"
+        android:name="it.halb.roboapp.ui.main.BoatInfoFragment"
         tools:layout="@layout/fragment_boat_info"
-        android:label="BoatInfo" />
+        android:label="BoatInfoFragment" />
 
     <include app:graph="@navigation/navigation_main" />
 
