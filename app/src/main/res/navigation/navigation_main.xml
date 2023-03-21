@@ -39,7 +39,7 @@
         tools:layout="@layout/fragment_boat_info"/>
     <fragment
         android:id="@+id/buoyInfoFragment"
-        android:name="it.halb.roboapp.ui.main.buoyInfoFragment"
+        android:name="it.halb.roboapp.ui.main.BuoyInfoFragment"
         tools:layout="@layout/fragment_buoy_info"
         android:label="buoyInfoFragment" />
     <fragment
