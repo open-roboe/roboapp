@@ -34,6 +34,13 @@ public class Constants {
 
     public static final String TriangleMark = "TRIANGLE MARK";
 
+    //constant string for regatta type
+
+    public static final String stickRegatta = "STICK";
+    public static final String triangleRegatta = "TRIANGLE";
+
+
+
 
 
 

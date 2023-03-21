@@ -13,50 +13,57 @@ public class BuoyFactory {
     private static Regatta regatta;
     private static List<Buoy> buoys;
     private static LatLng mid;
+    private static double left;
 
-    public static List<Buoy> regattaStick(Regatta race) {
-
-        double left = windDirection(race.getWindDirection(), -90);
+    public static List<Buoy> buildCourse(Regatta race)
+    {
         regatta = race;
-
+        left = windDirection(race.getWindDirection(), -90);
         buoys = new ArrayList<Buoy>();
+        switch (regatta.getType())
+        {
+            case Constants.stickRegatta:
+                regattaStick();
+                return buoys;
+            case Constants.triangleRegatta:
+                regattaTriangle();
+                return buoys;
+            default:
+                return null;
+        }
+    }
+    private static void regattaStick() {
 
         standardBuoys();
 
-        if (race.isBottonBuoy()) {
+        if (regatta.isBottonBuoy()) {
 
-            Buoy bottonMark = newBuoy(Constants.BottomMark, race.getName(), mid,
-                    race.getCourseLength() / 10, race.getWindDirection());
+            Buoy bottonMark = newBuoy(Constants.BottomMark, regatta.getName(), mid,
+                    regatta.getCourseLength() / 10, regatta.getWindDirection());
             buoys.add(bottonMark);
-            if (race.isGate()) {
+            if (regatta.isGate()) {
 
-                Buoy gateMarkSx = newBuoy(Constants.GateMarkSx, race.getName(), bottonMark.getPosition(),
-                        race.getStartLineLen() / 4, windDirection(race.getWindDirection(), -90));
+                Buoy gateMarkSx = newBuoy(Constants.GateMarkSx, regatta.getName(), bottonMark.getPosition(),
+                        regatta.getStartLineLen() / 4, windDirection(regatta.getWindDirection(), -90));
                 buoys.add(gateMarkSx);
 
-                Buoy gateMarkDx = newBuoy(Constants.GateMarkDx, race.getName(), bottonMark.getPosition(),
-                        race.getStartLineLen() / 4, windDirection(race.getWindDirection(), 90));
+                Buoy gateMarkDx = newBuoy(Constants.GateMarkDx, regatta.getName(), bottonMark.getPosition(),
+                        regatta.getStartLineLen() / 4, windDirection(regatta.getWindDirection(), 90));
                 buoys.add(gateMarkDx);
             }
         }
-        return buoys;
     }
 
     //distanze tutte in Km
-    public static List<Buoy> regattaTriangle(Regatta race) {
-        double left = windDirection(race.getWindDirection(), -90);
-
-        regatta = race;
-        buoys = new ArrayList<Buoy>();
+    private static void regattaTriangle() {
 
         standardBuoys();
 
         //questi due 45 dovranno essere variabili
-        int degreeTriangle = windDirection(race.getWindDirection(), -45);
-        Buoy triangleBuoy = newBuoy(Constants.TriangleMark, race.getName(),
+        int degreeTriangle = windDirection(regatta.getWindDirection(), -45);
+        Buoy triangleBuoy = newBuoy(Constants.TriangleMark, regatta.getName(),
                 buoyFinder(buoys,Constants.UpMark).getPosition(),
-                race.getCourseLength() * Math.cos(Math.toRadians(45)), degreeTriangle);
-       return buoys;
+                regatta.getCourseLength() * Math.cos(Math.toRadians(45)), degreeTriangle);
 
     }
 
@@ -110,7 +117,6 @@ public class BuoyFactory {
             Buoy secondUpMark = newBuoy(Constants.SecondUpMark, regatta.getName(), mid, regatta.getSecondMarkDistance(),
                     regatta.getWindDirection());
             buoys.add(secondUpMark);
-
         }
 
         if (regatta.getBreakDistance() != 0) {
@@ -118,7 +124,6 @@ public class BuoyFactory {
                     windDirection(regatta.getWindDirection(), 90));
             buoys.add(breakMark);
         }
-
     }
 
     public static Buoy buoyFinder(List<Buoy> list, String id)
