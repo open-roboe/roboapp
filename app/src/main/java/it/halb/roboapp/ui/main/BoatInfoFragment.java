@@ -55,11 +55,6 @@ public class BoatInfoFragment extends Fragment {
             adapter.submitList(boats);
         });
 
-        binding.boatsRecyclerView.setOnClickListener(v -> {
-            Toast.makeText(this.getContext(), "CLICKED" + v.toString(), Toast.LENGTH_LONG).show();
-            //TODO: implementare il giusto listener
-        });
-
         //test recyclerView
         Boat a = new Boat();
         Boat b = new Boat();
@@ -72,6 +67,9 @@ public class BoatInfoFragment extends Fragment {
         list.add(b);
         list.add(c);
         adapter.submitList(list);
+
+
+
 
 
 
