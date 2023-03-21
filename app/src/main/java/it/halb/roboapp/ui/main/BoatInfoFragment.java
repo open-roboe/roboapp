@@ -22,8 +22,6 @@ import it.halb.roboapp.ui.main.adapters.BoatsListAdapter;
 
 
 public class BoatInfoFragment extends Fragment {
-
-
     private FragmentBoatInfoBinding binding;
 
     public BoatInfoFragment() {
@@ -56,9 +54,10 @@ public class BoatInfoFragment extends Fragment {
         });
 
         //test recyclerView
-        Boat a = new Boat();
-        Boat b = new Boat();
-        Boat c = new Boat();
+
+        Boat a = new Boat("a", "b", 0.000, 0.2222);
+        Boat b = new Boat("a", "b", 0.000, 0.2222);
+        Boat c = new Boat("a", "b", 0.000, 0.2222);
         a.setUsername("qaaaaaaaa");
         b.setUsername("bbbbbbbbb");
         c.setUsername("ccccccccc");
