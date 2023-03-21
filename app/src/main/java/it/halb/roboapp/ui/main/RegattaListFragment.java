@@ -68,6 +68,9 @@ public class RegattaListFragment extends Fragment {
             model.fakeInsert(name ->{
             });
 
+            NavHostFragment.findNavController(this)
+                    .navigate(RegattaListFragmentDirections.actionCourseListToLoadFragment("name"));
+
             /*
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)

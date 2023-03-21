@@ -2,6 +2,7 @@ package it.halb.roboapp.util;
 
 import android.graphics.Color;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -17,9 +18,8 @@ import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 public class RegattaController {
 
     private static RegattaController instance;
-    private MutableLiveData<Regatta> regatta;
-    private MutableLiveData<List<Buoy>> buoys;
-
+    private LiveData<Regatta> regatta;
+    private LiveData<List<Buoy>> buoys;
     private GoogleMap map;
 
     private RegattaController() {
@@ -27,7 +27,7 @@ public class RegattaController {
         buoys = new MutableLiveData<>();
     }
 
-    public RegattaController(MutableLiveData<Regatta> regatta, MutableLiveData<List<Buoy>> buoys, GoogleMap map) {
+    public RegattaController(LiveData<Regatta> regatta, LiveData<List<Buoy>> buoys, GoogleMap map) {
         this.regatta = regatta;
         this.buoys = buoys;
         this.map = map;
@@ -47,31 +47,43 @@ public class RegattaController {
         return instance;
     }
     public void setCourse() {
-        Marker juryMark = map.addMarker(new MarkerOptions()
-                .position(regatta.getValue().getPosition())
+        map.addMarker(new MarkerOptions().position(regatta.getValue().getPosition())
                 .title("Jury")
                 .snippet("id:" + regatta.getValue().getName()));
 
         List list = buoys.getValue();
         for (int i = 0; i < list.size(); i++) {
             Buoy buoy = (Buoy) list.get(i);
-            if (buoy == null) {
+            if (buoy == null || buoy.getId().equals(Constants.MidLineStart)) {
 
             } else {
-                map.addMarker(new MarkerOptions()
-                        .position(buoy.getPosition())
-                        .title(buoy.getId()));
-            }
+                if(buoy.getId().equals(Constants.BottomMark) && regatta.getValue().isGate() == true)
+                {
 
+                }else
+                {
+                    map.addMarker(new MarkerOptions()
+                            .position(buoy.getPosition())
+                            .title(buoy.getId()));
+                }
+            }
         }
-        Buoy StartBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.StartMark);
-        Buoy upBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.UpMark);
-        Buoy midLineBuoy = (Buoy) BuoyFactory.buoyFinder(list, Constants.MidLineStart);
+        buildLine();
+    }
+
+    private void buildLine() {
+
+        List list = buoys.getValue();
+
+        Buoy StartBuoy = BuoyFactory.buoyFinder(list, Constants.StartMark);
+        Buoy upBuoy = BuoyFactory.buoyFinder(list, Constants.UpMark);
+        Buoy midLineBuoy = BuoyFactory.buoyFinder(list, Constants.MidLineStart);
+
         PolylineOptions opt = new PolylineOptions().add(regatta.getValue().getPosition(), StartBuoy.getPosition()).width(3f).color(Color.GRAY);
         map.addPolyline(opt);
+
         opt = new PolylineOptions().add(midLineBuoy.getPosition(), upBuoy.getPosition()).width(2f).color(Color.GRAY);
         map.addPolyline(opt);
-
 
         if (BuoyFactory.buoyFinder(list, Constants.BreakMark) != null) {
             Buoy breakMark = (Buoy) BuoyFactory.buoyFinder(list, Constants.BreakMark);
@@ -81,31 +93,35 @@ public class RegattaController {
 
         if (BuoyFactory.buoyFinder(list, Constants.SecondUpMark) != null) {
             Buoy secondUpMark = BuoyFactory.buoyFinder(list, Constants.SecondUpMark);
-
             opt = new PolylineOptions().add(upBuoy.getPosition(), secondUpMark.getPosition()).width(2f).color(Color.GRAY);
             map.addPolyline(opt);
         }
 
         if (BuoyFactory.buoyFinder(list, Constants.GateMarkDx) != null) {
-            Buoy dx = (Buoy) BuoyFactory.buoyFinder(list, Constants.GateMarkDx);
-            Buoy sx = (Buoy) BuoyFactory.buoyFinder(list, Constants.GateMarkSx);
+            Buoy dx = BuoyFactory.buoyFinder(list, Constants.GateMarkDx);
+            Buoy sx = BuoyFactory.buoyFinder(list, Constants.GateMarkSx);
             opt = new PolylineOptions().add(dx.getPosition(), sx.getPosition()).width(2f).color(Color.GRAY);
             map.addPolyline(opt);
         }
 
         if(BuoyFactory.buoyFinder(list, Constants.TriangleMark) != null) {
-            Buoy triangle = (Buoy) BuoyFactory.buoyFinder(list, Constants.TriangleMark);
-
+            Buoy triangle = BuoyFactory.buoyFinder(list, Constants.TriangleMark);
             opt = new PolylineOptions().add(midLineBuoy.getPosition(), triangle.getPosition()).width(2f).color(Color.GRAY);
             map.addPolyline(opt);
             opt = new PolylineOptions().add(upBuoy.getPosition(), triangle.getPosition()).width(2f).color(Color.GRAY);
             map.addPolyline(opt);
         }
-
     }
 
     public void setMap(GoogleMap map) {
         this.map = map;
     }
 
+    public void setRegatta(MutableLiveData<Regatta> regatta) {
+        this.regatta = regatta;
+    }
+
+    public void setBuoys(MutableLiveData<List<Buoy>> buoys) {
+        this.buoys = buoys;
+    }
 }

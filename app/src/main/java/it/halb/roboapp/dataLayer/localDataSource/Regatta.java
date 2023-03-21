@@ -16,23 +16,14 @@ public class Regatta {
     private String name;
     private String type;
     private final int creationDate;
-
     private int windDirection;
-
     private double startLineLen;
-
     private double breakDistance;
-
     private double courseLength;
-
     private double secondMarkDistance;
-
     private boolean bottonBuoy;
-
     private boolean gate;
-
     private double longitude;
-
     private double latitude;
 
 
