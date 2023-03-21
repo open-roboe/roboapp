@@ -12,15 +12,15 @@ import it.halb.roboapp.dataLayer.localDataSource.Boat;
 
 public class BoatInfoViewModel extends AndroidViewModel {
 
-    //private final LiveData<List<Boat>> boats;
-    private final LiveData<List<Boat>> boats = new LiveData<List<Boat>>() {};
+    private final LiveData<List<Boat>> boats;
+    //private final LiveData<List<Boat>> boats = new LiveData<List<Boat>>() {};
 
     private final RunningRegattaRepository runningRegattaRepository;
 
     public BoatInfoViewModel(@NonNull Application application) {
         super(application);
         runningRegattaRepository = new RunningRegattaRepository(application);
-        //boats = runningRegattaRepository.getAllBoats();
+        boats = runningRegattaRepository.getAllBoats();
     }
 
     public LiveData<List<Boat>> getBoats() {
