@@ -85,5 +85,6 @@ public class regattaRepository {
             regattaDao.insert(regatta);
             //TODO: insert all buoys. requires DAO method
         });
+        successCallback.success(null);
     }
 }

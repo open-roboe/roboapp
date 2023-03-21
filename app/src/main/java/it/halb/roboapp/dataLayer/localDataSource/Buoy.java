@@ -6,6 +6,8 @@ import androidx.room.Entity;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Objects;
+
 @Entity(tableName = "buoy_table",primaryKeys = {"regattaName", "id"})
 public class Buoy {
     @NonNull
@@ -16,11 +18,16 @@ public class Buoy {
     private double longitude;
 
 
-public Buoy(@NonNull String id, @NonNull String regattaName, double latitude, double longitude) {
+    public Buoy(@NonNull String id, @NonNull String regattaName, double latitude, double longitude) {
         this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.regattaName = regattaName;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(regattaName, id, latitude, longitude);
     }
 
     @NonNull
@@ -28,7 +35,7 @@ public Buoy(@NonNull String id, @NonNull String regattaName, double latitude, do
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
     }
 

@@ -1,5 +1,6 @@
 package it.halb.roboapp;
 
+import static it.halb.roboapp.util.Constants.LOCATION_PRIORITY;
 import static it.halb.roboapp.util.Constants.NOTIFICATION_CHANNEL_ID;
 import static it.halb.roboapp.util.Constants.NOTIFICATION_ID;
 import static it.halb.roboapp.util.Constants.POLLING_DELAY_MILLIS;
@@ -11,7 +12,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.location.Location;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
@@ -23,27 +23,46 @@ import androidx.core.app.NotificationCompat;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.tasks.Task;
+
+import it.halb.roboapp.dataLayer.RunningRegattaRepository;
+import it.halb.roboapp.util.Permissions;
 
 public class RunningRegattaService extends Service {
 
+    private static RunningRegattaService instance = null;
+    private FusedLocationProviderClient fusedLocationClient;
     private Handler pollingHandler;
-    private FusedLocationProviderClient fusedLocationProviderClient;
-
 
     /**
      * This runnable is the core of the service:
-     * It runs periodically, calling the repository to update
-     * the user position and fetching the regatta information
+     * It runs periodically, calling the repository poll() method
+     * that sends to the server the user position and fetches the regatta information
      *
      */
     private final Runnable pollingRunnable = new Runnable() {
+        @SuppressLint("MissingPermission")
         @Override
         public void run() {
-            Log.d("POLLING", "poll!");
+            //get the repository
             Application application = getApplication();
+            RunningRegattaRepository repository = new RunningRegattaRepository(application);
 
-            pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
+            //fetch the device location and call the repository
+            if( ! Permissions.hasLocationPermissions(application)){
+                repository.setError(getString(R.string.running_regatta_error_location_permission));
+            }else{
+                fusedLocationClient.getCurrentLocation(LOCATION_PRIORITY, null)
+                        .addOnSuccessListener(location -> {
+                            if(location != null)
+                                repository.poll(location.getLatitude(), location.getLongitude());
+                        })
+                        .addOnFailureListener(e ->
+                                repository.setError(getString(R.string.running_regatta_error_location_permission)));
+            }
+
+            //schedule the next call of run(), if there is a running instance of the service
+            if(instance != null)
+                pollingHandler.postDelayed(this, POLLING_DELAY_MILLIS);
         }
     };
 
@@ -55,7 +74,6 @@ public class RunningRegattaService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -85,16 +103,32 @@ public class RunningRegattaService extends Service {
         //start a foreground service, with the notification defined above
         startForeground(NOTIFICATION_ID, builder.build());
 
-        //initialize the polling loop
-        initializePolling();
+        //initialize the service
+        initializeService();
 
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void initializePolling(){
+    private void initializeService(){
         if(pollingHandler == null){
+            //initialize the polling loop
             pollingHandler = new Handler(Looper.getMainLooper());
             pollingHandler.postDelayed(pollingRunnable, POLLING_DELAY_MILLIS);
+            //initialize the location service
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        instance = null;
+        pollingHandler.removeCallbacks(pollingRunnable);
     }
 }

@@ -1,5 +1,7 @@
 package it.halb.roboapp.util;
 
+import com.google.android.gms.location.Priority;
+
 public class Constants {
 
     // sharedPreferences
@@ -14,11 +16,12 @@ public class Constants {
     // foreground service
     public static final String NOTIFICATION_CHANNEL_ID = "roboapp_foreground_channel";
     public static final int NOTIFICATION_ID = 42;
+    public static final int POLLING_DELAY_MILLIS = 6 * 1000;
+    public static final int OUT_OF_SYNC_AFTER_SECONDS = 15;
+    // https://developers.google.com/android/reference/com/google/android/gms/location/Priority
+    public static final int LOCATION_PRIORITY = Priority.PRIORITY_HIGH_ACCURACY;
 
-    public static final int POLLING_DELAY_MILLIS = 5 * 1000;
-
-    //Buoys Type
-
+    // Buoys Type
     public static final String GateMarkDx = "GATE MARK DX";
     public static final String GateMarkSx = "GATE MARK SX";
     public static final String BottomMark = "BOTTOM MARK";
