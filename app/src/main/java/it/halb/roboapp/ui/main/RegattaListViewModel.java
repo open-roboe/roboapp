@@ -20,8 +20,6 @@ import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 public class RegattaListViewModel extends AndroidViewModel {
 
     public boolean showSwipeHint = true;
-
-    private final MutableLiveData<String> placeholderVisible = new MutableLiveData<>("VISIBLE");
     private final LiveData<List<Regatta>> allRegattas;
     private final RegattaRepository regattaRepository;
     private final AuthRepository authRepository;
@@ -54,16 +52,4 @@ public class RegattaListViewModel extends AndroidViewModel {
         }, error);
     }
 
-   public void fakeInsert(SuccessCallback<String> success){
-        Log.d("FAKEINSERT", "cliecked");
-        Random rand = new Random();
-        String name = "name" + String.valueOf(rand.nextInt());
-       Regatta regatta = new Regatta(name, "stick", 0, 10, 10.1, 10.1, 10.0, 10.0, true, true);
-       regattaRepository.insertRegatta(regatta, null,
-               v -> {
-                success.success(name);
-               },
-               ((code, details) -> {})
-               );
-    }
 }
