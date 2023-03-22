@@ -15,7 +15,7 @@ import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
 import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
-public class regattaRepository {
+public class RegattaRepository {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
@@ -23,7 +23,7 @@ public class regattaRepository {
     private final LiveData<List<Regatta>> regattas;
 
     //TODO: transform into singleton
-    public regattaRepository(Application application){
+    public RegattaRepository(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();

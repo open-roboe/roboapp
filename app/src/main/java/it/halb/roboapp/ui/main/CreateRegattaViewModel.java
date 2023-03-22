@@ -9,13 +9,19 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.ErrorCallback;
+import it.halb.roboapp.dataLayer.RegattaRepository;
+import it.halb.roboapp.dataLayer.SuccessCallback;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class CreateRegattaViewModel extends AndroidViewModel {
@@ -33,6 +39,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     public final String BOLINA_DISTANCE = "bolinaDistance";
 
     public final String BUOY_STERN = "buoyStern";
+    private final RegattaRepository regattaRepository;
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
@@ -107,8 +114,10 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     }
 
     public CreateRegattaViewModel(@NonNull Application application) {
-
         super(application);
+
+        regattaRepository = new RegattaRepository(application);
+
         populateHashMaps("");
         populateHashMaps("Error");
         formFields.getValue().forEach((key, value) -> {
@@ -284,17 +293,29 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         });
     }
 
-    public void createRegatta() {
+    public void createRegatta(SuccessCallback<String> success, ErrorCallback error) {
         validateForm();
         Boolean[] buoySternInfo = getBuoySternInfo();
         Double[] optionalDistances = getOptionalDistances();
         if(isFormValid()) {
 
+            //create regatta object
             Log.d(TAG, "createRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
-
             Regatta regatta = new Regatta(formFields.getValue().get("regattaName").getValue(), regattaType.getValue(), (int) (new Date().getTime()), Integer.parseInt(formFields.getValue().get("courseAxis").getValue()), Double.parseDouble(formFields.getValue().get("startLineLength").getValue()), optionalDistances[0], Double.parseDouble(formFields.getValue().get("courseLength").getValue()) * 1000, optionalDistances[1], buoySternInfo[0], buoySternInfo[1], 0, 0);
             Log.d(TAG, "" + regatta.toString());
+
+            //create buoys objects
+            //TODO: use buoyFactory here
+            List<Buoy> buoys = null;
+
+            //repository call to create the regatta
+            regattaRepository.insertRegatta(
+                    regatta,
+                    buoys,
+                    v -> success.success(regatta.getName()),
+                    error
+            );
+
         }
     }
-
 }

@@ -86,7 +86,17 @@ public class CreateRegattaFragment extends Fragment {
         });
 
         createRegattaButton.setOnClickListener(v -> {
-            model.createRegatta();
+            model.createRegatta(
+                    //creation success
+                    regattaName -> {
+                        NavHostFragment.findNavController(this)
+                                .navigate(CreateRegattaFragmentDirections.actionCreateRegattaFragmentToRunRegattaFragment(regattaName));
+                    },
+                    //creation error
+                    (code, details) -> {
+                        //TODO: display error
+                    }
+            );
         });
 
         binding.buttonCancel.setOnClickListener(v -> {
