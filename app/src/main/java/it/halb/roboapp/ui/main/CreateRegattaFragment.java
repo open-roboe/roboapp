@@ -23,6 +23,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.snackbar.Snackbar;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.SuccessCallback;
@@ -159,7 +160,10 @@ public class CreateRegattaFragment extends Fragment {
                 },
                 //creation error
                 (code, details) -> {
-                    //TODO: display error
+                    String error = getString(R.string.create_regatta_creation_generic_error);
+                    error += code +  " " + details;
+                    Snackbar.make(this.getView(), error, Snackbar.LENGTH_SHORT)
+                            .show();
                 }
         );
     }
