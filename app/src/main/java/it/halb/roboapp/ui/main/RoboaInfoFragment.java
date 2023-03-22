@@ -11,17 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.halb.roboapp.R;
-import it.halb.roboapp.databinding.FragmentMapBinding;
 import it.halb.roboapp.databinding.FragmentRobuoyInfoBinding;
 
 
-public class RobuoyInfo extends Fragment {
+public class RoboaInfoFragment extends Fragment {
 
 
     private FragmentRobuoyInfoBinding binding;
 
-    public RobuoyInfo() {
+    public RoboaInfoFragment() {
 
     }
 

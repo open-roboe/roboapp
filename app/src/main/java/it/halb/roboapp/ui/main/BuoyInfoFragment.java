@@ -11,16 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import it.halb.roboapp.R;
 import it.halb.roboapp.databinding.FragmentBuoyInfoBinding;
-import it.halb.roboapp.databinding.FragmentMapBinding;
 
 
-public class buoyInfo extends Fragment {
+public class BuoyInfoFragment extends Fragment {
 
     private FragmentBuoyInfoBinding binding;
 
-    public buoyInfo() {
+    public BuoyInfoFragment() {
         // Required empty public constructor
     }
 

@@ -4,19 +4,25 @@ import android.Manifest;
 import android.content.Context;
 import android.content.MutableContextWrapper;
 import android.content.pm.PackageManager;
+import android.graphics.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -31,6 +37,7 @@ import it.halb.roboapp.databinding.FragmentLoginBinding;
 import it.halb.roboapp.databinding.FragmentMapBinding;
 import it.halb.roboapp.ui.main.MapViewModel;
 import it.halb.roboapp.util.BuoyFactory;
+import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.RegattaController;
 
 
@@ -70,14 +77,25 @@ public class MapFragment extends Fragment{
             }
             googleMap.setMyLocationEnabled(true);
 
-            MutableLiveData<Regatta> race = new MutableLiveData<Regatta>(new Regatta("prova",
-                    "stick",0,0,100,
-                    0,1000,0,
-                    false,false));
+            Regatta regatta = new Regatta("regatta_name", Constants.triangleRegatta, 0,
+                    10, 100.1, 0, 1000, 1500,
+                    false, false);
+            regatta.setLatLng(new LatLng(45.5141865,9.2109231));
 
+            List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
 
+            MutableLiveData<Regatta> race = new MutableLiveData<Regatta>();
+            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<List<Buoy>>();
+
+            race.setValue(regatta);
+            buoy.setValue(buoys);
+            RegattaController.getInstance().setMap(googleMap);
+            RegattaController.getInstance().setRegatta(race);
+            RegattaController.getInstance().setBuoys(buoy);
+            RegattaController.getInstance().setCourse();
+
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(45.5141865,9.2109231),15));
         });
-
         return binding.getRoot();
     }
 

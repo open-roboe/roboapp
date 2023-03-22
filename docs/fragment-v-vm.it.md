@@ -76,7 +76,7 @@ Iniziamo col definire un layout vuoto, in un file `fragment_pulsante.xml`
     <data>
         <variable
             name="loadViewModel"
-            type="it.halb.roboapp.ui.main.LoadViewModel" />
+            type="it.halb.roboapp.ui.main.RunRegattaViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -105,7 +105,7 @@ Dentro al tag layout, il tag `<data>` definisce la variabile pulsanteViewModel c
     <data>
         <variable
             name="loadViewModel"
-            type="it.halb.roboapp.ui.main.LoadViewModel" />
+            type="it.halb.roboapp.ui.main.RunRegattaViewModel" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -7,6 +7,8 @@ import androidx.room.PrimaryKey;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Objects;
+
 @Entity(tableName = "regatta_table")
 public class Regatta {
     @PrimaryKey
@@ -14,23 +16,14 @@ public class Regatta {
     private String name;
     private String type;
     private final int creationDate;
-
     private int windDirection;
-
     private double startLineLen;
-
     private double breakDistance;
-
     private double courseLength;
-
     private double secondMarkDistance;
-
     private boolean bottonBuoy;
-
     private boolean gate;
-
     private double longitude;
-
     private double latitude;
 
     @Ignore
@@ -71,6 +64,19 @@ public class Regatta {
         this.name = name;
         this.type = type;
         this.creationDate = creationDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Regatta regatta = (Regatta) o;
+        return creationDate == regatta.creationDate && windDirection == regatta.windDirection && Double.compare(regatta.startLineLen, startLineLen) == 0 && Double.compare(regatta.breakDistance, breakDistance) == 0 && Double.compare(regatta.courseLength, courseLength) == 0 && Double.compare(regatta.secondMarkDistance, secondMarkDistance) == 0 && bottonBuoy == regatta.bottonBuoy && gate == regatta.gate && Double.compare(regatta.longitude, longitude) == 0 && Double.compare(regatta.latitude, latitude) == 0 && name.equals(regatta.name) && Objects.equals(type, regatta.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type, creationDate, windDirection, startLineLen, breakDistance, courseLength, secondMarkDistance, bottonBuoy, gate, longitude, latitude);
     }
 
     @NonNull

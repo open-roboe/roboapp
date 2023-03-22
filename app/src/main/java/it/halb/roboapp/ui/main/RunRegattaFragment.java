@@ -16,7 +16,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 
 import it.halb.roboapp.RunningRegattaService;
-import it.halb.roboapp.databinding.FragmentLoadBinding;
+import it.halb.roboapp.databinding.FragmentRunRegattaBinding;
 import it.halb.roboapp.util.Permissions;
 
 /**
@@ -24,13 +24,13 @@ import it.halb.roboapp.util.Permissions;
  * Before navigating to this fragment, make sure that you called declareRegattaToRun
  *
  */
-public class LoadFragment extends Fragment {
+public class RunRegattaFragment extends Fragment {
 
-    private FragmentLoadBinding binding;
+    private FragmentRunRegattaBinding binding;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentLoadBinding.inflate(inflater, container, false);
+        binding = FragmentRunRegattaBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -39,10 +39,10 @@ public class LoadFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //require regattaName parameter, that is passed with every navigation
-        String regattaName = LoadFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
+        String regattaName = RunRegattaFragmentArgs.fromBundle(getArguments()).getRunRegattaName();
 
         //viewModel initialization
-        LoadViewModel model = new ViewModelProvider(this).get(LoadViewModel.class);
+        RunRegattaViewModel model = new ViewModelProvider(this).get(RunRegattaViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setLoadViewModel(model);
 
@@ -80,7 +80,9 @@ public class LoadFragment extends Fragment {
         requireActivity().startService(
                 new Intent(requireActivity(), RunningRegattaService.class)
         );
-        Intent intent = new Intent(this.getContext(), MainMapActivity.class);
-        startActivity(intent);
+
+        NavHostFragment.findNavController(this).navigate(
+                RunRegattaFragmentDirections.actionLoadFragmentToMainMapFragment()
+        );
     }
 }

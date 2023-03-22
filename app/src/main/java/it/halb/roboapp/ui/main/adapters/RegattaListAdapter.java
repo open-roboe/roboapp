@@ -30,10 +30,7 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
         @Override
         public boolean areContentsTheSame(@NonNull Regatta oldItem, @NonNull Regatta newItem) {
             //we compare the content
-            //TODO: implement has in Regatta class and all Database models. compare hash here
-            return oldItem.getName().equals(newItem.getName()) &&
-                    oldItem.getType().equals(newItem.getType()) &&
-                    oldItem.getCreationDate() == (newItem.getCreationDate());
+            return oldItem.hashCode() == newItem.hashCode();
         }
     };
 

@@ -10,121 +10,118 @@ import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class BuoyFactory {
 
-    private static Regatta race;
+    private static Regatta regatta;
     private static List<Buoy> buoys;
     private static LatLng mid;
+    private static int left;
 
-    public static List<Buoy> regattaStick(Regatta race) {
-
-        double left = windDirection(race.getWindDirection(), -90);
-
+    public static List<Buoy> buildCourse(Regatta race)
+    {
+        regatta = race;
+        left = windDirection(race.getWindDirection(), -90);
         buoys = new ArrayList<Buoy>();
-
         standardBuoys();
+        switch (regatta.getType())
+        {
+            case Constants.stickRegatta:
+                regattaStick();
+                return buoys;
+            case Constants.triangleRegatta:
+                regattaTriangle();
+                return buoys;
+            default:
+                return null;
+        }
+    }
 
-        if (race.isBottonBuoy()) {
+    //imposta boe di: partenza, meta linea di partenza(che è solo un punto util),boa di bolina,
+    // eventaulmente boe di seconda bolina e di stacchetto
+    private static void standardBuoys()
+    {
+        Buoy midLine = newBuoy(Constants.MidLineStart, regatta.getName(), regatta.getPosition(),
+                regatta.getStartLineLen()/2, left
+        );
 
-            Buoy bottonMark = newMark(Constants.BottomMark, race.getName(), mid,
-                    race.getCourseLength() / 10, race.getWindDirection());
+        buoys.add(midLine);
+        mid = midLine.getPosition();
+
+        Buoy upWindMark = newBuoy(Constants.UpMark, regatta.getName(), mid, regatta.getCourseLength(),
+                regatta.getWindDirection());
+        buoys.add(upWindMark);
+        Buoy startMark = newBuoy(Constants.StartMark, regatta.getName(), regatta.getPosition(), regatta.getStartLineLen(),
+                left);
+
+        buoys.add(startMark);
+
+        if (regatta.getSecondMarkDistance() != 0) {
+            Buoy secondUpMark = newBuoy(Constants.SecondUpMark, regatta.getName(), mid, regatta.getSecondMarkDistance(),
+                    regatta.getWindDirection());
+            buoys.add(secondUpMark);
+        }
+
+        if (regatta.getBreakDistance() != 0) {
+            Buoy breakMark = newBuoy(Constants.BreakMark, regatta.getName(), upWindMark.getPosition(), regatta.getBreakDistance(),
+                    left);
+            buoys.add(breakMark);
+        }
+    }
+    private static void regattaStick() {
+
+        if (regatta.isBottonBuoy()) {
+
+            Buoy bottonMark = newBuoy(Constants.BottomMark, regatta.getName(), mid,
+                    regatta.getCourseLength() / 10, regatta.getWindDirection());
+
             buoys.add(bottonMark);
-            if (race.isGate()) {
+            if (regatta.isGate()) {
 
-                Buoy gateMarkSx = newMark(Constants.GateMarkSx, race.getName(), bottonMark.getPosition(),
-                        race.getStartLineLen() / 4, windDirection(race.getWindDirection(), -90));
+                Buoy gateMarkSx = newBuoy(Constants.GateMarkSx, regatta.getName(), bottonMark.getPosition(),
+                        regatta.getStartLineLen() / 4, windDirection(regatta.getWindDirection(), -90));
                 buoys.add(gateMarkSx);
 
-                Buoy gateMarkDx = newMark(Constants.GateMarkDx, race.getName(), bottonMark.getPosition(),
-                        race.getStartLineLen() / 4, windDirection(race.getWindDirection(), 90));
+                Buoy gateMarkDx = newBuoy(Constants.GateMarkDx, regatta.getName(), bottonMark.getPosition(),
+                        regatta.getStartLineLen() / 4, windDirection(regatta.getWindDirection(), 90));
                 buoys.add(gateMarkDx);
-
             }
         }
-        return buoys;
     }
 
     //distanze tutte in Km
-    public static List<Buoy> regattaTriangle(Regatta race) {
+    private static void regattaTriangle() {
 
+        //questi due 45 dovranno essere variabili
+        int degreeTriangle = windDirection(regatta.getWindDirection(), -135);
 
-        double left = windDirection(race.getWindDirection(), -90);
-
-        buoys = new ArrayList<Buoy>();
-
-        standardBuoys();
-
-        //questi due 45 dovranno esere variabili
-        int degreeTriangle = windDirection(race.getWindDirection(), -45);
-        Buoy triangleBuoy = newMark(Constants.TriangleMark, race.getName(),
+        Buoy triangleBuoy = newBuoy(Constants.TriangleMark, regatta.getName(),
                 buoyFinder(buoys,Constants.UpMark).getPosition(),
-                race.getCourseLength() * Math.cos(Math.toRadians(45)), degreeTriangle);
+                regatta.getCourseLength() * Math.cos(Math.toRadians(45)), degreeTriangle);
 
-
-
-       return buoys;
-
+        buoys.add(triangleBuoy);
     }
 
-    private static Buoy newMark(String id, String raceID, LatLng startLocation, double distance, int degree) {
+    private static Buoy newBuoy(String id, String raceID, LatLng startLocation, double distance, int degree) {
 
         double lon1 = startLocation.longitude;
         double lat1 = startLocation.latitude;
         double azimuth = Math.toRadians(degree);
-        double R = 6371;
-
-        //chiamata al server per calcolare la lat2 e long 2
-        /*x2 = x1 + d * cos(direction)
-        y2 = y1 + d * sin(direction)
-        */
+        double R = 6371000; // km
 
         double lat2 = lat1 + Math.toDegrees(distance / R) * Math.cos(azimuth);
         double lon2 = lon1 + Math.toDegrees(distance / R) * Math.sin(azimuth);
-
-        LatLng markLocation = new LatLng(lat2, lon2);
 
         return new Buoy(id, raceID, lat2, lon2);
     }
 
     private static int windDirection(int degree, int difference) {
-        int newDegree = (degree + degree);
+
+        int newDegree = (degree + difference);
 
         if (newDegree > 359) {
-            newDegree = (short) (newDegree - 360);
+            newDegree = (newDegree - 360);
         } else if (newDegree < 0) {
-            newDegree = (short) (newDegree + 360);
+            newDegree =  (newDegree + 360);
         }
         return newDegree;
-    }
-
-    private static void standardBuoys()
-    {
-        Buoy midLine = newMark(Constants.MidLineStart, race.getName(), race.getPosition(),
-                race.getStartLineLen(), race.getWindDirection()
-        );
-
-
-        buoys.add(midLine);
-        LatLng mid = midLine.getPosition();
-        Buoy upWindMark = newMark(Constants.UpMark, race.getName(), mid, race.getCourseLength(),
-                race.getWindDirection());
-        buoys.add(upWindMark);
-        Buoy startMark = newMark(Constants.StartMark, race.getName(), race.getPosition(), race.getStartLineLen(),
-                race.getWindDirection());
-
-        buoys.add(startMark);
-
-        if (race.getSecondMarkDistance() != 0) {
-            Buoy secondUpMark = newMark(Constants.SecondUpMark, race.getName(), mid, race.getSecondMarkDistance(),
-                    race.getWindDirection());
-            buoys.add(secondUpMark);
-
-        }
-
-        if (race.getBreakDistance() != 0) {
-            Buoy breakMark = newMark(Constants.BreakMark, race.getName(), mid, race.getBreakDistance(),
-                    windDirection(race.getWindDirection(), 90));
-            buoys.add(breakMark);
-        }
-
     }
 
     public static Buoy buoyFinder(List<Buoy> list, String id)
