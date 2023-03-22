@@ -2,16 +2,11 @@ package it.halb.roboapp.ui.main;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.navigation.fragment.NavHostFragment;
-
-import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -23,6 +18,7 @@ import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.util.BuoyFactory;
 
 public class CreateRegattaViewModel extends AndroidViewModel {
 
@@ -39,6 +35,11 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     public final String BOLINA_DISTANCE = "bolinaDistance";
 
     public final String BUOY_STERN = "buoyStern";
+
+    private MutableLiveData<Double> currentLat = new MutableLiveData<>(0.0);
+    private MutableLiveData<Double> currentLon = new MutableLiveData<>(0.0);
+    private MutableLiveData<Boolean> locationPermissions = new MutableLiveData<>(false);
+
     private final RegattaRepository regattaRepository;
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
@@ -84,6 +85,26 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     private final String TAG = CreateRegattaViewModel.class.getSimpleName();
 
     private boolean formValid = true;
+
+    public void setCurrentLocation(double lat, double lon){
+        currentLat.setValue(lat);
+        currentLon.setValue(lon);
+    }
+
+    public LiveData<Double> getCurrentLat(){
+        return currentLat;
+    }
+    public LiveData<Double> getCurrentLon(){
+        return currentLon;
+    }
+
+    public LiveData<Boolean> hasLocationPermissions(){
+        return locationPermissions;
+    }
+
+    public void setLocationPermissions(boolean permissions){
+        locationPermissions.setValue(permissions);
+    }
 
     public boolean isFormValid() {
         return formValid;
@@ -301,12 +322,24 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
             //create regatta object
             Log.d(TAG, "createRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
-            Regatta regatta = new Regatta(formFields.getValue().get("regattaName").getValue(), regattaType.getValue(), (int) (new Date().getTime()), Integer.parseInt(formFields.getValue().get("courseAxis").getValue()), Double.parseDouble(formFields.getValue().get("startLineLength").getValue()), optionalDistances[0], Double.parseDouble(formFields.getValue().get("courseLength").getValue()) * 1000, optionalDistances[1], buoySternInfo[0], buoySternInfo[1], 0, 0);
+            Regatta regatta = new Regatta(
+                    formFields.getValue().get("regattaName").getValue(),
+                    regattaType.getValue(),
+                    (int) (new Date().getTime()),
+                    Integer.parseInt(formFields.getValue().get("courseAxis").getValue()),
+                    Double.parseDouble(formFields.getValue().get("startLineLength").getValue()),
+                    optionalDistances[0],
+                    Double.parseDouble(formFields.getValue().get("courseLength").getValue()) * 1000,
+                    optionalDistances[1],
+                    buoySternInfo[0],
+                    buoySternInfo[1],
+                    currentLat.getValue(),
+                    currentLon.getValue()
+            );
             Log.d(TAG, "" + regatta.toString());
 
             //create buoys objects
-            //TODO: use buoyFactory here
-            List<Buoy> buoys = null;
+            List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
 
             //repository call to create the regatta
             regattaRepository.insertRegatta(
