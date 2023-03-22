@@ -13,8 +13,8 @@ import java.util.Random;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.ErrorCallback;
+import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
-import it.halb.roboapp.dataLayer.regattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaListViewModel extends AndroidViewModel {
@@ -23,12 +23,12 @@ public class RegattaListViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> placeholderVisible = new MutableLiveData<>("VISIBLE");
     private final LiveData<List<Regatta>> allRegattas;
-    private final regattaRepository regattaRepository;
+    private final RegattaRepository regattaRepository;
     private final AuthRepository authRepository;
 
     public RegattaListViewModel(@NonNull Application application) {
         super(application);
-        regattaRepository = new regattaRepository(application);
+        regattaRepository = new RegattaRepository(application);
         authRepository = AuthRepository.getInstance(application);
         allRegattas = regattaRepository.getAllRegattas();
     }

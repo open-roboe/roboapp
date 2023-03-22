@@ -1,7 +1,7 @@
 package it.halb.roboapp.dataLayer;
 
 /**
- * Communicates successful responses from an asynchronous regattaRepository operation
+ * Communicates successful responses from an asynchronous RegattaRepository operation
  */
 @FunctionalInterface
 public interface SuccessCallback<T> {

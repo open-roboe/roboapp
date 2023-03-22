@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_courseList_to_loadFragment"
             app:destination="@id/runRegattaFragment" />
+        <action
+            android:id="@+id/action_courseList_to_createRegattaFragment"
+            app:destination="@id/createRegattaFragment" />
     </fragment>
     <fragment
         android:id="@+id/runRegattaFragment"
@@ -39,7 +42,7 @@
         tools:layout="@layout/fragment_boat_info"/>
     <fragment
         android:id="@+id/buoyInfoFragment"
-        android:name="it.halb.roboapp.ui.main.buoyInfoFragment"
+        android:name="it.halb.roboapp.ui.main.BuoyInfoFragment"
         tools:layout="@layout/fragment_buoy_info"
         android:label="buoyInfoFragment" />
     <fragment
@@ -47,5 +50,14 @@
         android:name="it.halb.roboapp.ui.main.RoboaInfoFragment"
         tools:layout="@layout/fragment_robuoy_info"
         android:label="RoboaInfoFragment" />
+    <fragment
+        android:id="@+id/createRegattaFragment"
+        android:name="it.halb.roboapp.ui.main.CreateRegattaFragment"
+        android:label="CreateRegattaFragment"
+        tools:layout="@layout/fragment_create_regatta" >
+        <action
+            android:id="@+id/action_createRegattaFragment_to_runRegattaFragment"
+            app:destination="@id/runRegattaFragment" />
+    </fragment>
 
 </navigation>

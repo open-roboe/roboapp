@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +58,11 @@ public class RegattaListFragment extends Fragment {
         RegattaListAdapter adapter = new RegattaListAdapter();
         binding.recyclerView.setAdapter(adapter);
 
-        //viewModel update listeners
+        //viewmodel update listeners
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
             //update the list adapter
             adapter.submitList(regattas);
+
             //update placeholder visibility
             binding.noRegattasPlaceholder.setVisibility(
                     regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
@@ -77,9 +79,6 @@ public class RegattaListFragment extends Fragment {
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
-            model.fakeInsert(name ->{
-            });
-
             /*
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)
@@ -104,10 +103,16 @@ public class RegattaListFragment extends Fragment {
             );
         });
 
+        binding.floatingActionButton.setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigate(
+                    RegattaListFragmentDirections.actionCourseListToCreateRegattaFragment()
+            );
+        });
 
         //recyclerview touch gestures
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT ) {
+
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
