@@ -68,7 +68,7 @@ public class RegattaListFragment extends Fragment {
             //update searchbar scroll
             AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) binding.fakeSearchBar.getLayoutParams();
             p.setScrollFlags(
-                    regattas.size() > 8 ?
+                    regattas.size() > 5 ?
                     AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL :
                     AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
             );
