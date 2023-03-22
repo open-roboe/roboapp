@@ -18,13 +18,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 >
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
+                    android:layout_margin="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -109,7 +109,7 @@
                         android:id="@+id/textInputRegattaStartLineLength"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="32dp"
                         android:hint="@string/textfield_hint_regatta_start_line_length"
                         app:errorEnabled="true"
                         app:layout_constraintBottom_toTopOf="@+id/toggleButton"
@@ -226,15 +226,15 @@
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/textInputRegattaBuoyStern"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp"
+                        android:layout_marginBottom="72dp"
                         android:enabled="@{createRegattaViewModel.enableBuoyStern}"
                         android:hint="@string/textfield_hint_regatta_buoy_stern"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/buttonCreateRegatta"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
 
                         <AutoCompleteTextView
                             android:layout_width="match_parent"
@@ -242,19 +242,37 @@
                             android:inputType="none"
                             android:onTextChanged="@{createRegattaViewModel::onBuoySternTextChanged}"
                             android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.BUOY_STERN)}"
-                            app:simpleItems="@array/buoy_stern_array"
-                            />
+                            app:simpleItems="@array/buoy_stern_array" />
 
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <Button
                         android:id="@+id/buttonCreateRegatta"
-                        style="@style/Widget.Material3.Button.TonalButton"
-                        android:layout_width="match_parent"
+                        style="@style/Widget.Material3.Button.UnelevatedButton"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="8dp"
                         android:text="@string/fragment_create_regatta_button"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/buttonCancel"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/button_cancel"
+                        app:layout_constraintStart_toEndOf="@+id/buttonCreateRegatta"
+                        app:layout_constraintTop_toTopOf="@+id/buttonCreateRegatta" />
+
+                    <View
+                        android:id="@+id/divider"
+                        android:layout_width="377dp"
+                        android:layout_height="1dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="?android:attr/listDivider"
+                        app:layout_constraintBottom_toTopOf="@+id/buttonCreateRegatta"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 

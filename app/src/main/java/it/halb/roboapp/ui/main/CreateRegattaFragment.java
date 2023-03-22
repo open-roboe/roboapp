@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
@@ -85,6 +87,11 @@ public class CreateRegattaFragment extends Fragment {
 
         createRegattaButton.setOnClickListener(v -> {
             model.createRegatta();
+        });
+
+        binding.buttonCancel.setOnClickListener(v -> {
+            //go back to the previous page. This is practically like pressing the back button
+            NavHostFragment.findNavController(this).popBackStack();
         });
 
 
