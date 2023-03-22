@@ -14,7 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -43,10 +47,11 @@ public class CreateRegattaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //initialize viewmodel
         model = new ViewModelProvider(this).get(CreateRegattaViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setCreateRegattaViewModel(model);
-
 
         //ask for location permissions. we notify the viewModel the result so that a
         // manual coordinates input can be created in case of denied permissions
@@ -119,6 +124,10 @@ public class CreateRegattaFragment extends Fragment {
             //go back to the previous page. This is practically like pressing the back button
             NavHostFragment.findNavController(this).popBackStack();
         });
+        binding.topAppBar.setNavigationOnClickListener(v -> {
+            NavHostFragment.findNavController(this).popBackStack();
+        });
+
 
 
     }
