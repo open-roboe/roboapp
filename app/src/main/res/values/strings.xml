@@ -29,6 +29,26 @@
     <string name="notification_text">regatta details</string>
     <string name="notification_channel_name">regattas</string>
     <string name="notification_channel_description">Immediate updates on navigation and running regattas</string>
+    <string name="textfield_hint_regatta_name">name</string>
+    <string name="fragment_create_regatta_title">Create Regatta</string>
+    <string name="textfield_hint_regatta_course_axis">course axis (grade)</string>
+    <string name="textfield_hint_regatta_course_length">course length (km)</string>
+    <string name="textfield_hint_regatta_start_line_length">start line length (m)</string>
+    <string name="toggleButton_triangle">triangle</string>
+    <string name="buttonToggle_stick">stick</string>
+    <string name="materialSwitch_stacchetto">stacchetto</string>
+    <string name="textfield_hint_regatta_stacchetto_distance">distance (m)</string>
+    <string name="materialSwitch_bolina">bolina</string>
+    <string name="textfield_hint_regatta_bolina_distance">distance (m)</string>
+    <string name="textfield_hint_regatta_buoy_stern">buoy stern</string>
+    <string name="fragment_create_regatta_button">Create regatta</string>
+    <array name="buoy_stern_array">
+        <item>None</item>
+        <item>Single</item>
+        <item>Gate</item>
+    </array>
+    <string name="textfield_missing_field_error">Required field! Please insert a value</string>
+    <string name="textfield_invalid_field_error">Invalid field! Please insert a valid value</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="regatta_menu_map">Map</string>
