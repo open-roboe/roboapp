@@ -1,14 +1,19 @@
 package it.halb.roboapp.dataLayer;
 
 import android.app.Application;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
+import javax.annotation.ParametersAreNonnullByDefault;
+
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
+import it.halb.roboapp.dataLayer.localDataSource.BuoyDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
@@ -19,6 +24,7 @@ public class RegattaRepository {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
+    private final BuoyDao buoyDao;
     private final LiveData<Account> account;
     private final LiveData<List<Regatta>> regattas;
 
@@ -28,6 +34,7 @@ public class RegattaRepository {
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
+        buoyDao = database.buoyDao();
 
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
@@ -74,6 +81,7 @@ public class RegattaRepository {
      * Create a regatta, both locally and remotely in the api server.
      * In case of error the local copy will be automatically deleted, and th ErrorCallback will execute.
      */
+    @ParametersAreNonnullByDefault
     public void insertRegatta(
             Regatta regatta,
             List<Buoy> buoys,
@@ -82,8 +90,7 @@ public class RegattaRepository {
     ){
         //mock
         Database.databaseWriteExecutor.execute(() ->{
-            regattaDao.insert(regatta);
-            //TODO: insert all buoys. requires DAO method
+            buoyDao.insert(buoys);
         });
         successCallback.success(null);
     }

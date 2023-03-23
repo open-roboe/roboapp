@@ -8,7 +8,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Objects;
 
-@Entity(tableName = "buoy_table",primaryKeys = {"regattaName", "id"})
+@Entity(tableName = "buoy_table", primaryKeys = {"regattaName", "id"})
 public class Buoy {
     @NonNull
     private String regattaName;
@@ -65,15 +65,20 @@ public class Buoy {
     }
 
 
-    public void setPosition(LatLng position)
-    {
-        this.setLatitude(position.latitude);
-        this.setLongitude(position.longitude);
-    }
 
     public LatLng getPosition()
     {
         return new LatLng(this.getLatitude(),this.getLongitude());
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return "Buoy{" +
+                "regattaName='" + regattaName + '\'' +
+                ", id='" + id + '\'' +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                '}';
+    }
 }

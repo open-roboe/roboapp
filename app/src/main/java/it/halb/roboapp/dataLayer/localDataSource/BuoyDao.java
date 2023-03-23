@@ -12,6 +12,8 @@ import java.util.List;
 public interface BuoyDao {
     @Insert
     void insert(Buoy buoy);
+    @Insert
+    void insert(List<Buoy> buoy);
 
     @Update
     void update(Buoy buoy);
@@ -21,6 +23,9 @@ public interface BuoyDao {
 
     @Query("SELECT * FROM buoy_table where regattaName = :regattaName")
     LiveData<List<Buoy>> getBuoy(String regattaName);
+
+    @Query("SELECT r.* FROM buoy_table r, running_status_table rs WHERE r.regattaName = rs.runningRegattaName")
+    LiveData<List<Buoy>> getRunningBuoys();
 
     @Query("SELECT * FROM buoy_table LIMIT 50")
     LiveData<List<Buoy>> getAll();

@@ -61,8 +61,8 @@ public class RunningRegattaRepository {
         //a running regatta is not set
         runningStatus = runningStatusDao.getRunningStatus();
         regatta = regattaDao.getRunningRegatta();
-        buoyList = buoyDao.getAll();
-        boatList = boatDao.getAll();
+        buoyList = buoyDao.getRunningBuoys();
+        boatList = boatDao.getRunningBoats();
         roboaList = roboaDao.getAll();
     }
 

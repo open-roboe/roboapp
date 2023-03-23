@@ -1,5 +1,9 @@
 package it.halb.roboapp.util;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
@@ -15,6 +19,7 @@ public class BuoyFactory {
     private static LatLng mid;
     private static int left;
 
+    @NonNull
     public static List<Buoy> buildCourse(Regatta race)
     {
         regatta = race;
@@ -25,13 +30,14 @@ public class BuoyFactory {
         {
             case Constants.stickRegatta:
                 regattaStick();
-                return buoys;
+                break;
             case Constants.triangleRegatta:
                 regattaTriangle();
-                return buoys;
+                break;
             default:
-                return null;
+                Log.d("BUOYFACTORY", "INVALID_STATE");
         }
+        return buoys;
     }
 
     //imposta boe di: partenza, meta linea di partenza(che è solo un punto util),boa di bolina,
