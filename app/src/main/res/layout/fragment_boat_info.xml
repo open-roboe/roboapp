@@ -5,8 +5,8 @@
     >
     <data>
         <variable
-            name="boatInfoViewModel"
-            type="it.halb.roboapp.ui.main.BoatInfoViewModel" />
+            name="MapViewModel"
+            type="it.halb.roboapp.ui.main.MapViewModel" />
     </data>
 
 

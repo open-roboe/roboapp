@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHolder> {
 
@@ -32,8 +33,7 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
         @Override
         public boolean areContentsTheSame(@NonNull Boat oldItem, @NonNull Boat newItem) {
             //we compare the content
-            //TODO: finire bene questo metodo
-            return true;
+            return oldItem.hashCode() == newItem.hashCode();
         }
     };
     @NonNull
@@ -49,7 +49,7 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
         Boat currentBoat = getItem(position);
         try{
             holder.user_online.setText(currentBoat.getUsername());
-            holder.distanza_metri.setText("distanza da calcolare");
+            holder.distanza_metri.setText("distanza tra (" + currentBoat.getLatitude() + ", " + currentBoat.getLongitude() + ") e posizione attuale");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -59,6 +59,10 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
             Toast.makeText(v.getContext(), "Clicked: " + position, Toast.LENGTH_SHORT).show();
             Log.d("prova", "Clicked: " + position);
         });
+    }
+
+    public Boat getBoatAt(int position){
+        return getItem(position);
     }
 
     public class BoatsHolder extends RecyclerView.ViewHolder {

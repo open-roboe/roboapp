@@ -40,9 +40,9 @@ public class BoatInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        BoatInfoViewModel model = new ViewModelProvider(this).get(BoatInfoViewModel.class);
+        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
-        binding.setBoatInfoViewModel(model);
+        binding.setMapViewModel(model);
 
         binding.boatsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.boatsRecyclerView.setHasFixedSize(true);
@@ -54,62 +54,7 @@ public class BoatInfoFragment extends Fragment {
         });
 
         //test recyclerView
-        Boat a = new Boat("a", "b", 0.000, 0.2222);
-        Boat b = new Boat("a", "b", 0.000, 0.2222);
-        Boat c = new Boat("a", "b", 0.000, 0.2222);
-        a.setUsername("qaaaaaaaa");
-        b.setUsername("bbbbbbbbb");
-        c.setUsername("ccccccccc");
-        ArrayList<Boat> list = new ArrayList<Boat>();
-        list.add(a);
-        list.add(b);
-        list.add(c);
-        /*
-        Boat d = new Boat("a", "b", 0.000, 0.2222);
-        Boat e = new Boat("a", "b", 0.000, 0.2222);
-        Boat f = new Boat("a", "b", 0.000, 0.2222);
-        d.setUsername("qaaaaaaaa");
-        e.setUsername("bbbbbbbbb");
-        f.setUsername("ccccccccc");
-
-        list.add(d);
-        list.add(e);
-        list.add(f);
-        Boat g = new Boat("a", "b", 0.000, 0.2222);
-        Boat h = new Boat("a", "b", 0.000, 0.2222);
-        Boat i = new Boat("a", "b", 0.000, 0.2222);
-        g.setUsername("qaaaaaaaa");
-        h.setUsername("bbbbbbbbb");
-        i.setUsername("ccccccccc");
-
-        list.add(g);
-        list.add(h);
-        list.add(i);
-        Boat l = new Boat("a", "b", 0.000, 0.2222);
-        Boat m = new Boat("a", "b", 0.000, 0.2222);
-        Boat n = new Boat("a", "b", 0.000, 0.2222);
-        l.setUsername("qaaaaaaaa");
-        m.setUsername("bbbbbbbbb");
-        n.setUsername("ccccccccc");
-
-        list.add(l);
-        list.add(m);
-        list.add(n);
-        Boat p = new Boat("a", "b", 0.000, 0.2222);
-        Boat q = new Boat("a", "b", 0.000, 0.2222);
-        Boat r = new Boat("a", "b", 0.000, 0.2222);
-        p.setUsername("qaaaaaaaa");
-        q.setUsername("BBBBBBB");
-        r.setUsername("AAAAAAAAAA");
-
-        list.add(p);
-        list.add(q);
-        list.add(r);
-
-
-         */
-        adapter.submitList(list);
-
+        model.fakeData();
 
 
 
