@@ -340,6 +340,14 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
             //create buoys objects
             List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
+            if(buoys == null){
+                Log.d("INSERTREGATTA", "NULL lol");
+            }
+            else{
+                buoys.forEach(buoy -> {
+                    Log.d("INSERTREGATTA", buoy.toString());
+                });
+            }
 
             //repository call to create the regatta
             regattaRepository.insertRegatta(
