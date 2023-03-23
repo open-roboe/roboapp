@@ -73,10 +73,22 @@ public class RunningRegattaRepository {
         return regatta;
     }
 
+    /**
+     *
+     * @return all the buoys of the current regatta
+     */
     public LiveData<List<Buoy>> getBuoys(){
         return buoyList;
     }
 
+    /**
+     * Return a list with all the boats currently following the regatta.
+     * the position of every boat will update in real time, and so will the lastUpdate timer.
+     * When a boat has an old lastUpdate time it might be offline. When the time gets too old
+     * it will disappear from this list
+     *
+     * @return all the boats of the current regatta
+     */
     public LiveData<List<Boat>> getBoats(){
         return boatList;
     }

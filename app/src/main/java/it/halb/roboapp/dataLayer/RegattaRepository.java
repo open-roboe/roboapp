@@ -75,6 +75,7 @@ public class RegattaRepository {
     public void deleteRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
         //mock
         Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
+        //TODO: add constraint key, or manually delete buoys from here
     }
 
     /**
