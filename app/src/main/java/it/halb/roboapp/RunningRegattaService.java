@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -40,7 +39,7 @@ public class RunningRegattaService extends Service {
      *
      */
     private final Runnable pollingRunnable = new Runnable() {
-        @SuppressLint("MissingPermission")
+        @SuppressLint("MissingPermission") //this lint is broken, we are actually checking the permission
         @Override
         public void run() {
             //get the repository

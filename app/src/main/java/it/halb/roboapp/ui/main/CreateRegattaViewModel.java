@@ -19,6 +19,7 @@ import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.util.BuoyFactory;
+import it.halb.roboapp.util.Constants;
 
 public class CreateRegattaViewModel extends AndroidViewModel {
 
@@ -74,7 +75,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     private MutableLiveData<String> buoySternError = new MutableLiveData<>("");
 
-    private MutableLiveData<String> regattaType = new MutableLiveData<>("stick");
+    private MutableLiveData<String> regattaType = new MutableLiveData<>(Constants.stickRegatta);
 
     private MutableLiveData<Boolean> enableStacchettoDistance = new MutableLiveData<>(true);
 
@@ -208,11 +209,11 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     public void onRegattaTypeChanged(int index) {
         if (index == 0) {
-            regattaType.setValue("stick");
+            regattaType.setValue(Constants.stickRegatta);
             enableBuoyStern.setValue(true);
         }
         else {
-            regattaType.setValue("triangle");
+            regattaType.setValue(Constants.triangleRegatta);
             enableBuoyStern.setValue(false);
             resetDisplayError(formFieldsErrors.getValue().get("buoySternError"));
         }
