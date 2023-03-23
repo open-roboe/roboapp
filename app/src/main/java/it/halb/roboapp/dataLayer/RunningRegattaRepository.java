@@ -73,15 +73,15 @@ public class RunningRegattaRepository {
         return regatta;
     }
 
-    public LiveData<List<Buoy>> getAllBuoys(){
+    public LiveData<List<Buoy>> getBuoys(){
         return buoyList;
     }
 
-    public LiveData<List<Boat>> getAllBoats(){
+    public LiveData<List<Boat>> getBoats(){
         return boatList;
     }
 
-    public LiveData<List<Roboa>> getAllRoboas(){
+    public LiveData<List<Roboa>> getRoboas(){
         return roboaList;
     }
 
@@ -145,9 +145,6 @@ public class RunningRegattaRepository {
         //clear previous data, and set the initial data
         Database.databaseWriteExecutor.execute(() -> {
             runningStatusDao.delete();
-            buoyDao.deleteAll();
-            boatDao.deleteAll();
-            roboaDao.deleteAll();
             runningStatusDao.insert(runningStatus);
         });
 

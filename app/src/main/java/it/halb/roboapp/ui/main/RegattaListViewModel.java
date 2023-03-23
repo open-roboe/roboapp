@@ -15,7 +15,10 @@ import it.halb.roboapp.dataLayer.AuthRepository;
 import it.halb.roboapp.dataLayer.ErrorCallback;
 import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.util.BuoyFactory;
+import it.halb.roboapp.util.Constants;
 
 public class RegattaListViewModel extends AndroidViewModel {
 
@@ -50,6 +53,13 @@ public class RegattaListViewModel extends AndroidViewModel {
         regattaRepository.loadAllRegattas(l -> {
             success.success(null);
         }, error);
+    }
+
+    public void debugFakeregatta(){
+        String name = "Regatta-" + (new Random().nextInt());
+        Regatta regatta = new Regatta(name, Constants.stickRegatta, 0, 10, 100.1, 10.1, 1000.0, 10.0, true, true);
+        List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
+        regattaRepository.insertRegatta(regatta, buoys, v->{}, (code, details) -> {});
     }
 
 }

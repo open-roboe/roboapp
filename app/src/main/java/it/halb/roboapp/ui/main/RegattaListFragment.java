@@ -77,6 +77,7 @@ public class RegattaListFragment extends Fragment {
 
         //temporary test
         binding.fakeSearchBar.setOnClickListener(v -> {
+            model.debugFakeregatta();
             /*
             Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
                     .setDuration(10 * 1000)

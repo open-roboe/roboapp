@@ -90,6 +90,7 @@ public class RegattaRepository {
     ){
         //mock
         Database.databaseWriteExecutor.execute(() ->{
+            regattaDao.insert(regatta);
             buoyDao.insert(buoys);
         });
         successCallback.success(null);
