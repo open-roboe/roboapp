@@ -20,7 +20,9 @@ public interface BoatDao {
     @Query("DELETE FROM boat_table")
     void deleteAll();
 
+    @Query("SELECT r.* FROM boat_table r, running_status_table rs WHERE r.regattaName = rs.runningRegattaName")
+    LiveData<List<Boat>> getRunningBoats();
+
     @Query("SELECT * FROM boat_table LIMIT 50")
     LiveData<List<Boat>> getAll();
-
 }

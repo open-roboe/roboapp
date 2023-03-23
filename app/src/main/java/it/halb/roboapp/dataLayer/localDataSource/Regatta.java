@@ -16,26 +16,17 @@ public class Regatta {
     private String name;
     private String type;
     private final int creationDate;
-
     private int windDirection;
-
     private double startLineLen;
-
     private double breakDistance;
-
     private double courseLength;
-
     private double secondMarkDistance;
-
     private boolean bottonBuoy;
-
     private boolean gate;
-
     private double longitude;
-
     private double latitude;
 
-
+    @Ignore
     public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
                    double startLineLen, double breakDistance, double courseLength,
                    double secondMarkDistance, boolean bottonBuoy, boolean gate) {
@@ -49,6 +40,23 @@ public class Regatta {
         this.secondMarkDistance = secondMarkDistance;
         this.bottonBuoy = bottonBuoy;
         this.gate = gate;
+    }
+
+    public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
+                   double startLineLen, double breakDistance, double courseLength,
+                   double secondMarkDistance, boolean bottonBuoy, boolean gate, double longitude, double latitude) {
+        this.name = name;
+        this.type = type;
+        this.creationDate = creationDate;
+        this.windDirection = windDirection;
+        this.startLineLen = startLineLen;
+        this.breakDistance = breakDistance;
+        this.courseLength = courseLength;
+        this.secondMarkDistance = secondMarkDistance;
+        this.bottonBuoy = bottonBuoy;
+        this.gate = gate;
+        this.longitude = longitude;
+        this.latitude = latitude;
     }
 
     @Ignore
@@ -91,7 +99,6 @@ public class Regatta {
     public int getCreationDate() {
         return creationDate;
     }
-
 
     public int getWindDirection() {
         return windDirection;
@@ -165,16 +172,31 @@ public class Regatta {
         this.latitude = latitude;
     }
 
-    public void setLatLng (LatLng position)
-    {
+    public void setLatLng(LatLng position) {
         this.setLatitude(position.latitude);
         this.setLongitude(position.longitude);
     }
 
-    public LatLng getPosition()
-    {
-        return new LatLng(this.getLatitude(),this.getLongitude());
+    public LatLng getPosition() {
+        return new LatLng(this.getLatitude(), this.getLongitude());
     }
 
-
+    @Override
+    public String toString() {
+        return "Regatta{" +
+                "name='" + name + '\'' +
+                ", type='" + type + '\'' +
+                ", creationDate=" + creationDate +
+                ", windDirection=" + windDirection +
+                ", startLineLen=" + startLineLen +
+                ", breakDistance=" + breakDistance +
+                ", courseLength=" + courseLength +
+                ", secondMarkDistance=" + secondMarkDistance +
+                ", bottonBuoy=" + bottonBuoy +
+                ", gate=" + gate +
+                ", longitude=" + longitude +
+                ", latitude=" + latitude +
+                '}';
+    }
 }
+

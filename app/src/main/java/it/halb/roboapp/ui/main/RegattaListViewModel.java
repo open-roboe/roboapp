@@ -7,26 +7,29 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Random;
 
 import it.halb.roboapp.dataLayer.AuthRepository;
+import it.halb.roboapp.dataLayer.ErrorCallback;
+import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
-import it.halb.roboapp.dataLayer.regattaRepository;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.util.BuoyFactory;
+import it.halb.roboapp.util.Constants;
 
 public class RegattaListViewModel extends AndroidViewModel {
 
-    private final MutableLiveData<String> placeholderVisible = new MutableLiveData<>("VISIBLE");
+    public boolean showSwipeHint = true;
     private final LiveData<List<Regatta>> allRegattas;
-    private final regattaRepository regattaRepository;
+    private final RegattaRepository regattaRepository;
     private final AuthRepository authRepository;
 
     public RegattaListViewModel(@NonNull Application application) {
         super(application);
-        regattaRepository = new regattaRepository(application);
+        regattaRepository = new RegattaRepository(application);
         authRepository = AuthRepository.getInstance(application);
         allRegattas = regattaRepository.getAllRegattas();
     }
@@ -46,16 +49,17 @@ public class RegattaListViewModel extends AndroidViewModel {
         );
     }
 
-   public void fakeInsert(SuccessCallback<String> success){
-        Log.d("FAKEINSERT", "cliecked");
-        Random rand = new Random();
-        String name = "name" + String.valueOf(rand.nextInt());
-       Regatta regatta = new Regatta(name, "stick", 0, 10, 10.1, 10.1, 10.0, 10.0, true, true);
-       regattaRepository.insertRegatta(regatta, null,
-               v -> {
-                success.success(name);
-               },
-               ((code, details) -> {})
-               );
+    public void refresh(SuccessCallback<Void> success, ErrorCallback error){
+        regattaRepository.loadAllRegattas(l -> {
+            success.success(null);
+        }, error);
     }
+
+    public void debugFakeregatta(){
+        String name = "Regatta-" + (new Random().nextInt());
+        Regatta regatta = new Regatta(name, Constants.stickRegatta, 0, 10, 100.1, 10.1, 1000.0, 10.0, true, true);
+        List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
+        regattaRepository.insertRegatta(regatta, buoys, v->{}, (code, details) -> {});
+    }
+
 }

@@ -61,8 +61,8 @@ public class RunningRegattaRepository {
         //a running regatta is not set
         runningStatus = runningStatusDao.getRunningStatus();
         regatta = regattaDao.getRunningRegatta();
-        buoyList = buoyDao.getAll();
-        boatList = boatDao.getAll();
+        buoyList = buoyDao.getRunningBuoys();
+        boatList = boatDao.getRunningBoats();
         roboaList = roboaDao.getAll();
     }
 
@@ -73,15 +73,27 @@ public class RunningRegattaRepository {
         return regatta;
     }
 
-    public LiveData<List<Buoy>> getAllBuoys(){
+    /**
+     *
+     * @return all the buoys of the current regatta
+     */
+    public LiveData<List<Buoy>> getBuoys(){
         return buoyList;
     }
 
-    public LiveData<List<Boat>> getAllBoats(){
+    /**
+     * Return a list with all the boats currently following the regatta.
+     * the position of every boat will update in real time, and so will the lastUpdate timer.
+     * When a boat has an old lastUpdate time it might be offline. When the time gets too old
+     * it will disappear from this list
+     *
+     * @return all the boats of the current regatta
+     */
+    public LiveData<List<Boat>> getBoats(){
         return boatList;
     }
 
-    public LiveData<List<Roboa>> getAllRoboas(){
+    public LiveData<List<Roboa>> getRoboas(){
         return roboaList;
     }
 
@@ -145,9 +157,6 @@ public class RunningRegattaRepository {
         //clear previous data, and set the initial data
         Database.databaseWriteExecutor.execute(() -> {
             runningStatusDao.delete();
-            buoyDao.deleteAll();
-            boatDao.deleteAll();
-            roboaDao.deleteAll();
             runningStatusDao.insert(runningStatus);
         });
 
