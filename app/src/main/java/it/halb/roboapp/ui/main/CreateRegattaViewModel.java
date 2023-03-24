@@ -243,8 +243,8 @@ public class CreateRegattaViewModel extends AndroidViewModel {
             buoySternInfo[1] = false;
         }
         else {
-            buoySternInfo[0] = !(buoyStern.getValue().equals("None"));
-            buoySternInfo[1] = buoyStern.getValue().equals("Gate");
+            buoySternInfo[0] = !(formFields.getValue().get("buoyStern").getValue().equals("None"));
+            buoySternInfo[1] = formFields.getValue().get("buoyStern").getValue().equals("Gate");
         }
         return buoySternInfo;
     }
