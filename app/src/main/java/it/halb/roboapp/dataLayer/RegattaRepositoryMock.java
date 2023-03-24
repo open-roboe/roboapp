@@ -15,19 +15,17 @@ import it.halb.roboapp.dataLayer.localDataSource.BuoyDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
-import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.util.SharedPreferenceUtil;
+import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
-public class RegattaRepository implements RegattaInterface {
-    private final ApiClient apiClient;
+public class RegattaRepositoryMock implements RegattaInterface {
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
     private final BuoyDao buoyDao;
     private final LiveData<Account> account;
     private final LiveData<List<Regatta>> regattas;
 
-    //TODO: transform into singleton
-    public RegattaRepository(Application application){
+    public RegattaRepositoryMock(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
@@ -43,7 +41,7 @@ public class RegattaRepository implements RegattaInterface {
         if(account.getValue() != null)
             authToken = account.getValue().getAuthToken();
         //init remote data source
-        apiClient = new ApiClient(apiBaseUrl, authToken);
+        ApiClient apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
     public LiveData<List<Regatta>> getAllRegattas(){
@@ -51,12 +49,10 @@ public class RegattaRepository implements RegattaInterface {
     }
 
     public void loadAllRegattas(SuccessCallback<List<Regatta>> successCallback, ErrorCallback errorCallback){
-        //mock
         successCallback.success(getAllRegattas().getValue());
     }
 
     public void deleteRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
-        //mock
         Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
         //TODO: add constraint key, or manually delete buoys from here
     }
