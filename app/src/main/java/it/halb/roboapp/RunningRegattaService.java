@@ -16,6 +16,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
@@ -23,7 +24,7 @@ import androidx.core.app.NotificationCompat;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 
-import it.halb.roboapp.dataLayer.RunningRegattaRepository;
+import it.halb.roboapp.dataLayer.RunningRegattaRepositoryMock;
 import it.halb.roboapp.util.Permissions;
 
 public class RunningRegattaService extends Service {
@@ -44,7 +45,7 @@ public class RunningRegattaService extends Service {
         public void run() {
             //get the repository
             Application application = getApplication();
-            RunningRegattaRepository repository = new RunningRegattaRepository(application);
+            RunningRegattaRepositoryMock repository = new RunningRegattaRepositoryMock(application);
 
             //fetch the device location and call the repository
             if( ! Permissions.hasLocationPermissions(application)){

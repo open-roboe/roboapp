@@ -4,15 +4,15 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import it.halb.roboapp.dataLayer.RunningRegattaRepository;
+import it.halb.roboapp.dataLayer.RunningRegattaRepositoryMock;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 
 public class RunRegattaViewModel extends AndroidViewModel {
-    private final RunningRegattaRepository runningRegatta;
+    private final RunningRegattaRepositoryMock runningRegatta;
 
     public RunRegattaViewModel(@NonNull Application application) {
         super(application);
-        runningRegatta = new RunningRegattaRepository(application);
+        runningRegatta = new RunningRegattaRepositoryMock(application);
     }
 
     public void declareRegattaToRun(@NonNull String name,

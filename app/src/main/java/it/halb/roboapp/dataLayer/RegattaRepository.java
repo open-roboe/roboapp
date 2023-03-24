@@ -20,7 +20,7 @@ import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
 import it.halb.roboapp.util.SharedPreferenceUtil;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 
-public class RegattaRepository {
+public class RegattaRepository implements RegattaInterface {
     private final ApiClient apiClient;
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
@@ -48,40 +48,21 @@ public class RegattaRepository {
         apiClient = new ApiClient(apiBaseUrl, authToken);
     }
 
-    /**
-     * Return a LiveData list of all the regattas. To update this list, call loadAllRegattas()
-     *
-     * Note that a Regatta object does not include the associated buoys, boats, or roboas.
-     * If you want to get that data you must use the RunningRegattaRepository repository
-     *
-     */
     public LiveData<List<Regatta>> getAllRegattas(){
         return regattas;
     }
 
-    /**
-     * TODO
-     * Perform an api request to get the list of all the regattas. When it succeeds, the Livedata allRegattas list is
-     * updated with the new data. Use the method getAllRegattas() to get the Livedata List.
-     */
     public void loadAllRegattas(SuccessCallback<List<Regatta>> successCallback, ErrorCallback errorCallback){
         //mock
         successCallback.success(getAllRegattas().getValue());
     }
 
-    /**
-     * TODO
-     */
     public void deleteRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
         //mock
         Database.databaseWriteExecutor.execute(() -> regattaDao.delete(regatta));
         //TODO: add constraint key, or manually delete buoys from here
     }
 
-    /**
-     * Create a regatta, both locally and remotely in the api server.
-     * In case of error the local copy will be automatically deleted, and th ErrorCallback will execute.
-     */
     @ParametersAreNonnullByDefault
     public void insertRegatta(
             Regatta regatta,
