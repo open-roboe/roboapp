@@ -38,10 +38,6 @@ All'interno del codice è tradotto come "running regatta".
 
 [TODO: link a docs runningregattarepository]
 
-la documentazione di questa repository include una spiegazione del suo comportamento particolare
-
-[TODO: move to runningregattarepository doc]
-
 Questa repository è complicata perchè quando si "lancia" una regatta, Occorre fare due cose:
 - Salvare in memoria il nome della regata lanciata
 - Attivare il foreground service che si occupa di tenere aggiornati i dati, anche quando si spegne lo schermo.
