@@ -48,4 +48,6 @@ Questa repository è complicata perchè quando si "lancia" una regatta, Occorre 
 
 Tutto questo è fatto dal fragment RunRegattaFragment, secondo questo schema
 
-![diagram](./src/runningregttadiagram.png)
+<div align="center">
+<img src="./src/runningregattadiagram.png" height="auto" width="900" />
+</div>
