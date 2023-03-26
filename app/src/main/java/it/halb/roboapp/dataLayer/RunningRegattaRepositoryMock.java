@@ -59,8 +59,8 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
         buoyDao = database.buoyDao();
-        boatDao = database.BoatDao();
-        roboaDao = database.RoboaDao();
+        boatDao = database.boatDao();
+        roboaDao = database.roboaDao();
         runningStatusDao = database.RunningStatusDao();
 
 
@@ -103,7 +103,7 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
     }
     public LiveData<Location> getLocation(){
         return Transformations.map(runningStatus, r ->{
-            Location l = new Location("what is a provider? lol");
+            Location l = new Location("lat_lon_deserialized");
             l.setLatitude(r.getLat());
             l.setLongitude(r.getLon());
             return l;

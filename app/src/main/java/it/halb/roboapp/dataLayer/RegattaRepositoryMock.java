@@ -5,11 +5,14 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
+import it.halb.roboapp.dataLayer.localDataSource.BoatDao;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.BuoyDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
@@ -22,6 +25,7 @@ public class RegattaRepositoryMock implements RegattaInterface {
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
     private final BuoyDao buoyDao;
+    private final BoatDao boatDao;
     private final LiveData<Account> account;
     private final LiveData<List<Regatta>> regattas;
 
@@ -31,6 +35,7 @@ public class RegattaRepositoryMock implements RegattaInterface {
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
         buoyDao = database.buoyDao();
+        boatDao = database.boatDao();
 
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
@@ -65,9 +70,21 @@ public class RegattaRepositoryMock implements RegattaInterface {
             ErrorCallback errorCallback
     ){
         //mock
+        int r = new Random().nextInt();
+        Boat b = new Boat(
+                "boat-"+ r,
+                regatta.getName(),
+                r%2 == 0,
+                regatta.getLatitude() + 0.0001,
+                regatta.getLongitude(),
+                0
+        );
+
         Database.databaseWriteExecutor.execute(() ->{
             regattaDao.insert(regatta);
             buoyDao.insert(buoys);
+            //mock
+            boatDao.insert(b);
         });
         successCallback.success(null);
     }

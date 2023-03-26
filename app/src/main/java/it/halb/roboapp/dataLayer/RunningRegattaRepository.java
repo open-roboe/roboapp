@@ -59,8 +59,8 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
         buoyDao = database.buoyDao();
-        boatDao = database.BoatDao();
-        roboaDao = database.RoboaDao();
+        boatDao = database.boatDao();
+        roboaDao = database.roboaDao();
         runningStatusDao = database.RunningStatusDao();
 
 
