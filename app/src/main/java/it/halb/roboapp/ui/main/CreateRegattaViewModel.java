@@ -14,7 +14,7 @@ import java.util.List;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.ErrorCallback;
-import it.halb.roboapp.dataLayer.RegattaRepository;
+import it.halb.roboapp.dataLayer.RegattaRepositoryMock;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
@@ -41,7 +41,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     private MutableLiveData<Double> currentLon = new MutableLiveData<>(0.0);
     private MutableLiveData<Boolean> locationPermissions = new MutableLiveData<>(false);
 
-    private final RegattaRepository regattaRepository;
+    private final RegattaRepositoryMock regattaRepository;
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
@@ -138,7 +138,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     public CreateRegattaViewModel(@NonNull Application application) {
         super(application);
 
-        regattaRepository = new RegattaRepository(application);
+        regattaRepository = new RegattaRepositoryMock(application);
 
         populateHashMaps("");
         populateHashMaps("Error");
