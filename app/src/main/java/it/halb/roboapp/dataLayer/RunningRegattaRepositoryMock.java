@@ -35,7 +35,7 @@ import it.halb.roboapp.dataLayer.localDataSource.RunningStatusDao;
  * It's useful for instrumental tests and development.
  *
  */
-public class RunningRegattaRepository implements RunningRegattaInterface {
+public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
 
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
@@ -45,15 +45,15 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
     private final RoboaDao roboaDao;
     private final RunningStatusDao runningStatusDao;
     private final LiveData<Account> account;
-    private LiveData<Regatta> regatta;
+    private final LiveData<Regatta> regatta;
 
-    private LiveData<List<Buoy>> buoyList;
-    private LiveData<List<Boat>> boatList;
-    private LiveData<List<Roboa>> roboaList;
-    private LiveData<RunningStatus> runningStatus;
+    private final LiveData<List<Buoy>> buoyList;
+    private final LiveData<List<Boat>> boatList;
+    private final LiveData<List<Roboa>> roboaList;
+    private final LiveData<RunningStatus> runningStatus;
 
 
-    public RunningRegattaRepository(Application application){
+    public RunningRegattaRepositoryMock(Application application){
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
@@ -121,7 +121,6 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
 
     public void declareRegattaToRun(@NonNull String name,
                                     SuccessCallback<Void> success, ErrorCallback error){
-
         //define the new running regatta
         RunningStatus runningStatus = new RunningStatus(name);
 
@@ -130,22 +129,21 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
             runningStatusDao.delete();
             runningStatusDao.insert(runningStatus);
         });
-
         //mock
-        Log.d("RUNNINGREGATTA", "declared id: "+ name);
-        //TODO:
-        // make api request to specific regatta, same request that poll() will make.
-        // in case of errors call errorcallback
-        // in case of success call successcallback. loadFragment will start the service
         success.success(null);
     }
 
 
+    /**
+     * The mock version of this method does not make calls to the apis, instead if will
+     * simulate the response data such as boats and their movements.
+     *
+     * Check out the interface for the documentation on the real behaviour
+     */
     public void poll(Double lat, Double lon){
         Log.d("RUNNINGREGATTA", "received lat: "+ lat + "lon: "+ lon);
-        //mock update only status
         Database.databaseWriteExecutor.execute(() -> {
-            //TODO: update only on success
+            //TODO: mock boat data
             runningStatusDao.updateLocation(lat, lon, System.currentTimeMillis()/1000);
         });
     }

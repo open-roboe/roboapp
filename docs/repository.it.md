@@ -1,7 +1,5 @@
 # Repository
 
-> Le repository non sono ancora state sviluppate! Per ora, skippare questa documentazione
-
 Premessa: Se non sono chiari, i concetti di Repository e di Data layer sono spiegati prevemente nella [documentazione sull'architettura](https://developer.android.com/topic/architecture#recommended-app-arch) di Android.
 
 In poche parole comunque, il data layer è la parte dell'applicazione che gestisce la logica e i dati dell'applicazione.
@@ -36,24 +34,16 @@ la lista di boe, roboe, barche, e altre info su questa regata.
 - RoboaInfoFragment
 
 Nota che il concetto di "regata in corso"
-All'interno del codice è tradotto come "running regatta", e significa [TODO: spiegare]
+All'interno del codice è tradotto come "running regatta".
 
 [TODO: link a docs runningregattarepository]
 
-la documentazione di questa repository include una spiegazione del suo comportamento particolare
+Questa repository è complicata perchè quando si "lancia" una regatta, Occorre fare due cose:
+- Salvare in memoria il nome della regata lanciata
+- Attivare il foreground service che si occupa di tenere aggiornati i dati, anche quando si spegne lo schermo.
 
-[TODO: move to runningregattarepository doc]
+Tutto questo è fatto dal fragment RunRegattaFragment, secondo questo schema
 
-Questa repository è complicata perchè quando si "lancia" una regatta, Occorre lanciare un serviceworker che tiene aggiornata la repository.
-un service worker può solo essere lanciato da un fragment, non da dentro una repository, quindi ci troviamo
-nella situazione un po sporca dove una repository deve essere tenuta in sincrono con un service, e qualcuno deve occuparsene.
-
-Quel qualcuno è la schermata loadFragment[TODO: rinominare in futuro, magari in InitRunningRegattaFragment]
-
-
-Quando si è nella schermata di login, o nella schermata con la lista delle regata, questa repository è vuota e non serve a niente.
-
-Per attivare una regata bisogna navigare al fragment LoadFragment passando come argomento il nome della regatta che si vuole attivare.
-Loadfragment si occupa di inizializzare il background service
-
-Una volta attivata questa repository permette di ottenere boe, roboe, barche, e tutte le informazioni associate alla regata selezionata
+<div align="center">
+<img src="./src/runningregattadiagram.png" height="auto" width="900" />
+</div>
