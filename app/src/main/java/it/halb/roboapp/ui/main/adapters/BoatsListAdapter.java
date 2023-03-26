@@ -54,11 +54,12 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
         catch (Exception e){
             e.printStackTrace();
         }
-
+        /*
         holder.boat_item_view.setOnClickListener(v -> {
             Toast.makeText(v.getContext(), "Clicked: " + position, Toast.LENGTH_SHORT).show();
             Log.d("prova", "Clicked: " + position);
         });
+         */
     }
 
     public Boat getBoatAt(int position){
