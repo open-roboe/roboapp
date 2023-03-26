@@ -54,11 +54,6 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
         catch (Exception e){
             e.printStackTrace();
         }
-
-        holder.boat_item_view.setOnClickListener(v -> {
-            Toast.makeText(v.getContext(), "Clicked: " + position, Toast.LENGTH_SHORT).show();
-            Log.d("prova", "Clicked: " + position);
-        });
     }
 
     public Boat getBoatAt(int position){
@@ -68,12 +63,10 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
     public class BoatsHolder extends RecyclerView.ViewHolder {
         private TextView user_online;
         private TextView distanza_metri;
-        private View boat_item_view;
         public BoatsHolder(@NonNull View itemView) {
             super(itemView);
-            this.user_online = itemView.findViewById(R.id.user_online);
-            this.distanza_metri = itemView.findViewById(R.id.distanza_metri);
-            this.boat_item_view = itemView.findViewById(R.id.boatItemAdapterXML);
+            this.user_online = itemView.findViewById(R.id.textViewUpdate);
+            this.distanza_metri = itemView.findViewById(R.id.textViewTitle);
         }
     }
 

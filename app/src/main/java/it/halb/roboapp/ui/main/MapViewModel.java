@@ -50,50 +50,6 @@ public class MapViewModel extends AndroidViewModel {
         list.add(a);
         list.add(b);
         list.add(c);
-        /*
-        Boat d = new Boat("a", "b", 0.000, 0.2222);
-        Boat e = new Boat("a", "b", 0.000, 0.2222);
-        Boat f = new Boat("a", "b", 0.000, 0.2222);
-        d.setUsername("qaaaaaaaa");
-        e.setUsername("bbbbbbbbb");
-        f.setUsername("ccccccccc");
-
-        list.add(d);
-        list.add(e);
-        list.add(f);
-        Boat g = new Boat("a", "b", 0.000, 0.2222);
-        Boat h = new Boat("a", "b", 0.000, 0.2222);
-        Boat i = new Boat("a", "b", 0.000, 0.2222);
-        g.setUsername("qaaaaaaaa");
-        h.setUsername("bbbbbbbbb");
-        i.setUsername("ccccccccc");
-
-        list.add(g);
-        list.add(h);
-        list.add(i);
-        Boat l = new Boat("a", "b", 0.000, 0.2222);
-        Boat m = new Boat("a", "b", 0.000, 0.2222);
-        Boat n = new Boat("a", "b", 0.000, 0.2222);
-        l.setUsername("qaaaaaaaa");
-        m.setUsername("bbbbbbbbb");
-        n.setUsername("ccccccccc");
-
-        list.add(l);
-        list.add(m);
-        list.add(n);
-        Boat p = new Boat("a", "b", 0.000, 0.2222);
-        Boat q = new Boat("a", "b", 0.000, 0.2222);
-        Boat r = new Boat("a", "b", 0.000, 0.2222);
-        p.setUsername("qaaaaaaaa");
-        q.setUsername("BBBBBBB");
-        r.setUsername("AAAAAAAAAA");
-
-        list.add(p);
-        list.add(q);
-        list.add(r);
-
-
-         */
         boats.setValue(list);
 
     }
