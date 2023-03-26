@@ -77,7 +77,7 @@ public class RegattaRepositoryMock implements RegattaInterface {
                 r%2 == 0,
                 regatta.getLatitude() + 0.0001,
                 regatta.getLongitude(),
-                0
+                System.currentTimeMillis() /1000
         );
 
         Database.databaseWriteExecutor.execute(() ->{

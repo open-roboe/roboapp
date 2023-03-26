@@ -1,11 +1,10 @@
 package it.halb.roboapp.ui.main.adapters;
 
-import android.util.Log;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
-import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHolder> {
 
@@ -47,13 +45,22 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
     @Override
     public void onBindViewHolder(@NonNull BoatsHolder holder, int position) {
         Boat currentBoat = getItem(position);
-        try{
-            holder.user_online.setText(currentBoat.getUsername());
-            holder.distanza_metri.setText("distanza tra (" + currentBoat.getLatitude() + ", " + currentBoat.getLongitude() + ") e posizione attuale");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+
+        //generate last update string
+        long timestamp = currentBoat.getLastUpdate();
+        String timeDeltaString = DateUtils.getRelativeTimeSpanString(
+                timestamp * 1000, // Convert timestamp to milliseconds
+                System.currentTimeMillis(),
+                DateUtils.MINUTE_IN_MILLIS, // Show result in minutes
+                DateUtils.FORMAT_ABBREV_RELATIVE
+        ).toString();
+
+        holder.title.setText(
+                currentBoat.getUsername() + " (250 mt)"
+        );
+        holder.lastUpdate.setText(timeDeltaString);
+
+        holder.subtitle.setText("Race officer");
     }
 
     public Boat getBoatAt(int position){
@@ -61,12 +68,14 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
     }
 
     public class BoatsHolder extends RecyclerView.ViewHolder {
-        private TextView user_online;
-        private TextView distanza_metri;
+        private final TextView subtitle;
+        private TextView lastUpdate;
+        private TextView title;
         public BoatsHolder(@NonNull View itemView) {
             super(itemView);
-            this.user_online = itemView.findViewById(R.id.textViewUpdate);
-            this.distanza_metri = itemView.findViewById(R.id.textViewTitle);
+            this.lastUpdate = itemView.findViewById(R.id.textViewUpdate);
+            this.title = itemView.findViewById(R.id.textViewTitle);
+            this.subtitle = itemView.findViewById(R.id.textViewDescription);
         }
     }
 

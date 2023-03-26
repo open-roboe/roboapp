@@ -13,16 +13,22 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
+import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
 import it.halb.roboapp.ui.main.adapters.BoatsListAdapter;
+import it.halb.roboapp.util.RecyclerItemClickListener;
 
 
 public class BoatInfoFragment extends Fragment {
     private FragmentBoatInfoBinding binding;
+    private MapViewModel model;
 
     public BoatInfoFragment() {
 
@@ -40,7 +46,7 @@ public class BoatInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
+        model = new ViewModelProvider(this).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
@@ -53,12 +59,27 @@ public class BoatInfoFragment extends Fragment {
             adapter.submitList(boats);
         });
 
-        //test recyclerView
-        model.fakeData();
+
+        //touch listener
+        binding.boatsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener(
+                requireContext(), binding.boatsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Boat b = adapter.getBoatAt(position);
+                handleBoatClick(b);
+            }
+
+            @Override
+            public void onLongItemClick(View view, int position) {
+
+            }
+        }
+        ));
 
 
+    }
 
-
-
+    public void handleBoatClick(Boat b){
+        model.setTarget(b);
     }
 }
