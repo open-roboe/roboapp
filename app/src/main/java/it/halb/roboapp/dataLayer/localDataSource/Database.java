@@ -18,8 +18,8 @@ public abstract class Database extends RoomDatabase {
     public abstract AccountDao accountDao();
     public abstract RegattaDao regattaDao();
     public abstract BuoyDao buoyDao();
-    public abstract BoatDao BoatDao();
-    public abstract RoboaDao RoboaDao();
+    public abstract BoatDao boatDao();
+    public abstract RoboaDao roboaDao();
     public abstract RunningStatusDao RunningStatusDao();
     private static final int NUMBER_OF_THREADS = Runtime.getRuntime().availableProcessors();
     public static final ExecutorService databaseWriteExecutor =
