@@ -45,6 +45,7 @@ public class BoatInfoFragment extends Fragment {
         binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
             Boat b = adapter.getItemAt(position);
             Log.d("CLICK", "clicked " + b.getUsername());
+            model.setTarget(b);
         });
 
         //update listview with livedata.
@@ -55,9 +56,5 @@ public class BoatInfoFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
-    }
-
-    public void handleBoatClick(Boat b){
-        model.setTarget(b);
     }
 }
