@@ -45,7 +45,7 @@ public class BoatsListSimpleAdapter extends ArrayAdapter<Boat>{
 
         //write last update
         long timestamp = currentBoat.getLastUpdate();
-        if(timestamp - System.currentTimeMillis()/1000 < 60 ){
+        if(System.currentTimeMillis()/1000 - timestamp < 60 ){
             lastUpdate.setText(R.string.status_online);
         }
         else{
