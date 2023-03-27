@@ -4,9 +4,12 @@ import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -46,7 +49,7 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
     public void onBindViewHolder(@NonNull BoatsHolder holder, int position) {
         Boat currentBoat = getItem(position);
 
-        //generate last update string
+        //write last update
         long timestamp = currentBoat.getLastUpdate();
         String timeDeltaString = DateUtils.getRelativeTimeSpanString(
                 timestamp * 1000, // Convert timestamp to milliseconds
@@ -54,13 +57,33 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
                 DateUtils.MINUTE_IN_MILLIS, // Show result in minutes
                 DateUtils.FORMAT_ABBREV_RELATIVE
         ).toString();
+        holder.lastUpdate.setText(timeDeltaString);
 
+        //write name and distance
+        //todo: calculate distance, maybe from inside mapviewmodel
         holder.title.setText(
                 currentBoat.getUsername() + " (250 mt)"
         );
-        holder.lastUpdate.setText(timeDeltaString);
 
-        holder.subtitle.setText("Race officer");
+        //write race officer status
+        if(currentBoat.isRaceOfficer()){
+            holder.subtitle.setText(R.string.race_officer);
+            holder.image.setImageDrawable(
+                    ContextCompat.getDrawable(
+                            holder.image.getContext(),
+                            R.drawable.speedboat_yellow1
+                    )
+            );
+        }
+        else{
+            holder.subtitle.setText(R.string.support_boat);
+            holder.image.setImageDrawable(
+                    ContextCompat.getDrawable(
+                            holder.image.getContext(),
+                            R.drawable.speedboat_gray1
+                    )
+            );
+        }
     }
 
     public Boat getBoatAt(int position){
@@ -69,6 +92,7 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
 
     public class BoatsHolder extends RecyclerView.ViewHolder {
         private final TextView subtitle;
+        private final ImageView image;
         private TextView lastUpdate;
         private TextView title;
         public BoatsHolder(@NonNull View itemView) {
@@ -76,6 +100,7 @@ public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHo
             this.lastUpdate = itemView.findViewById(R.id.textViewUpdate);
             this.title = itemView.findViewById(R.id.textViewTitle);
             this.subtitle = itemView.findViewById(R.id.textViewDescription);
+            this.image = itemView.findViewById(R.id.imageView2);
         }
     }
 
