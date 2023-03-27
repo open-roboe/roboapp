@@ -43,21 +43,25 @@ public class BoatsListSimpleAdapter extends ArrayAdapter<Boat>{
         TextView subtitle = convertView.findViewById(R.id.textViewDescription);
         ImageView image = convertView.findViewById(R.id.imageView2);
 
-
         //write last update
         long timestamp = currentBoat.getLastUpdate();
-        String timeDeltaString = DateUtils.getRelativeTimeSpanString(
-                timestamp * 1000, // Convert timestamp to milliseconds
-                System.currentTimeMillis(),
-                DateUtils.MINUTE_IN_MILLIS, // Show result in minutes
-                DateUtils.FORMAT_ABBREV_RELATIVE
-        ).toString();
-        lastUpdate.setText(timeDeltaString);
+        if(timestamp - System.currentTimeMillis()/1000 < 60 ){
+            lastUpdate.setText(R.string.status_online);
+        }
+        else{
+            String timeDeltaString = DateUtils.getRelativeTimeSpanString(
+                    timestamp * 1000, // Convert timestamp to milliseconds
+                    System.currentTimeMillis(),
+                    DateUtils.MINUTE_IN_MILLIS, // Show result in minutes
+                    DateUtils.FORMAT_ABBREV_RELATIVE
+            ).toString();
+            lastUpdate.setText(timeDeltaString);
+        }
 
         //write name and distance
         //todo: calculate distance, maybe from inside mapviewmodel
         title.setText(
-                currentBoat.getUsername() + " (250 mt)"
+                currentBoat.getUsername()
         );
 
         //write race officer status

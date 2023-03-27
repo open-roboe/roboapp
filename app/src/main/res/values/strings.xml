@@ -60,4 +60,5 @@
     <string name="fragment_info_navigation_hint">click on an item to set the navigation</string>
     <string name="race_officer">Race Officer</string>
     <string name="support_boat">Support Boat</string>
+    <string name="status_online">Online</string>
 </resources>
