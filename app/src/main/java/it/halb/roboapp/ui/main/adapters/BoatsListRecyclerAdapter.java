@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,10 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 
-public class BoatsListAdapter extends ListAdapter<Boat, BoatsListAdapter.BoatsHolder> {
+/**
+ * This class is here only as a reference for future work. Will be removed soon
+ *
+ * Boat lists are being displayed with BoatsListSimpleAdapter, which is a basic ListView.
+ * The complexity of a RecyclerView is not justified for by the small amount of data displayed
+ */
+public class BoatsListRecyclerAdapter extends ListAdapter<Boat, BoatsListRecyclerAdapter.BoatsHolder> {
 
 
-    public BoatsListAdapter() {
+    public BoatsListRecyclerAdapter() {
         super(DIFF_CALLBACK);
     }
 
