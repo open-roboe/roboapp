@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
 import it.halb.roboapp.ui.main.adapters.BoatsListSimpleAdapter;
@@ -46,7 +48,10 @@ public class BoatInfoFragment extends Fragment {
             Boat b = adapter.getItemAt(position);
             Log.d("CLICK", "clicked " + b.getUsername());
             model.setTarget(b);
+            //Navigation.findNavController(view1).navigate(R.id.mapFragment);
         });
+
+        //TODO: implementare la navigazione verso il fragment della mappa
 
         //update listview with livedata.
         //this list will always be short, and will update sporadically. No need for fancy recyclerViews

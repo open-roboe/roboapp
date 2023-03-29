@@ -21,6 +21,8 @@ public class MapViewModel extends AndroidViewModel {
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
 
+    private final LiveData<List<Buoy>> buoys;
+
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
 
     public MapViewModel(@NonNull Application application) {
@@ -28,6 +30,7 @@ public class MapViewModel extends AndroidViewModel {
         runningRegattaRepository = new RunningRegattaRepository(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
+        buoys = runningRegattaRepository.getBuoys();
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -36,6 +39,7 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Boat>> getBoats() {
         return boats;
     }
+    public LiveData<List<Buoy>> getBuoy() { return buoys; }
 
     public void setTarget(Buoy buoy){
         navigationTarget.setValue(new NavigationTarget(buoy.getId(), true));
