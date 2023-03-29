@@ -6,25 +6,22 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
-import it.halb.roboapp.ui.main.adapters.BoatsListAdapter;
-import it.halb.roboapp.util.RecyclerItemClickListener;
+import it.halb.roboapp.ui.main.adapters.BoatsListSimpleAdapter;
 
 
 public class BoatInfoFragment extends Fragment {
     private FragmentBoatInfoBinding binding;
-
-    public BoatInfoFragment() {
-
-    }
+    private MapViewModel model;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -38,35 +35,26 @@ public class BoatInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
+        model = new ViewModelProvider(this).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
-        binding.boatsRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        binding.boatsRecyclerView.setHasFixedSize(true);
-        BoatsListAdapter adapter = new BoatsListAdapter();
-        binding.boatsRecyclerView.setAdapter(adapter);
+        //listview initialization
+        BoatsListSimpleAdapter adapter = new BoatsListSimpleAdapter(requireContext(), new ArrayList<>());
+        binding.boatsListView.setAdapter(adapter);
+        binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
+            Boat b = adapter.getItemAt(position);
+            Log.d("CLICK", "clicked " + b.getUsername());
+            model.setTarget(b);
+        });
 
-        model.getBoats().observe(this.getViewLifecycleOwner(), adapter::submitList);
-
-        //test recyclerView
-        model.fakeData();
-
-        binding.boatsRecyclerView.addOnItemTouchListener(new RecyclerItemClickListener
-                (this.getContext(), binding.boatsRecyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Boat boat = adapter.getBoatAt(position);
-                //navigazione alla mappa con le info sulla boat giusta
-            }
-
-            @Override
-            public void onLongItemClick(View view, int position) {
-                Toast.makeText(getContext(),
-                        "Hai cliccato la barca " + adapter.getBoatAt(position).getUsername(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        }));
+        //update listview with livedata.
+        //this list will always be short, and will update sporadically. No need for fancy recyclerViews
+        model.getBoats().observe(getViewLifecycleOwner(), boats -> {
+            adapter.clear();
+            adapter.addAll(boats);
+            adapter.notifyDataSetChanged();
+        });
 
     }
 }

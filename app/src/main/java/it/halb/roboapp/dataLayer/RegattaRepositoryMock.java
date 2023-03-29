@@ -77,7 +77,16 @@ public class RegattaRepositoryMock implements RegattaInterface {
                 r%2 == 0,
                 regatta.getLatitude() + 0.0001,
                 regatta.getLongitude(),
-                0
+                System.currentTimeMillis() /1000
+        );
+        r = new Random().nextInt();
+        Boat b2 = new Boat(
+                "boat-"+ r,
+                regatta.getName(),
+                r%2 == 0,
+                regatta.getLatitude() + 0.0001,
+                regatta.getLongitude(),
+                System.currentTimeMillis() /1000
         );
 
         Database.databaseWriteExecutor.execute(() ->{
@@ -85,6 +94,7 @@ public class RegattaRepositoryMock implements RegattaInterface {
             buoyDao.insert(buoys);
             //mock
             boatDao.insert(b);
+            boatDao.insert(b2);
         });
         successCallback.success(null);
     }
