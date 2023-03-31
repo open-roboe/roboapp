@@ -53,10 +53,10 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(boat.getUsername(), false));
     }
 
-
     /*
     public Boat getTargetBoat(){
         Boat boat = null;
+
         for(int i = 0; i < boats.getValue().size(); i++){
             if(boats.getValue().get(i).getUsername().equals(navigationTarget.getValue().getId())){
                 boat = boats.getValue().get(i);
@@ -64,8 +64,10 @@ public class MapViewModel extends AndroidViewModel {
         }
         return boat;
     }
-
+    //null pointer exception quando chiami size() su boats.getValue() non so perchè
      */
+
+
 
     public LiveData<Location> getTargetLocation(){
         return Transformations.map(navigationTarget, target -> {

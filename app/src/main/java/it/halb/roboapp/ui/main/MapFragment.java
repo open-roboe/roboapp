@@ -110,7 +110,7 @@ public class MapFragment extends Fragment{
 
         model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
             Log.d("prova location", "" + location.getLatitude() + " " + location.getLongitude());
-            //Log.d("prova location 2", "" + model.getTargetBoat().getLatitude() + " " + model.getTargetBoat().getLongitude());
+            Log.d("prova location 2", "" + model.getTargetBoat().getLatitude() + " " + model.getTargetBoat().getLongitude());
             try {
                 supportmapfragment.getMapAsync(googleMap1 -> {
                     googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
