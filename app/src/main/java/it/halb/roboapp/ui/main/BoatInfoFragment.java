@@ -49,9 +49,9 @@ public class BoatInfoFragment extends Fragment {
             Log.d("CLICK", "clicked " + b.getUsername());
             model.setTarget(b);
             //Navigation.findNavController(view1).navigate(R.id.mapFragment);
+            Log.d("", "risultato getTarget: " + model.getTargetLocation().toString());
         });
 
-        //TODO: implementare la navigazione verso il fragment della mappa
 
         //update listview with livedata.
         //this list will always be short, and will update sporadically. No need for fancy recyclerViews

@@ -18,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,6 +107,22 @@ public class MapFragment extends Fragment{
         MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
+
+        model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
+            Log.d("prova location", "" + location.getLatitude() + " " + location.getLongitude());
+            //Log.d("prova location 2", "" + model.getTargetBoat().getLatitude() + " " + model.getTargetBoat().getLongitude());
+            try {
+                supportmapfragment.getMapAsync(googleMap1 -> {
+                    googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                            location.getLatitude(),
+                            location.getLongitude()),15));
+                });
+
+            }
+            catch (Exception e){
+                e.printStackTrace();
+            }
+        });
     }
 
 
