@@ -35,7 +35,7 @@ public class RoboaInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
+        MapViewModel model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
     }

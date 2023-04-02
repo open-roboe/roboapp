@@ -111,8 +111,10 @@ public class MapFragment extends Fragment{
         binding.setMapViewModel(model);
 
         //observe the boat to get Latitude and Longitude
+        //la prima volta che viene chiamato il metodo observe,
+        //location dovrebbe essere null, o comunque non valido. Non so bene cosa succede,
+        //ma dalla seconda volta dovrebbe essere valido
         model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
-            Log.d("prova location", "" + location.getLatitude() + " " + location.getLongitude());
             try {
                 supportmapfragment.getMapAsync(googleMap1 -> {
                     googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(

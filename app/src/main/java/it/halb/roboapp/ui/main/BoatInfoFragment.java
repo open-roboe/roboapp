@@ -48,14 +48,10 @@ public class BoatInfoFragment extends Fragment {
 
         //set onClickListener for listview
         binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
-            Boat b = adapter.getItemAt(position);
-            Log.d("CLICK", "clicked " + b.getUsername());
-            model.setTarget(b);
+            Boat boat = adapter.getItemAt(position);
+            model.setTarget(boat);
             //Navigation.findNavController(view1).navigate(R.id.mapFragment);
-            Log.d("", "risultato getTarget: " + model.getTargetLocation().getValue()
-            + " " + model.getTargetLocation().getValue());
         });
-
 
         //update listview with livedata.
         //this list will always be short, and will update sporadically. No need for fancy recyclerViews
@@ -64,14 +60,6 @@ public class BoatInfoFragment extends Fragment {
             adapter.addAll(boats);
             adapter.notifyDataSetChanged();
         });
-
-        //observe the boat
-        model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
-            Log.d("TARGET", "target location: [" + location.getLatitude()
-                    + " " + location.getLongitude() + "]");
-        });
-
-
 
 
     }

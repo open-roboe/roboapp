@@ -47,37 +47,34 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(buoy.getId(), true));
     }
 
-    //va bene così? NavigationTarget viene sovrascritto dal secondo setTarget
+    //va bene così? NavigationTarget viene sovrascritto dal secondo setTarget()
     public void setTarget(Boat boat){
-        Log.d("aaaaaaaaaaaa", "target is now " + boat.getUsername());
         navigationTarget.setValue(new NavigationTarget(boat.getUsername(), false));
     }
 
-    //TODO: tutti i fragment che usano MapViewModel devono dichiarare il prorio vireModel cosi:
-    //model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
-
-
-
     public LiveData<Location> getTargetLocation(){
-        return Transformations.map(navigationTarget, (target) -> {
+        return Transformations.map(navigationTarget, target -> {
             Location location = new Location("");
-            if(target == null){
-                location.setLatitude(1.0);
-                location.setLongitude(1.0);
-                return location;
-            }
-            if(target.isBuoy()){
-                //a.setLatitude(buoys.getValue().get(target.getId()).getLatitude());
-                location.setLatitude(5.0);
-                location.setLongitude(5.0);
-            } else {
-                boats.getValue().forEach(boat -> {
-                    if(boat.getUsername().equals(target.getId())){
-                        location.setLatitude(boat.getLatitude());
-                        location.setLongitude(boat.getLongitude());
-                    }
-                });
-
+            //se target è null, viene lanciata un'eccezione
+            //target è null finchè non viene chiamato setTarget()
+            try{
+                if(target.isBuoy()){
+                    buoys.getValue().forEach(buoy -> {
+                        if(buoy.getId().equals(target.getId())){
+                            location.setLatitude(buoy.getLatitude());
+                            location.setLongitude(buoy.getLongitude());
+                        }
+                    });
+                } else {
+                    boats.getValue().forEach(boat -> {
+                        if(boat.getUsername().equals(target.getId())){
+                            location.setLatitude(boat.getLatitude());
+                            location.setLongitude(boat.getLongitude());
+                        }
+                    });
+                }
+            } catch (Exception e){
+                e.printStackTrace();
             }
             return location;
         });
