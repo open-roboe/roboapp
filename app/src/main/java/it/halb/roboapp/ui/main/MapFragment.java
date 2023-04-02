@@ -47,6 +47,7 @@ public class MapFragment extends Fragment{
     private FragmentMapBinding binding;
     private SupportMapFragment supportmapfragment;
     Context c;
+    private MapViewModel model;
 
     public MapFragment() {
 
@@ -104,13 +105,13 @@ public class MapFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
+        //observe the boat to get Latitude and Longitude
         model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
             Log.d("prova location", "" + location.getLatitude() + " " + location.getLongitude());
-            Log.d("prova location 2", "" + model.getTargetBoat().getLatitude() + " " + model.getTargetBoat().getLongitude());
             try {
                 supportmapfragment.getMapAsync(googleMap1 -> {
                     googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(

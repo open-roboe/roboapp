@@ -37,19 +37,23 @@ public class BoatInfoFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         //ViewModel initialization
-        model = new ViewModelProvider(this).get(MapViewModel.class);
+        model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
         //listview initialization
         BoatsListSimpleAdapter adapter = new BoatsListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.boatsListView.setAdapter(adapter);
+
+
+        //set onClickListener for listview
         binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
             Boat b = adapter.getItemAt(position);
             Log.d("CLICK", "clicked " + b.getUsername());
             model.setTarget(b);
             //Navigation.findNavController(view1).navigate(R.id.mapFragment);
-            Log.d("", "risultato getTarget: " + model.getTargetLocation().toString());
+            Log.d("", "risultato getTarget: " + model.getTargetLocation().getValue()
+            + " " + model.getTargetLocation().getValue());
         });
 
 
@@ -60,6 +64,15 @@ public class BoatInfoFragment extends Fragment {
             adapter.addAll(boats);
             adapter.notifyDataSetChanged();
         });
+
+        //observe the boat
+        model.getTargetLocation().observe(getViewLifecycleOwner(), location -> {
+            Log.d("TARGET", "target location: [" + location.getLatitude()
+                    + " " + location.getLongitude() + "]");
+        });
+
+
+
 
     }
 }

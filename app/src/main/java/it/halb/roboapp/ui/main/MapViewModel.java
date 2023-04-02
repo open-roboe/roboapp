@@ -49,44 +49,34 @@ public class MapViewModel extends AndroidViewModel {
 
     //va bene così? NavigationTarget viene sovrascritto dal secondo setTarget
     public void setTarget(Boat boat){
-        Log.d("aaaaaaaaaaaa", "target is now" + boat.getUsername());
+        Log.d("aaaaaaaaaaaa", "target is now " + boat.getUsername());
         navigationTarget.setValue(new NavigationTarget(boat.getUsername(), false));
     }
-
-    /*
-    public Boat getTargetBoat(){
-        Boat boat = null;
-
-        for(int i = 0; i < boats.getValue().size(); i++){
-            if(boats.getValue().get(i).getUsername().equals(navigationTarget.getValue().getId())){
-                boat = boats.getValue().get(i);
-            }
-        }
-        return boat;
-    }
-    //null pointer exception quando chiami size() su boats.getValue() non so perchè
-     */
 
 
 
     public LiveData<Location> getTargetLocation(){
-        return Transformations.map(navigationTarget, target -> {
-            Location a = new Location("");
+        return Transformations.map(navigationTarget, (target) -> {
+            Location location = new Location("");
             if(target == null){
-                a.setLatitude(1.0);
-                a.setLongitude(1.0);
-                return a;
+                location.setLatitude(1.0);
+                location.setLongitude(1.0);
+                return location;
             }
             if(target.isBuoy()){
                 //a.setLatitude(buoys.getValue().get(target.getId()).getLatitude());
-                a.setLatitude(0.0);
-                a.setLongitude(0.0);
+                location.setLatitude(5.0);
+                location.setLongitude(5.0);
             } else {
-                //a.setLatitude(boats.getValue().get(target.getId()).getLatitude());
-                a.setLatitude(0.0);
-                a.setLatitude(0.0);
+                boats.getValue().forEach(boat -> {
+                    if(boat.getUsername().equals(target.getId())){
+                        location.setLatitude(boat.getLatitude());
+                        location.setLongitude(boat.getLongitude());
+                    }
+                });
+
             }
-            return a;
+            return location;
         });
     }
 
