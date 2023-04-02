@@ -53,6 +53,9 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(boat.getUsername(), false));
     }
 
+    //TODO: tutti i fragment che usano MapViewModel devono dichiarare il prorio vireModel cosi:
+    //model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
+
 
 
     public LiveData<Location> getTargetLocation(){
