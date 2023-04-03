@@ -10,6 +10,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
 import java.util.List;
+import java.util.Objects;
 
 import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
@@ -57,32 +58,31 @@ public class MapViewModel extends AndroidViewModel {
 
     /**
      * This livedata Location object updates every time the map focus should change.
-     * When the regatta is first started for example, it focuses on the user location.
-     * When a boat or a buoy is clicked to set it as navigation target it focuses on its location
+     * When a boat or a buoy is clicked to set it as navigation target it focuses on its location,
+     * If something goes wrong, or there is no target set, the default coordinates of 0.0 are returned.
+     * When using this livedata, make sure to handle the case where the coordinates are 0.0, 0.0
      */
     public LiveData<Location> getMapFocusLocation(){
         return Transformations.map(navigationTarget, target -> {
-            Location location = new Location("");
-            //se target è null, viene lanciata un'eccezione
-            //target è null finchè non viene chiamato setTarget()
-            try{
-                if(target.isBuoy()){
-                    buoys.getValue().forEach(buoy -> {
-                        if(buoy.getId().equals(target.getId())){
-                            location.setLatitude(buoy.getLatitude());
-                            location.setLongitude(buoy.getLongitude());
-                        }
-                    });
-                } else {
-                    boats.getValue().forEach(boat -> {
-                        if(boat.getUsername().equals(target.getId())){
-                            location.setLatitude(boat.getLatitude());
-                            location.setLongitude(boat.getLongitude());
-                        }
-                    });
-                }
-            } catch (Exception e){
-                e.printStackTrace();
+            Location location = new Location("viewModel_transformation");
+            //if there is no target set, return the default location, 0.0, 0.0
+            if(target == null){
+                return location;
+            }
+            if(target.isBuoy()){
+                Objects.requireNonNull(buoys.getValue()).forEach(buoy -> {
+                    if(buoy.getId().equals(target.getId())){
+                        location.setLatitude(buoy.getLatitude());
+                        location.setLongitude(buoy.getLongitude());
+                    }
+                });
+            } else {
+                Objects.requireNonNull(boats.getValue()).forEach(boat -> {
+                    if(boat.getUsername().equals(target.getId())){
+                        location.setLatitude(boat.getLatitude());
+                        location.setLongitude(boat.getLongitude());
+                    }
+                });
             }
             return location;
         });

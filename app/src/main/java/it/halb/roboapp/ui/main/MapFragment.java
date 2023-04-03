@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,13 +38,8 @@ public class MapFragment extends Fragment{
     private SupportMapFragment supportmapfragment;
     Context c;
     private MapViewModel model;
-
-    public MapFragment() {
-
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentMapBinding.inflate(inflater, container, false);
@@ -75,8 +71,8 @@ public class MapFragment extends Fragment{
 
             List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
 
-            MutableLiveData<Regatta> race = new MutableLiveData<Regatta>();
-            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<List<Buoy>>();
+            MutableLiveData<Regatta> race = new MutableLiveData<>();
+            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<>();
 
             race.setValue(regatta);
             buoy.setValue(buoys);
@@ -99,21 +95,14 @@ public class MapFragment extends Fragment{
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
-        //observe the boat to get Latitude and Longitude
-        //la prima volta che viene chiamato il metodo observe,
-        //location dovrebbe essere null, o comunque non valido. Non so bene cosa succede,
-        //ma dalla seconda volta dovrebbe essere valido
+        //set the map focus when a new navigation target is set
         model.getMapFocusLocation().observe(getViewLifecycleOwner(), location -> {
-            try {
+            if(location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0) ){
                 supportmapfragment.getMapAsync(googleMap1 -> {
                     googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                             location.getLatitude(),
                             location.getLongitude()),15));
                 });
-
-            }
-            catch (Exception e){
-                e.printStackTrace();
             }
         });
     }
