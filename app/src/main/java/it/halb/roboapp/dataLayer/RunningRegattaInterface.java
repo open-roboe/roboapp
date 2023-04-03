@@ -96,7 +96,7 @@ public interface RunningRegattaInterface {
      *
      * @return The current location
      */
-    LiveData<Location> getLocation();
+    LiveData<Location> getCurrentLocation();
 
     /**
      * The app is in sync if it managed to communicate with the server in the last few seconds.

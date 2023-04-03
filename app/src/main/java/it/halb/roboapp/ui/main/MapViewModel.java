@@ -11,6 +11,7 @@ import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 
 import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
@@ -20,6 +21,8 @@ import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
+
+    public String TEST;
     private final RunningRegattaRepository runningRegattaRepository;
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
@@ -32,6 +35,7 @@ public class MapViewModel extends AndroidViewModel {
 
     public MapViewModel(@NonNull Application application) {
         super(application);
+        TEST = "TEST" + new Random().nextInt();
         runningRegattaRepository = new RunningRegattaRepository(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
@@ -101,8 +105,8 @@ public class MapViewModel extends AndroidViewModel {
 
 
     /**
-     * TODO: calculate, by combining all the required livedata such as currentLocation,
-     *  targetLocation, deviceOrientation, magnetometer.
+     * TODO: calculate, by combining all the required livedata such as currentLocation and targetLocation
+     *   with the sensors data, that should be put into the viewModel by MapFragment, and kept updated
      *
      * @return the orientation angle for the compass image.
      */

@@ -41,6 +41,9 @@ public class BuoyInfoFragment extends Fragment {
         model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
+        //TEST
+        //TODO: remove
+        Log.d("VIEWMODEL_SCOPING_TEST", " " + model.TEST);
 
         //listview initialization
         BuoyListSimpleAdapter adapter = new BuoyListSimpleAdapter(requireContext(), new ArrayList<>());
