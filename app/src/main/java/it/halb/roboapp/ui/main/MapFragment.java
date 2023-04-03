@@ -115,10 +115,18 @@ public class MapFragment extends Fragment{
             Log.d("OBS_", "target changed " + name);
             if(name == null){
                 // There is no navigation target
+                binding.topAppBarCard.setVisibility(View.INVISIBLE);
             }else{
                 // Set navigation target UI
+                binding.topAppBarCard.setVisibility(View.VISIBLE);
             }
         });
+
+
+        binding.topAppBar.setNavigationOnClickListener(l -> {
+            model.clearTarget();
+        });
+
     }
 
 

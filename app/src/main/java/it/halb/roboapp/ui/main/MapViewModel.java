@@ -59,6 +59,10 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(boat));
     }
 
+    public void clearTarget(){
+        navigationTarget.setValue(null);
+    }
+
     /**
      * This livedata Location object updates every time the map focus should change.
      * When a boat or a buoy is clicked to set it as navigation target it focuses on its location,
@@ -95,10 +99,7 @@ public class MapViewModel extends AndroidViewModel {
         return Transformations.map(navigationTarget, target -> {
             if(target == null)
                 return null;
-            if(target.isBuoy())
-                return "Buoy " + target.getId(); //TODO: proper i18n
-            else
-                return "Boat " + target.getId(); //TODO: proper i18n
+            return target.getId();
         });
     }
 
