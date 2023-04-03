@@ -1,27 +1,29 @@
 package it.halb.roboapp.util;
 
-public class NavigationTarget {
-    private String id;
-    private boolean isBuoy;
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 
-    public NavigationTarget(String id, boolean isBuoy) {
+public class NavigationTarget {
+    private final String id;
+    private final Class<?> targetClass;
+
+    public NavigationTarget(Boat boat){
+        this(boat.getUsername(), Boat.class);
+    }
+    public NavigationTarget(Buoy buoy){
+        this(buoy.getId(), Buoy.class);
+    }
+    private NavigationTarget(String id, Class<?> targetClass) {
         this.id = id;
-        this.isBuoy = isBuoy;
+        this.targetClass = targetClass;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public boolean isBuoy() {
-        return isBuoy;
-    }
-
-    public void setBuoy(boolean buoy) {
-        isBuoy = buoy;
+        return targetClass.equals(Buoy.class);
     }
 }

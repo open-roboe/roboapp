@@ -2,7 +2,6 @@ package it.halb.roboapp.ui.main;
 
 import android.app.Application;
 import android.location.Location;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -49,15 +48,19 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
     public void setTarget(Buoy buoy){
-        navigationTarget.setValue(new NavigationTarget(buoy.getId(), true));
+        navigationTarget.setValue(new NavigationTarget(buoy));
     }
 
-    //va bene così? NavigationTarget viene sovrascritto dal secondo setTarget()
     public void setTarget(Boat boat){
-        navigationTarget.setValue(new NavigationTarget(boat.getUsername(), false));
+        navigationTarget.setValue(new NavigationTarget(boat));
     }
 
-    public LiveData<Location> getTargetLocation(){
+    /**
+     * This livedata Location object updates every time the map focus should change.
+     * When the regatta is first started for example, it focuses on the user location.
+     * When a boat or a buoy is clicked to set it as navigation target it focuses on its location
+     */
+    public LiveData<Location> getMapFocusLocation(){
         return Transformations.map(navigationTarget, target -> {
             Location location = new Location("");
             //se target è null, viene lanciata un'eccezione
