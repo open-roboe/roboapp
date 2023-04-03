@@ -31,7 +31,7 @@
                 android:id="@+id/topAppBarFragmentRobuoy"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/titolo_schermata_buoy_bots"
+                app:title="@string/fragment_roboa_info_title"
                 app:subtitle="@string/fragment_info_navigation_hint"
                 />
         </com.google.android.material.appbar.AppBarLayout>

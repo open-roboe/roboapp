@@ -30,7 +30,7 @@
                 android:id="@+id/topAppBarBuoy"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:title="@string/regatta_menu_buoy"
+                app:title="@string/fragment_buoy_info_title"
                 app:subtitle="@string/fragment_info_navigation_hint"
                 />
         </com.google.android.material.appbar.AppBarLayout>
