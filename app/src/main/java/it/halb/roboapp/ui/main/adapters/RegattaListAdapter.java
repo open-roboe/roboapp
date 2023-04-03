@@ -66,7 +66,7 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
             super(itemView);
             this.textViewTitle = itemView.findViewById(R.id.textViewTitle);
             this.textViewDescription = itemView.findViewById(R.id.textViewDescription);
-            this.textViewDate = itemView.findViewById(R.id.textViewDate);
+            this.textViewDate = itemView.findViewById(R.id.textViewUpdate);
         }
     }
 }

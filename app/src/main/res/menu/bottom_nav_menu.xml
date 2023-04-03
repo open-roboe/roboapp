@@ -10,18 +10,18 @@
     <item
         android:id="@+id/buoyInfoFragment"
         android:enabled="true"
-        android:icon="@drawable/baseline_circle_24"
+        android:icon="@drawable/baseline_flag_24"
         android:title="@string/regatta_menu_buoy" />
 
     <item
         android:id="@+id/roboaInfoFragment"
-        android:icon="@drawable/baseline_circle_24"
+        android:icon="@drawable/baseline_fiber_manual_record_24"
         android:enabled="true"
         android:title="@string/regatta_menu_roboa" />
 
     <item
         android:id="@+id/boatInfoFragment"
-        android:icon="@drawable/baseline_circle_24"
+        android:icon="@drawable/baseline_sailing_24"
         android:enabled="true"
         android:title="@string/regatta_menu_boat" />
 
