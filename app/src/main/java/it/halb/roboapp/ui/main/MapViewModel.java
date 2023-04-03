@@ -16,6 +16,7 @@ import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
+import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
@@ -25,6 +26,8 @@ public class MapViewModel extends AndroidViewModel {
 
     private final LiveData<List<Buoy>> buoys;
 
+    private final LiveData<List<Roboa>> robuoys;
+
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
 
     public MapViewModel(@NonNull Application application) {
@@ -33,6 +36,7 @@ public class MapViewModel extends AndroidViewModel {
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
         buoys = runningRegattaRepository.getBuoys();
+        robuoys = runningRegattaRepository.getRoboas();
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -42,6 +46,7 @@ public class MapViewModel extends AndroidViewModel {
         return boats;
     }
     public LiveData<List<Buoy>> getBuoy() { return buoys; }
+    public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
     public void setTarget(Buoy buoy){
         navigationTarget.setValue(new NavigationTarget(buoy.getId(), true));
