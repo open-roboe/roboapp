@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -43,37 +44,11 @@ public class CreateRegattaViewModel extends AndroidViewModel {
 
     private final RegattaRepository regattaRepository;
 
+    private final MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
+
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFieldsErrors = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
-
-    private MutableLiveData<String> regattaName = new MutableLiveData<>("");
-
-    private MutableLiveData<String> courseAxis = new MutableLiveData<>("");
-
-    private MutableLiveData<String> courseLength = new MutableLiveData<>("");
-
-    private MutableLiveData<String> startLineLength = new MutableLiveData<>("");
-
-    private MutableLiveData<String> stacchettoDistance = new MutableLiveData<>("");
-
-    private MutableLiveData<String> bolinaDistance = new MutableLiveData<>("");
-
-    private MutableLiveData<String> buoyStern = new MutableLiveData<>("");
-
-    private MutableLiveData<String> regattaNameError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> courseAxisError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> courseLengthError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> startLineLengthError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> stacchettoDistanceError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> bolinaDistanceError = new MutableLiveData<>("");
-
-    private MutableLiveData<String> buoySternError = new MutableLiveData<>("");
 
     private MutableLiveData<String> regattaType = new MutableLiveData<>(Constants.stickRegatta);
 
@@ -84,6 +59,8 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     private MutableLiveData<Boolean> enableBuoyStern = new MutableLiveData<>(true);
 
     private final String TAG = CreateRegattaViewModel.class.getSimpleName();
+
+    private LiveData<List<Regatta>> regattas;
 
     private boolean formValid = true;
 
@@ -135,10 +112,18 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         return enableBuoyStern;
     }
 
+    public LiveData<List<Regatta>> getRegattas() {
+        return regattas;
+    }
+
     public CreateRegattaViewModel(@NonNull Application application) {
         super(application);
 
         regattaRepository = new RegattaRepository(application);
+        regattas = regattaRepository.getAllRegattas();
+        regattas.observeForever(regattas -> {
+            Log.d(TAG, "Regattas: " + regattas.size());
+        });
 
         populateHashMaps("");
         populateHashMaps("Error");
@@ -235,6 +220,10 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         }
     }
 
+    public LiveData<Boolean> getCanClick(){
+        return Transformations.map(loading, loading -> !loading);
+    }
+
     public Boolean[] getBuoySternInfo() {
         Log.d(TAG, "getBuoySternInfo: " + formFields.getValue().get("buoyStern").getValue());
         Boolean[] buoySternInfo = new Boolean[2];
@@ -282,6 +271,19 @@ public class CreateRegattaViewModel extends AndroidViewModel {
                     mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
                     setFormValid(false);
                 }
+
+                Log.d(TAG, "Regattas: " + regattas.getValue());
+                if(regattas.getValue() != null) {
+                    for (Regatta r : regattas.getValue()) {
+                        Log.d(TAG, "Existing regatta name: " + r.getName() + " " + v.getValue());
+                        Log.d(TAG, "New regatta name: " + v.getValue());
+                        if (r.getName().equals(v.getValue())) {
+                            mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_duplicate_field_error));
+                            setFormValid(false);
+                        }
+                    }
+                }
+
             } else if (k.equals("stacchettoDistance")) {
                 if (enableStacchettoDistance.getValue() == true && v.getValue().equals("")) {
                     mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
@@ -303,6 +305,14 @@ public class CreateRegattaViewModel extends AndroidViewModel {
                     mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
                     setFormValid(false);
                 }
+            } else if (k.equals("courseAxis")){
+                if (v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (Double.parseDouble(v.getValue()) < 0 || Double.parseDouble(v.getValue()) > 360) {
+                    mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_invalid_field_error));
+                    setFormValid(false);
+                }
             } else {
                 if (v.getValue().equals("")) {
                     mapFormFieldsErrors.get(k + "Error").setValue(getApplication().getString(R.string.textfield_missing_field_error));
@@ -316,10 +326,14 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     }
 
     public void createRegatta(SuccessCallback<String> success, ErrorCallback error) {
+        if(Boolean.TRUE.equals(loading.getValue()))
+            return;
+
         validateForm();
         Boolean[] buoySternInfo = getBuoySternInfo();
         Double[] optionalDistances = getOptionalDistances();
         if(isFormValid()) {
+            loading.setValue(true);
 
             //create regatta object
             Log.d(TAG, "createRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
@@ -346,10 +360,18 @@ public class CreateRegattaViewModel extends AndroidViewModel {
             regattaRepository.insertRegatta(
                     regatta,
                     buoys,
-                    v -> success.success(regatta.getName()),
-                    error
+                    v -> {
+                        loading.setValue(false);
+                        success.success(regatta.getName());
+                        },
+                    (code, details) -> {
+                        loading.setValue(false);
+                        error.error(code, details);
+                    }
             );
 
+
         }
+
     }
 }

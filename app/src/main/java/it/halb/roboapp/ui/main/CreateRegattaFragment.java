@@ -70,6 +70,10 @@ public class CreateRegattaFragment extends Fragment {
         regattaTypeSegmentedButton = binding.toggleButton;
         createRegattaButton = binding.buttonCreateRegatta;
 
+        /*model.getRegattas().observe(getViewLifecycleOwner(), regattas -> {
+            Log.d("CreateRegattaFragment", "Regatta Prova: " + regattas);
+        });*/
+
         model.getFormFieldsErrors().getValue().get("regattaNameError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
         });
