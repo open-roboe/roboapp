@@ -12,27 +12,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 
+import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.databinding.FragmentBuoyInfoBinding;
 import it.halb.roboapp.ui.main.adapters.BuoyListSimpleAdapter;
 
 
 public class BuoyInfoFragment extends Fragment {
-
     private FragmentBuoyInfoBinding binding;
     private MapViewModel model;
 
-    public BuoyInfoFragment() {
-        // Required empty public constructor
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentBuoyInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -45,36 +42,27 @@ public class BuoyInfoFragment extends Fragment {
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
+        //listview initialization
         BuoyListSimpleAdapter adapter = new BuoyListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.buoysListView.setAdapter(adapter);
+
+        //Listen to clicks on the listview
         binding.buoysListView.setOnItemClickListener((parent, view1, position, id) -> {
+            //set the current buoy as a target for the navigation
             Buoy buoy = adapter.getItemAt(position);
-            Log.d("CLICK", "clicked buoy: " + buoy.getId());
             model.setTarget(buoy);
-            //Navigation.findNavController(view1).navigate(R.id.mapFragment);
+            //simulate a click on the bottomNavigation map button
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNavigation);
+            bottomNav.setSelectedItemId(R.id.mapFragment);
         });
 
-        //TODO: mettere la giusta immagine e le giuste info per ogni item della lista
-        //TODO: implementari le funzioni di click su ogni item della lista (quali sono?)
-
-
+        //update listview with livedata.
+        //this list will always be short, and will update sporadically. No need for fancy recyclerViews
         model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
             adapter.clear();
             adapter.addAll(buoy);
             adapter.notifyDataSetChanged();
         });
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 }

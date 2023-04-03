@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 
 import it.halb.roboapp.R;
@@ -45,12 +47,14 @@ public class BoatInfoFragment extends Fragment {
         BoatsListSimpleAdapter adapter = new BoatsListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.boatsListView.setAdapter(adapter);
 
-
         //set onClickListener for listview
         binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
+            //set the current boat as a target for the navigation
             Boat boat = adapter.getItemAt(position);
             model.setTarget(boat);
-            //Navigation.findNavController(view1).navigate(R.id.mapFragment);
+            //simulate a click on the bottomNavigation map button
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNavigation);
+            bottomNav.setSelectedItemId(R.id.mapFragment);
         });
 
         //update listview with livedata.
