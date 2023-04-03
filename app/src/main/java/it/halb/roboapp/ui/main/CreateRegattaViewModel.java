@@ -328,7 +328,6 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     public void createRegatta(SuccessCallback<String> success, ErrorCallback error) {
         if(Boolean.TRUE.equals(loading.getValue()))
             return;
-
         validateForm();
         Boolean[] buoySternInfo = getBuoySternInfo();
         Double[] optionalDistances = getOptionalDistances();
