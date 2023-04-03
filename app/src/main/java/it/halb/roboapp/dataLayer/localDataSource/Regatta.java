@@ -44,7 +44,7 @@ public class Regatta {
 
     public Regatta(@NonNull String name, String type, int creationDate, int windDirection,
                    double startLineLen, double breakDistance, double courseLength,
-                   double secondMarkDistance, boolean bottonBuoy, boolean gate, double longitude, double latitude) {
+                   double secondMarkDistance, boolean bottonBuoy, boolean gate, double latitude, double longitude) {
         this.name = name;
         this.type = type;
         this.creationDate = creationDate;
