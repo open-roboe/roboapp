@@ -259,6 +259,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="16dp"
                         android:text="@string/fragment_create_regatta_button"
+                        android:clickable="@{createRegattaViewModel.canClick}"
+                        android:enabled="@{createRegattaViewModel.canClick}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 

@@ -55,8 +55,8 @@ public class Regatta {
         this.secondMarkDistance = secondMarkDistance;
         this.bottonBuoy = bottonBuoy;
         this.gate = gate;
-        this.longitude = longitude;
         this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     @Ignore
