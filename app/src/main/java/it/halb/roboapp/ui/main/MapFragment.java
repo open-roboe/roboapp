@@ -95,7 +95,7 @@ public class MapFragment extends Fragment{
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
-        //set the map focus when a new navigation target is set
+        //model listeners
         model.getMapFocusLocation().observe(getViewLifecycleOwner(), location -> {
             if(location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0) ){
                 supportmapfragment.getMapAsync(googleMap1 -> {
@@ -103,6 +103,14 @@ public class MapFragment extends Fragment{
                             location.getLatitude(),
                             location.getLongitude()),15));
                 });
+            }
+        });
+        model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
+            Log.d("OBS_", "target changed " + name);
+            if(name == null){
+                // There is no navigation target
+            }else{
+                // Set navigation target UI
             }
         });
     }

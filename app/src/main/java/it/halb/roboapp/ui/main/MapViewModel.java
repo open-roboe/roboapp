@@ -88,4 +88,27 @@ public class MapViewModel extends AndroidViewModel {
         });
     }
 
+    public LiveData<String> getNavigationTargetReadableName(){
+        return Transformations.map(navigationTarget, target -> {
+            if(target == null)
+                return null;
+            if(target.isBuoy())
+                return "Buoy " + target.getId(); //TODO: proper i18n
+            else
+                return "Boat " + target.getId(); //TODO: proper i18n
+        });
+    }
+
+
+    /**
+     * TODO: calculate, by combining all the required livedata such as currentLocation,
+     *  targetLocation, deviceOrientation, magnetometer.
+     *
+     * @return the orientation angle for the compass image.
+     */
+    public LiveData<Double> getCompassOrientation(){
+        return null;
+    }
+
+
 }
