@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,22 +16,16 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentRobuoyInfoBinding;
 import it.halb.roboapp.ui.main.adapters.RoboaListSimpleAdapter;
 
 
 public class RoboaInfoFragment extends Fragment {
-
-
     private FragmentRobuoyInfoBinding binding;
-
-    public RoboaInfoFragment() {
-
-    }
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentRobuoyInfoBinding.inflate(inflater, container, false);
@@ -39,8 +35,12 @@ public class RoboaInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
+        // ViewModel initialization.
+        // It is scoped to the navigation graph, so that it will be shared between all
+        // the runningRegatta fragments and it will be cleared when navigating back to the regatta lists fragment.
+        NavBackStackEntry backStackEntry = NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.main_navigation);
+        MapViewModel model = new ViewModelProvider(backStackEntry).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
@@ -61,11 +61,6 @@ public class RoboaInfoFragment extends Fragment {
             adapter.addAll(roboa);
             adapter.notifyDataSetChanged();
         });
-
-
-
-
-
 
     }
 }

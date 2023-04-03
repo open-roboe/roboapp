@@ -6,6 +6,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,13 +39,14 @@ public class BuoyInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //ViewModel initialization
-        model = new ViewModelProvider(requireActivity()).get(MapViewModel.class);
+        // ViewModel initialization.
+        // It is scoped to the navigation graph, so that it will be shared between all
+        // the runningRegatta fragments and it will be cleared when navigating back to the regatta lists fragment.
+        NavBackStackEntry store = NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.main_navigation);
+        model = new ViewModelProvider(store).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
-        //TEST
-        //TODO: remove
-        Log.d("VIEWMODEL_SCOPING_TEST", " " + model.TEST);
 
         //listview initialization
         BuoyListSimpleAdapter adapter = new BuoyListSimpleAdapter(requireContext(), new ArrayList<>());

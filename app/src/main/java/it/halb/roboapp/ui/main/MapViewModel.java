@@ -2,6 +2,7 @@ package it.halb.roboapp.ui.main;
 
 import android.app.Application;
 import android.location.Location;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -21,8 +22,6 @@ import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
-
-    public String TEST;
     private final RunningRegattaRepository runningRegattaRepository;
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
@@ -35,7 +34,7 @@ public class MapViewModel extends AndroidViewModel {
 
     public MapViewModel(@NonNull Application application) {
         super(application);
-        TEST = "TEST" + new Random().nextInt();
+        Log.d("VIEWMODEL_SCOPING_TEST", "constructor run");
         runningRegattaRepository = new RunningRegattaRepository(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();

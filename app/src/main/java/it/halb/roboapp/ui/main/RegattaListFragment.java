@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +45,12 @@ public class RegattaListFragment extends Fragment {
 
         // stop the followService, since we are not following any regatta
         requireActivity().stopService(new Intent(getContext(), RunningRegattaService.class));
+        // Clear the runningRegatta viewModel.
+        // For some reason proper Navigation Graph scoping does not work, so we are manually clearing it here.
+        NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.main_navigation)
+                        .getViewModelStore()
+                                .clear();
 
         //viewModel initialization
         RegattaListViewModel model = new ViewModelProvider(this).get(RegattaListViewModel.class);
