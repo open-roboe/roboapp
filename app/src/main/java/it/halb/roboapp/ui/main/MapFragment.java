@@ -2,29 +2,24 @@ package it.halb.roboapp.ui.main;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.MutableContextWrapper;
 import android.content.pm.PackageManager;
-import android.graphics.Camera;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
+import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.NavigationUI;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
@@ -33,9 +28,7 @@ import java.util.List;
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
-import it.halb.roboapp.databinding.FragmentLoginBinding;
 import it.halb.roboapp.databinding.FragmentMapBinding;
-import it.halb.roboapp.ui.main.MapViewModel;
 import it.halb.roboapp.util.BuoyFactory;
 import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.RegattaController;
@@ -46,13 +39,9 @@ public class MapFragment extends Fragment{
     private FragmentMapBinding binding;
     private SupportMapFragment supportmapfragment;
     Context c;
-
-    public MapFragment() {
-
-    }
-
+    private MapViewModel model;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         binding = FragmentMapBinding.inflate(inflater, container, false);
@@ -84,8 +73,8 @@ public class MapFragment extends Fragment{
 
             List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
 
-            MutableLiveData<Regatta> race = new MutableLiveData<Regatta>();
-            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<List<Buoy>>();
+            MutableLiveData<Regatta> race = new MutableLiveData<>();
+            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<>();
 
             race.setValue(regatta);
             buoy.setValue(buoys);
@@ -99,13 +88,37 @@ public class MapFragment extends Fragment{
         return binding.getRoot();
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //ViewModel initialization
-        MapViewModel model = new ViewModelProvider(this).get(MapViewModel.class);
+        // ViewModel initialization.
+        // It is scoped to the navigation graph, so that it will be shared between all
+        // the runningRegatta fragments and it will be cleared when navigating back to the regatta lists fragment.
+        NavBackStackEntry store = NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.main_navigation);
+        model = new ViewModelProvider(store).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
+
+        //model listeners
+        model.getMapFocusLocation().observe(getViewLifecycleOwner(), location -> {
+            if(location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0) ){
+                supportmapfragment.getMapAsync(googleMap1 -> {
+                    googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+                            location.getLatitude(),
+                            location.getLongitude()),15));
+                });
+            }
+        });
+        model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
+            Log.d("OBS_", "target changed " + name);
+            if(name == null){
+                // There is no navigation target
+            }else{
+                // Set navigation target UI
+            }
+        });
     }
 
 

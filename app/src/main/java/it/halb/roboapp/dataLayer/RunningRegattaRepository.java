@@ -101,7 +101,7 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
             return new Date(r.getLastUpdate());
         });
     }
-    public LiveData<Location> getLocation(){
+    public LiveData<Location> getCurrentLocation(){
         return Transformations.map(runningStatus, r ->{
             Location l = new Location("lat_lon_deserialized");
             l.setLatitude(r.getLat());

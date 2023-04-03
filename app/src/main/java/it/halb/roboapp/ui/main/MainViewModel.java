@@ -1,6 +1,7 @@
 package it.halb.roboapp.ui.main;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -16,6 +17,7 @@ public class MainViewModel extends AndroidViewModel {
         super(application);
         AuthRepository authRepository = AuthRepository.getInstance(application);
         account = authRepository.getAccount();
+        Log.d("VIEWMODEL_SCOPING_TEST", "main viewmodel constructor run");
     }
 
     public LiveData<Account> getAccount(){

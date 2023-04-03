@@ -6,14 +6,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavBackStackEntry;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import java.util.ArrayList;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
 import it.halb.roboapp.ui.main.adapters.BoatsListSimpleAdapter;
@@ -34,18 +40,27 @@ public class BoatInfoFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        //ViewModel initialization
-        model = new ViewModelProvider(this).get(MapViewModel.class);
+        // ViewModel initialization.
+        // It is scoped to the navigation graph, so that it will be shared between all
+        // the runningRegatta fragments and it will be cleared when navigating back to the regatta lists fragment.
+        NavBackStackEntry store = NavHostFragment.findNavController(this)
+                .getBackStackEntry(R.id.main_navigation);
+        model = new ViewModelProvider(store).get(MapViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
         //listview initialization
         BoatsListSimpleAdapter adapter = new BoatsListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.boatsListView.setAdapter(adapter);
+
+        //set onClickListener for listview
         binding.boatsListView.setOnItemClickListener((parent, view1, position, id) -> {
-            Boat b = adapter.getItemAt(position);
-            Log.d("CLICK", "clicked " + b.getUsername());
-            model.setTarget(b);
+            //set the current boat as a target for the navigation
+            Boat boat = adapter.getItemAt(position);
+            model.setTarget(boat);
+            //simulate a click on the bottomNavigation map button
+            BottomNavigationView bottomNav = requireActivity().findViewById(R.id.bottomNavigation);
+            bottomNav.setSelectedItemId(R.id.mapFragment);
         });
 
         //update listview with livedata.
@@ -55,6 +70,7 @@ public class BoatInfoFragment extends Fragment {
             adapter.addAll(boats);
             adapter.notifyDataSetChanged();
         });
+
 
     }
 }

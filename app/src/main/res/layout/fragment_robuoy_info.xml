@@ -1,18 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
+<layout xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
     <data>
         <variable
-            name="mapViewModel"
+            name="MapViewModel"
             type="it.halb.roboapp.ui.main.MapViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="88dp"
+        android:paddingTop="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
 
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayoutFragmentRobuoy"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBarFragmentRobuoy"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="@string/fragment_roboa_info_title"
+                app:subtitle="@string/fragment_info_navigation_hint"
+                />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ListView
+            android:id="@+id/robuoyListView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/appBarLayoutFragmentRobuoy"
+            tools:listitem="@layout/roboa_item" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

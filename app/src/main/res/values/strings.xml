@@ -57,6 +57,8 @@
     <string name="snackbar_info_swipe_to_delete_regatta">Swipe left to delete this regatta</string>
     <string name="create_regatta_creation_generic_error">\"Regatta creation failed. Error \"</string>
     <string name="fragment_boat_info_title">Assistance Boats</string>
+    <string name="fragment_roboa_info_title">BuoyBots</string>
+    <string name="fragment_buoy_info_title">Buoys</string>
     <string name="fragment_info_navigation_hint">click on an item to set the navigation</string>
     <string name="race_officer">Race Officer</string>
     <string name="support_boat">Support Boat</string>
