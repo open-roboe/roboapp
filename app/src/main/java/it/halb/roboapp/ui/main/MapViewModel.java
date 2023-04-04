@@ -27,7 +27,7 @@ public class MapViewModel extends AndroidViewModel {
 
     //data used by the compass
     public float initialCompassDegree = 0;
-    public float lastAngle = 0;
+    public float angleFilterData = 0;
     public boolean hasSensors = false;
     public final float[] accelerometerReading = new float[3];
     public final float[] magnetometerReading = new float[3];

@@ -150,6 +150,8 @@ public class MapFragment extends Fragment implements SensorEventListener{
                 binding.topAppBarCard.setVisibility(View.VISIBLE);
                 binding.compass.setVisibility(View.VISIBLE);
             }
+            //reset the angle filter
+            model.angleFilterData = 0;
         });
 
 
@@ -205,7 +207,7 @@ public class MapFragment extends Fragment implements SensorEventListener{
     public void updateCompass(){
         //compass smoothness configuration.
         //change these values to affect the way the compass moves.
-        float ANGLE_CAP = 3;
+        float ANGLE_CAP = 2.5f;
         long ANIMATION_DURATION = 100;
         //get repository data
         Location targetLocation = model.getTargetLocation();
@@ -252,20 +254,23 @@ public class MapFragment extends Fragment implements SensorEventListener{
         float angle = heading;
 
         //to avoid flickering, apply the animation only if the angle changed significantly
-        if(Math.abs(angle - model.lastAngle) < ANGLE_CAP){
+        if(model.angleFilterData != 0 && Math.abs(angle - model.angleFilterData) < ANGLE_CAP){
+            Log.d("COMPASS", "cap " + Math.abs(angle - model.angleFilterData));
             return;
         }else{
-            model.lastAngle = angle;
+            model.angleFilterData = angle;
         }
 
         //compensate device rotation, as explained here
         // https://android-developers.googleblog.com/2010/09/one-screen-turn-deserves-another.html
-        int rotationMode = binding.getRoot().getDisplay().getRotation();
-        Log.d("COMPASS", "rotation mode " + rotationMode);
-        if (rotationMode == Surface.ROTATION_90)
-            angle += 90;
-        if (rotationMode == Surface.ROTATION_270)
-            angle += 270;
+        if(binding.getRoot().getDisplay() != null){
+            int rotationMode = binding.getRoot().getDisplay().getRotation();
+            Log.d("COMPASS", "rotation mode " + rotationMode);
+            if (rotationMode == Surface.ROTATION_90)
+                angle += 90;
+            if (rotationMode == Surface.ROTATION_270)
+                angle += 270;
+        }
 
         //rotate the compass with an animation
         Animation rotate = new RotateAnimation(
