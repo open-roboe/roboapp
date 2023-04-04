@@ -116,9 +116,11 @@ public class MapFragment extends Fragment{
             if(name == null){
                 // There is no navigation target
                 binding.topAppBarCard.setVisibility(View.INVISIBLE);
+                binding.compass.setVisibility(View.INVISIBLE);
             }else{
                 // Set navigation target UI
                 binding.topAppBarCard.setVisibility(View.VISIBLE);
+                binding.compass.setVisibility(View.VISIBLE);
             }
         });
 
