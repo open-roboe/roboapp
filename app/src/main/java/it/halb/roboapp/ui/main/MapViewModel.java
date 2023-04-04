@@ -51,12 +51,6 @@ public class MapViewModel extends AndroidViewModel {
         buoys = runningRegattaRepository.getBuoys();
         robuoys = runningRegattaRepository.getRoboas();
         currentLocation = runningRegattaRepository.getCurrentLocation();
-
-        //we fetch the current location livedata by polling it, but livedata will be null if no one
-        //observes it. This is why here there is an empty observer
-        currentLocation.observeForever(location -> {
-            Log.d("COMPASS", "location observeforever " + (location == null ? "null " : ""));
-        });
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -67,6 +61,10 @@ public class MapViewModel extends AndroidViewModel {
     }
     public LiveData<List<Buoy>> getBuoy() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
+
+    public LiveData<Location> getCurrentLocation() {
+        return currentLocation;
+    }
 
     public void setTarget(Buoy buoy){
         navigationTarget.setValue(new NavigationTarget(buoy));
@@ -99,17 +97,16 @@ public class MapViewModel extends AndroidViewModel {
     }
 
     /**
-     * The current location is used by the compass code in the fragment. It's inside a callback
-     * with a quick refresh rate, so there is no need to fetch livedata.
+     * The current location fetched by the runningRegattaService, but the actual value and not a LiveData.
      *
-     * Careful! This data may be null
+     * Careful! If there are no observers registered on the liveData version, getCurrentLocation(),
+     * This method will always return null.
      *
-     * Careful! If there are no observers for this livedata, it will always be null
-     *
-     * @return the current location, fetched by the runningRegattaService, or null if it's still loading
+     * @return the current location fetched by the runningRegattaService, or null if it's still loading
+     *         or if there are no observers registered on getCurrentLocation();
      */
     @Nullable
-    public Location getCurrentLocation(){
+    public Location getCurrentLocationValue(){
         return currentLocation.getValue();
     }
 

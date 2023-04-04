@@ -5,6 +5,8 @@ import static it.halb.roboapp.util.Constants.SENSOR_SAMPLING_RATE;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -132,6 +134,19 @@ public class MapFragment extends Fragment implements SensorEventListener{
                 });
             }
         });
+        model.getCurrentLocation().observe(getViewLifecycleOwner(), location -> {
+            //show a grey compass when the location is not available
+            if(location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)){
+                ColorMatrix matrix = new ColorMatrix();
+                matrix.setSaturation(0);  //0 means grayscale
+                ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                binding.compass.setColorFilter(cf);
+                binding.compass.setImageAlpha(160);
+            }else{
+                binding.compass.setColorFilter(null);
+                binding.compass.setImageAlpha(255);
+            }
+        });
         model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
             Log.d("OBS_", "target changed " + name);
             if(name == null){
@@ -211,7 +226,7 @@ public class MapFragment extends Fragment implements SensorEventListener{
         long ANIMATION_DURATION = 100;
         //get repository data
         Location targetLocation = model.getTargetLocation();
-        Location currentLocation = model.getCurrentLocation();
+        Location currentLocation = model.getCurrentLocationValue();
 
         //don't show the compass if there is no target or current location
         if(targetLocation == null){
