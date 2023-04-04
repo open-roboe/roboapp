@@ -23,7 +23,10 @@ import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
 
+    //data used by the compass
     public float initialCompassDegree = 0;
+    public boolean hasSensors = false;
+    public boolean isFirstRotation = true;
     private final RunningRegattaRepository runningRegattaRepository;
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;

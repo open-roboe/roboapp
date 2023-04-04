@@ -1,8 +1,12 @@
 package it.halb.roboapp.ui.main;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -18,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
@@ -27,6 +32,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
+import java.util.Objects;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
@@ -43,6 +49,8 @@ public class MapFragment extends Fragment{
     private SupportMapFragment supportmapfragment;
     Context c;
     private MapViewModel model;
+    private SensorManager sensorManager;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -104,6 +112,13 @@ public class MapFragment extends Fragment{
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
+        //sensors initialization
+        sensorManager = (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null){
+            // Success! There's a magnetometer.
+            model.hasSensors = true;
+        }
+
         //model listeners
         model.getMapFocusLocation().observe(getViewLifecycleOwner(), location -> {
             if(location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0) ){
@@ -120,6 +135,12 @@ public class MapFragment extends Fragment{
                 // There is no navigation target
                 binding.topAppBarCard.setVisibility(View.INVISIBLE);
                 binding.compass.setVisibility(View.INVISIBLE);
+                binding.compass.animate()
+                        .rotation(100)
+                        .scaleY(0f)
+                        .scaleX(0f)
+                        .setInterpolator(new AccelerateInterpolator())
+                        .setDuration(100);
             }else{
                 // Set navigation target UI
                 binding.topAppBarCard.setVisibility(View.VISIBLE);
@@ -127,8 +148,17 @@ public class MapFragment extends Fragment{
             }
         });
         model.getCompassOrientation().observe(getViewLifecycleOwner(), angle ->{
-
-            RotateAnimation rotate = new RotateAnimation(
+            //don't animate the first time this observer runs.
+            //the first time it fires is when the viewModel is initialized, and the compass should not appear
+            if(model.isFirstRotation){
+                model.isFirstRotation = false;
+                return;
+            }
+            //don't show the compass if there are no magnetometer sensors
+            if(!model.hasSensors){
+                return;
+            }
+            Animation rotate = new RotateAnimation(
                     model.initialCompassDegree,
                     -angle,
                     Animation.RELATIVE_TO_SELF, 0.5f,
