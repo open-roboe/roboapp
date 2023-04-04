@@ -1,7 +1,5 @@
 package it.halb.roboapp.ui.main;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
 import static it.halb.roboapp.util.Constants.SENSOR_SAMPLING_RATE;
 
 import android.Manifest;
@@ -10,10 +8,17 @@ import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,21 +29,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.fragment.NavHostFragment;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.List;
-import java.util.Objects;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
@@ -209,8 +204,6 @@ public class MapFragment extends Fragment implements SensorEventListener{
     public void updateCompass(){
         //compass smoothness configuration.
         //change these values to affect the way the compass moves.
-        //Troppo basso e l'ago trema molto quando il telefono è fermo.
-        //troppo alto e l'ago ruota a scatti quando il telefono ruota
         float ANGLE_CAP = 3;
         long ANIMATION_DURATION = 100;
         //get repository data
@@ -255,7 +248,6 @@ public class MapFragment extends Fragment implements SensorEventListener{
         // heading * heading + targetAngle
 
         if(heading > 360) heading = heading-360;
-        Log.d("COMPASS", "heading: "+heading);
         float angle = heading;
 
         //to avoid flickering, apply the animation only if the angle changed significantly
