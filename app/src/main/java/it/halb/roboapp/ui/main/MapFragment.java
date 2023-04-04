@@ -18,6 +18,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -122,6 +125,19 @@ public class MapFragment extends Fragment{
                 binding.topAppBarCard.setVisibility(View.VISIBLE);
                 binding.compass.setVisibility(View.VISIBLE);
             }
+        });
+        model.getCompassOrientation().observe(getViewLifecycleOwner(), angle ->{
+
+            RotateAnimation rotate = new RotateAnimation(
+                    model.initialCompassDegree,
+                    -angle,
+                    Animation.RELATIVE_TO_SELF, 0.5f,
+                    Animation.RELATIVE_TO_SELF, 0.5f);
+            rotate.setDuration(200);
+            rotate.setFillAfter(true);
+            rotate.setInterpolator(new LinearInterpolator());
+            binding.compass.startAnimation(rotate);
+            model.initialCompassDegree = -angle;
         });
 
 

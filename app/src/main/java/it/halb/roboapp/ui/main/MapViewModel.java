@@ -22,6 +22,8 @@ import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
+
+    public float initialCompassDegree = 0;
     private final RunningRegattaRepository runningRegattaRepository;
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
@@ -110,8 +112,11 @@ public class MapViewModel extends AndroidViewModel {
      *
      * @return the orientation angle for the compass image.
      */
-    public LiveData<Double> getCompassOrientation(){
-        return null;
+    public LiveData<Float> getCompassOrientation(){
+        //TODO
+        return Transformations.map(navigationTarget, test -> {
+            return (float)90.0;
+        });
     }
 
 
