@@ -2,11 +2,17 @@ package it.halb.roboapp.ui.main;
 
 import static androidx.core.content.ContextCompat.getSystemService;
 
+import static it.halb.roboapp.util.Constants.SENSOR_SAMPLING_RATE;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.location.Location;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,11 +45,12 @@ import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.databinding.FragmentMapBinding;
 import it.halb.roboapp.util.BuoyFactory;
+import it.halb.roboapp.util.CompassUtil;
 import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.RegattaController;
 
 
-public class MapFragment extends Fragment{
+public class MapFragment extends Fragment implements SensorEventListener{
 
     private FragmentMapBinding binding;
     private SupportMapFragment supportmapfragment;
@@ -132,9 +139,10 @@ public class MapFragment extends Fragment{
         model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
             Log.d("OBS_", "target changed " + name);
             if(name == null){
-                // There is no navigation target
+                // hide navigation target UI
                 binding.topAppBarCard.setVisibility(View.INVISIBLE);
                 binding.compass.setVisibility(View.INVISIBLE);
+                //hide the compass. An animation is required to cancel out the previous rotation animation
                 binding.compass.animate()
                         .rotation(100)
                         .scaleY(0f)
@@ -147,35 +155,108 @@ public class MapFragment extends Fragment{
                 binding.compass.setVisibility(View.VISIBLE);
             }
         });
-        model.getCompassOrientation().observe(getViewLifecycleOwner(), angle ->{
-            //don't animate the first time this observer runs.
-            //the first time it fires is when the viewModel is initialized, and the compass should not appear
-            if(model.isFirstRotation){
-                model.isFirstRotation = false;
-                return;
-            }
-            //don't show the compass if there are no magnetometer sensors
-            if(!model.hasSensors){
-                return;
-            }
-            Animation rotate = new RotateAnimation(
-                    model.initialCompassDegree,
-                    -angle,
-                    Animation.RELATIVE_TO_SELF, 0.5f,
-                    Animation.RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(200);
-            rotate.setFillAfter(true);
-            rotate.setInterpolator(new LinearInterpolator());
-            binding.compass.startAnimation(rotate);
-            model.initialCompassDegree = -angle;
-        });
 
 
+        //view listeners
         binding.topAppBar.setNavigationOnClickListener(l -> {
             model.clearTarget();
         });
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        if (accelerometer != null) {
+            sensorManager.registerListener(this, accelerometer,
+                    SENSOR_SAMPLING_RATE, SENSOR_SAMPLING_RATE);
+        }
+
+        Sensor magneticField = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
+        if (magneticField != null) {
+            sensorManager.registerListener(this, magneticField,
+                    SENSOR_SAMPLING_RATE, SENSOR_SAMPLING_RATE);
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(this);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+            //make sensor readings smoother using a low pass filter
+            CompassUtil.lowPassFilter(event.values.clone(), model.accelerometerReading);
+        } else if (event.sensor.getType() == Sensor.TYPE_MAGNETIC_FIELD) {
+            //make sensor readings smoother using a low pass filter
+            CompassUtil.lowPassFilter(event.values.clone(), model.magnetometerReading);
+        }
+        updateCompass();
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        // method required by the interface
+    }
+
+    public void updateCompass(){
+        //get repository data
+        Location targetLocation = model.getTargetLocation();
+        Location currentLocation = model.getCurrentLocation();
+        //don't show the compass if there is no target set
+        if(targetLocation == null){
+            Log.d("COMPASS", "no target location");
+            return;
+        }
+        //don't show the compass if we don't have coordinates yet
+        if(currentLocation == null){
+            Log.d("COMPASS", "no current location");
+            return;
+        }
+        if(currentLocation.getLatitude() == 0.0 && currentLocation.getLongitude() == 0.0){
+            Log.d("COMPASS", "invalid current location");
+            return;
+        }
+
+        //calculate heading
+        float heading = CompassUtil.calculateHeading(model.accelerometerReading, model.magnetometerReading);
+        heading = CompassUtil.convertRadtoDeg(heading);
+        heading = CompassUtil.map180to360(heading);
+
+        //calculate magnetic declination
+        //TODO: debug, may be useless
+        float currentLatitude = (float) currentLocation.getLatitude();
+        float currentLongitude = (float) currentLocation.getLongitude();
+        float currentAltitude = (float) currentLocation.getAltitude();
+        float magneticDeclination = CompassUtil.calculateMagneticDeclination(currentLatitude, currentLongitude, currentAltitude);
+        heading = heading + magneticDeclination;
+
+        //calculate target angle
+        //TODO
+        // heading * heading + targetAngle
+
+        if(heading > 360) heading = heading-360;
+        Log.d("COMPASS", "heading: "+heading);
+        float angle = heading;
+
+        //rotate the compass with an animation
+        Animation rotate = new RotateAnimation(
+                model.initialCompassDegree,
+                -angle,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        rotate.setDuration(200);
+        rotate.setFillAfter(true);
+        rotate.setInterpolator(new LinearInterpolator());
+        binding.compass.startAnimation(rotate);
+        model.initialCompassDegree = -angle;
+    }
 
 }

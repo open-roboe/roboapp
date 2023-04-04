@@ -12,6 +12,7 @@ import androidx.lifecycle.Transformations;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import it.halb.roboapp.dataLayer.localDataSource.Account;
 import it.halb.roboapp.dataLayer.localDataSource.AccountDao;
@@ -52,8 +53,12 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
     private final LiveData<List<Roboa>> roboaList;
     private final LiveData<RunningStatus> runningStatus;
 
+    //TODO: remove, use hilt instead
+    public static RunningRegattaInterface instance;
 
-    public RunningRegattaRepositoryMock(Application application){
+
+    private RunningRegattaRepositoryMock(Application application){
+        Log.d("REPO_SCOPING", "constructor run");
         //init local datasource
         Database database = Database.getInstance(application);
         accountDao = database.accountDao();
@@ -72,6 +77,13 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
         buoyList = buoyDao.getRunningBuoys();
         boatList = boatDao.getRunningBoats();
         roboaList = roboaDao.getAll();
+    }
+
+    public static synchronized RunningRegattaInterface getInstance(Application application){
+        if(instance == null){
+            instance = new RunningRegattaRepositoryMock(application);
+        }
+        return instance;
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -104,6 +116,7 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
     public LiveData<Location> getCurrentLocation(){
         return Transformations.map(runningStatus, r ->{
             Location l = new Location("lat_lon_deserialized");
+            Log.d("RUNNINGREGATTA", "transforming lat: "+ r.getLat()+ "lon: "+ r.getLon());
             l.setLatitude(r.getLat());
             l.setLongitude(r.getLon());
             return l;
