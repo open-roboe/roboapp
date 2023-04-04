@@ -253,9 +253,8 @@ public class MapFragment extends Fragment implements SensorEventListener{
         if(heading > 360) heading = heading-360;
         float angle = heading;
 
-        //to avoid flickering, apply the animation only if the angle changed significantly
+        //to avoid flickering, skip the animation if the angle is not significantly different from the current angle
         if(model.angleFilterData != 0 && Math.abs(angle - model.angleFilterData) < ANGLE_CAP){
-            Log.d("COMPASS", "cap " + Math.abs(angle - model.angleFilterData));
             return;
         }else{
             model.angleFilterData = angle;
@@ -265,7 +264,6 @@ public class MapFragment extends Fragment implements SensorEventListener{
         // https://android-developers.googleblog.com/2010/09/one-screen-turn-deserves-another.html
         if(binding.getRoot().getDisplay() != null){
             int rotationMode = binding.getRoot().getDisplay().getRotation();
-            Log.d("COMPASS", "rotation mode " + rotationMode);
             if (rotationMode == Surface.ROTATION_90)
                 angle += 90;
             if (rotationMode == Surface.ROTATION_270)
