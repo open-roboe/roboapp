@@ -207,17 +207,27 @@ public class MapFragment extends Fragment implements SensorEventListener{
     }
 
     public void updateCompass(){
+        //compass smoothness configuration.
+        //change these values to affect the way the compass moves.
+        //Troppo basso e l'ago trema molto quando il telefono è fermo.
+        //troppo alto e l'ago ruota a scatti quando il telefono ruota
+        float ANGLE_CAP = 3;
+        long ANIMATION_DURATION = 100;
         //get repository data
         Location targetLocation = model.getTargetLocation();
         Location currentLocation = model.getCurrentLocation();
-        //don't show the compass if there is no target set
+
+        //don't show the compass if there is no target or current location
         if(targetLocation == null){
             Log.d("COMPASS", "no target location");
             return;
         }
-        //don't show the compass if we don't have coordinates yet
         if(currentLocation == null){
             Log.d("COMPASS", "no current location");
+            return;
+        }
+        if(targetLocation.getLatitude() == 0.0 && targetLocation.getLongitude() == 0.0){
+            Log.d("COMPASS", "invalid target location");
             return;
         }
         if(currentLocation.getLatitude() == 0.0 && currentLocation.getLongitude() == 0.0){
@@ -231,12 +241,14 @@ public class MapFragment extends Fragment implements SensorEventListener{
         heading = CompassUtil.map180to360(heading);
 
         //calculate magnetic declination
-        //TODO: debug, may be useless
+        //TODO: debug, may be useless. we are keeping it disabled for now
+        /*
         float currentLatitude = (float) currentLocation.getLatitude();
         float currentLongitude = (float) currentLocation.getLongitude();
         float currentAltitude = (float) currentLocation.getAltitude();
         float magneticDeclination = CompassUtil.calculateMagneticDeclination(currentLatitude, currentLongitude, currentAltitude);
         heading = heading + magneticDeclination;
+         */
 
         //calculate target angle
         //TODO
@@ -246,13 +258,20 @@ public class MapFragment extends Fragment implements SensorEventListener{
         Log.d("COMPASS", "heading: "+heading);
         float angle = heading;
 
+        //to avoid flickering, apply the animation only if the angle changed significantly
+        if(Math.abs(angle - model.lastAngle) < ANGLE_CAP){
+            return;
+        }else{
+            model.lastAngle = angle;
+        }
+
         //rotate the compass with an animation
         Animation rotate = new RotateAnimation(
                 model.initialCompassDegree,
                 -angle,
                 Animation.RELATIVE_TO_SELF, 0.5f,
                 Animation.RELATIVE_TO_SELF, 0.5f);
-        rotate.setDuration(200);
+        rotate.setDuration(ANIMATION_DURATION);
         rotate.setFillAfter(true);
         rotate.setInterpolator(new LinearInterpolator());
         binding.compass.startAnimation(rotate);

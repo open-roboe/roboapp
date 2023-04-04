@@ -3,6 +3,9 @@ package it.halb.roboapp.util;
 import java.util.GregorianCalendar;
 
 
+/**
+ * <a href="https://github.com/yogur/android-compass">author</a>
+ */
 public class CompassUtil {
     //0 ≤ ALPHA ≤ 1
     //smaller ALPHA results in smoother sensor data but slower updates
