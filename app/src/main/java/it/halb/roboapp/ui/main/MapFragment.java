@@ -13,6 +13,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -256,6 +257,15 @@ public class MapFragment extends Fragment implements SensorEventListener{
         }else{
             model.lastAngle = angle;
         }
+
+        //compensate device rotation, as explained here
+        // https://android-developers.googleblog.com/2010/09/one-screen-turn-deserves-another.html
+        int rotationMode = binding.getRoot().getDisplay().getRotation();
+        Log.d("COMPASS", "rotation mode " + rotationMode);
+        if (rotationMode == Surface.ROTATION_90)
+            angle += 90;
+        if (rotationMode == Surface.ROTATION_270)
+            angle += 270;
 
         //rotate the compass with an animation
         Animation rotate = new RotateAnimation(
