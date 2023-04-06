@@ -15,3 +15,12 @@ Queste guide coprono tutto quello che serve sapere per mettere mano all'app, sen
 - [Come si utilizzano le repository](./docs/repository.it.md)
 
 - [Come si implementa il design, Figma, Navigazione, sbatti vari](./docs/view-design.it.md)
+
+## Organizzazione progetto
+
+Il lavoro da fare è organizzato ad obbiettivi, o milestones.
+
+Ogni obbiettivo racchiude una serie di features da svolgere, una volta terminate tutte si passa alla milestone successiva.
+Si può tenere traccia del lavoro in corso nei seguenti link:
+
+[lavori in corso per la milestone attuale](https://github.com/orgs/open-roboe/projects/3/views/1)
