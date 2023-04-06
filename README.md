@@ -24,3 +24,4 @@ Ogni obbiettivo racchiude una serie di features da svolgere, una volta terminate
 Si può tenere traccia del lavoro in corso nei seguenti link:
 
 [lavori in corso per la milestone attuale](https://github.com/orgs/open-roboe/projects/3/views/1)
+
