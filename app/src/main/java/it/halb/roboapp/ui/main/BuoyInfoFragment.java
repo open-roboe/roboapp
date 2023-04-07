@@ -64,7 +64,7 @@ public class BuoyInfoFragment extends Fragment {
 
         //update listview with livedata.
         //this list will always be short, and will update sporadically. No need for fancy recyclerViews
-        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+        model.getBuoys().observe(getViewLifecycleOwner(), buoy -> {
             adapter.clear();
             adapter.addAll(buoy);
             adapter.notifyDataSetChanged();

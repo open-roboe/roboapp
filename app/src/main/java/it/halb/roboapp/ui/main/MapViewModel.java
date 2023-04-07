@@ -59,7 +59,7 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Boat>> getBoats() {
         return boats;
     }
-    public LiveData<List<Buoy>> getBuoy() { return buoys; }
+    public LiveData<List<Buoy>> getBuoys() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
     public LiveData<Location> getCurrentLocation() {

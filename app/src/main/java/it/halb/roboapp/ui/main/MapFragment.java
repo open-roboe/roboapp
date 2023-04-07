@@ -48,13 +48,16 @@ import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.RegattaController;
 
 
-public class MapFragment extends Fragment implements SensorEventListener{
+public class MapFragment extends Fragment implements SensorEventListener {
 
     private FragmentMapBinding binding;
     private SupportMapFragment supportmapfragment;
     Context c;
     private MapViewModel model;
     private SensorManager sensorManager;
+
+    private boolean firstRegatta = false; //andra tolto una volta risolto il problema nella tabella current regatta
+    private boolean firstBuoys = false; //andra tolto una volta risolto il problema nella tabella current regatta
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -81,29 +84,33 @@ public class MapFragment extends Fragment implements SensorEventListener{
                 return;
             }
             googleMap.setMyLocationEnabled(true);
-
-            Regatta regatta = new Regatta("regatta_name", Constants.triangleRegatta, 0,
-                    10, 100.1, 0, 1000, 1500,
-                    false, false);
-            regatta.setLatLng(new LatLng(45.5141865,9.2109231));
-
-            List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
-
-            MutableLiveData<Regatta> race = new MutableLiveData<>();
-            MutableLiveData<List<Buoy>> buoy = new MutableLiveData<>();
-
-            race.setValue(regatta);
-            buoy.setValue(buoys);
             RegattaController.getInstance().setMap(googleMap);
-            RegattaController.getInstance().setRegatta(race);
-            RegattaController.getInstance().setBuoys(buoy);
-            RegattaController.getInstance().setCourse();
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(45.5141865,9.2109231),15));
+            model.getRegatta().observe(getViewLifecycleOwner(), regatta -> {
+                if (firstRegatta) {
+                    return;
+                }
+                if (regatta != null) {
+                    RegattaController.getInstance().setRegatta(regatta);
+                    firstRegatta=true;
+                    Log.d("Buoys", " model.getRegatta().observe execute");
+                }
+            });
+
+            model.getBuoys().observe(getViewLifecycleOwner(), buoys -> {
+                if (firstBuoys) {
+                    return;
+                }
+                if (buoys != null) {
+                    RegattaController.getInstance().setBuoys(buoys);
+                    RegattaController.getInstance().setCourse();
+                    Log.d("Buoys", " model.getBuoys().observe execute");
+                    firstBuoys=true;
+                }
+            });
         });
         return binding.getRoot();
     }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -119,37 +126,38 @@ public class MapFragment extends Fragment implements SensorEventListener{
 
         //sensors initialization
         sensorManager = (SensorManager) requireActivity().getSystemService(Context.SENSOR_SERVICE);
-        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null){
+        if (sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD) != null) {
             // Success! There's a magnetometer.
             model.hasSensors = true;
         }
 
         //model listeners
         model.getMapFocusLocation().observe(getViewLifecycleOwner(), location -> {
-            if(location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0) ){
+            if (location != null && !(location.getLongitude() == 0.0 && location.getLatitude() == 0.0)) {
                 supportmapfragment.getMapAsync(googleMap1 -> {
                     googleMap1.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
                             location.getLatitude(),
-                            location.getLongitude()),15));
+                            location.getLongitude()), 15));
+                    Log.d("Buoys", " model.getMapFocusLocation().observe execute");
                 });
             }
         });
         model.getCurrentLocation().observe(getViewLifecycleOwner(), location -> {
             //show a grey compass when the location is not available
-            if(location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)){
+            if (location == null || (location.getLatitude() == 0.0 && location.getLongitude() == 0.0)) {
                 ColorMatrix matrix = new ColorMatrix();
                 matrix.setSaturation(0);  //0 means grayscale
                 ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
                 binding.compass.setColorFilter(cf);
                 binding.compass.setImageAlpha(160);
-            }else{
+            } else {
                 binding.compass.setColorFilter(null);
                 binding.compass.setImageAlpha(255);
             }
         });
         model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
             Log.d("OBS_", "target changed " + name);
-            if(name == null){
+            if (name == null) {
                 // hide navigation target UI
                 binding.topAppBarCard.setVisibility(View.INVISIBLE);
                 binding.compass.setVisibility(View.INVISIBLE);
@@ -160,7 +168,7 @@ public class MapFragment extends Fragment implements SensorEventListener{
                         .scaleX(0f)
                         .setInterpolator(new AccelerateInterpolator())
                         .setDuration(100);
-            }else{
+            } else {
                 // Set navigation target UI
                 binding.topAppBarCard.setVisibility(View.VISIBLE);
                 binding.compass.setVisibility(View.VISIBLE);
@@ -219,7 +227,7 @@ public class MapFragment extends Fragment implements SensorEventListener{
         // method required by the interface
     }
 
-    public void updateCompass(){
+    public void updateCompass() {
         //compass smoothness configuration.
         //change these values to affect the way the compass moves.
         float ANGLE_CAP = 2.5f;
@@ -229,19 +237,19 @@ public class MapFragment extends Fragment implements SensorEventListener{
         Location currentLocation = model.getCurrentLocationValue();
 
         //don't show the compass if there is no target or current location
-        if(targetLocation == null){
+        if (targetLocation == null) {
             Log.d("COMPASS", "no target location");
             return;
         }
-        if(currentLocation == null){
+        if (currentLocation == null) {
             Log.d("COMPASS", "no current location");
             return;
         }
-        if(targetLocation.getLatitude() == 0.0 && targetLocation.getLongitude() == 0.0){
+        if (targetLocation.getLatitude() == 0.0 && targetLocation.getLongitude() == 0.0) {
             Log.d("COMPASS", "invalid target location");
             return;
         }
-        if(currentLocation.getLatitude() == 0.0 && currentLocation.getLongitude() == 0.0){
+        if (currentLocation.getLatitude() == 0.0 && currentLocation.getLongitude() == 0.0) {
             Log.d("COMPASS", "invalid current location");
             return;
         }
@@ -265,19 +273,19 @@ public class MapFragment extends Fragment implements SensorEventListener{
         //TODO
         // heading * heading + targetAngle
 
-        if(heading > 360) heading = heading-360;
+        if (heading > 360) heading = heading - 360;
         float angle = heading;
 
         //to avoid flickering, skip the animation if the angle is not significantly different from the current angle
-        if(model.angleFilterData != 0 && Math.abs(angle - model.angleFilterData) < ANGLE_CAP){
+        if (model.angleFilterData != 0 && Math.abs(angle - model.angleFilterData) < ANGLE_CAP) {
             return;
-        }else{
+        } else {
             model.angleFilterData = angle;
         }
 
         //compensate device rotation, as explained here
         // https://android-developers.googleblog.com/2010/09/one-screen-turn-deserves-another.html
-        if(binding.getRoot().getDisplay() != null){
+        if (binding.getRoot().getDisplay() != null) {
             int rotationMode = binding.getRoot().getDisplay().getRotation();
             if (rotationMode == Surface.ROTATION_90)
                 angle += 90;
