@@ -13,7 +13,7 @@ public class RunRegattaViewModel extends AndroidViewModel {
 
     public RunRegattaViewModel(@NonNull Application application) {
         super(application);
-        runningRegatta = new RunningRegattaRepositoryMock(application);
+        runningRegatta = RunningRegattaRepositoryMock.getInstance(application);
     }
 
     public void declareRegattaToRun(@NonNull String name,

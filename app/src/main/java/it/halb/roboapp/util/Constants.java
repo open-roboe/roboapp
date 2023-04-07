@@ -1,5 +1,7 @@
 package it.halb.roboapp.util;
 
+import android.hardware.SensorManager;
+
 import com.google.android.gms.location.Priority;
 
 public class Constants {
@@ -20,6 +22,9 @@ public class Constants {
     public static final int OUT_OF_SYNC_AFTER_SECONDS = 15;
     // https://developers.google.com/android/reference/com/google/android/gms/location/Priority
     public static final int LOCATION_PRIORITY = Priority.PRIORITY_HIGH_ACCURACY;
+
+    // Compass
+    public static final int SENSOR_SAMPLING_RATE = SensorManager.SENSOR_DELAY_UI;
 
     // Buoys Type
     public static final String GateMarkDx = "GATE MARK DX";

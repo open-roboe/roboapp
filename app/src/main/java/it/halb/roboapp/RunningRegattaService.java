@@ -46,7 +46,7 @@ public class RunningRegattaService extends Service {
         public void run() {
             //get the repository
             Application application = getApplication();
-            RunningRegattaInterface repository = new RunningRegattaRepositoryMock(application);
+            RunningRegattaInterface repository = RunningRegattaRepositoryMock.getInstance(application);
 
             //fetch the device location and call the repository
             if( ! Permissions.hasLocationPermissions(application)){

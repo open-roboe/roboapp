@@ -12,9 +12,11 @@ import androidx.lifecycle.Transformations;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 
-import it.halb.roboapp.dataLayer.RunningRegattaRepository;
+import javax.annotation.Nullable;
+
+import it.halb.roboapp.dataLayer.RunningRegattaInterface;
+import it.halb.roboapp.dataLayer.RunningRegattaRepositoryMock;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
@@ -22,10 +24,18 @@ import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.util.NavigationTarget;
 
 public class MapViewModel extends AndroidViewModel {
-    private final RunningRegattaRepository runningRegattaRepository;
+
+    //data used by the compass
+    public float initialCompassDegree = 0;
+    public float angleFilterData = 0;
+    public boolean hasSensors = false;
+    public final float[] accelerometerReading = new float[3];
+    public final float[] magnetometerReading = new float[3];
+
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
 
+    private final LiveData<Location> currentLocation;
     private final LiveData<List<Buoy>> buoys;
 
     private final LiveData<List<Roboa>> robuoys;
@@ -35,11 +45,12 @@ public class MapViewModel extends AndroidViewModel {
     public MapViewModel(@NonNull Application application) {
         super(application);
         Log.d("VIEWMODEL_SCOPING_TEST", "constructor run");
-        runningRegattaRepository = new RunningRegattaRepository(application);
+        RunningRegattaInterface runningRegattaRepository = RunningRegattaRepositoryMock.getInstance(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
         buoys = runningRegattaRepository.getBuoys();
         robuoys = runningRegattaRepository.getRoboas();
+        currentLocation = runningRegattaRepository.getCurrentLocation();
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -51,12 +62,20 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Buoy>> getBuoy() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
+    public LiveData<Location> getCurrentLocation() {
+        return currentLocation;
+    }
+
     public void setTarget(Buoy buoy){
         navigationTarget.setValue(new NavigationTarget(buoy));
     }
 
     public void setTarget(Boat boat){
         navigationTarget.setValue(new NavigationTarget(boat));
+    }
+
+    public void clearTarget(){
+        navigationTarget.setValue(null);
     }
 
     /**
@@ -66,52 +85,66 @@ public class MapViewModel extends AndroidViewModel {
      * When using this livedata, make sure to handle the case where the coordinates are 0.0, 0.0
      */
     public LiveData<Location> getMapFocusLocation(){
-        return Transformations.map(navigationTarget, target -> {
-            Location location = new Location("viewModel_transformation");
-            //if there is no target set, return the default location, 0.0, 0.0
-            if(target == null){
-                return location;
-            }
-            if(target.isBuoy()){
-                Objects.requireNonNull(buoys.getValue()).forEach(buoy -> {
-                    if(buoy.getId().equals(target.getId())){
-                        location.setLatitude(buoy.getLatitude());
-                        location.setLongitude(buoy.getLongitude());
-                    }
-                });
-            } else {
-                Objects.requireNonNull(boats.getValue()).forEach(boat -> {
-                    if(boat.getUsername().equals(target.getId())){
-                        location.setLatitude(boat.getLatitude());
-                        location.setLongitude(boat.getLongitude());
-                    }
-                });
-            }
-            return location;
-        });
+        return Transformations.map(navigationTarget, this::getTargetLocation);
     }
 
     public LiveData<String> getNavigationTargetReadableName(){
         return Transformations.map(navigationTarget, target -> {
             if(target == null)
                 return null;
-            if(target.isBuoy())
-                return "Buoy " + target.getId(); //TODO: proper i18n
-            else
-                return "Boat " + target.getId(); //TODO: proper i18n
+            return target.getId();
         });
     }
 
-
     /**
-     * TODO: calculate, by combining all the required livedata such as currentLocation and targetLocation
-     *   with the sensors data, that should be put into the viewModel by MapFragment, and kept updated
+     * The current location fetched by the runningRegattaService, but the actual value and not a LiveData.
      *
-     * @return the orientation angle for the compass image.
+     * Careful! If there are no observers registered on the liveData version, getCurrentLocation(),
+     * This method will always return null.
+     *
+     * @return the current location fetched by the runningRegattaService, or null if it's still loading
+     *         or if there are no observers registered on getCurrentLocation();
      */
-    public LiveData<Double> getCompassOrientation(){
-        return null;
+    @Nullable
+    public Location getCurrentLocationValue(){
+        return currentLocation.getValue();
     }
 
+    /**
+     * The target location is used by the compass code in the fragment. It's inside a callback
+     * with a quick refresh rate, so there is no need to fetch livedata.
+     * This data may be null
+     * @return the target location, or null if there is no target set yet
+     */
+    @Nullable
+    public Location getTargetLocation(){
+        NavigationTarget target = navigationTarget.getValue();
+        if(target == null) return null;
+        return getTargetLocation(target);
+    }
+
+    private Location getTargetLocation(NavigationTarget target){
+        Location location = new Location("viewModel_transformation");
+        //if there is no target set, return the default location, 0.0, 0.0
+        if(target == null){
+            return location;
+        }
+        if(target.isBuoy()){
+            Objects.requireNonNull(buoys.getValue()).forEach(buoy -> {
+                if(buoy.getId().equals(target.getId())){
+                    location.setLatitude(buoy.getLatitude());
+                    location.setLongitude(buoy.getLongitude());
+                }
+            });
+        } else {
+            Objects.requireNonNull(boats.getValue()).forEach(boat -> {
+                if(boat.getUsername().equals(target.getId())){
+                    location.setLatitude(boat.getLatitude());
+                    location.setLongitude(boat.getLongitude());
+                }
+            });
+        }
+        return location;
+    }
 
 }
