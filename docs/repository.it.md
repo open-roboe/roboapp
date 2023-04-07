@@ -19,7 +19,7 @@ un race officer.
 Questa repository serve a gestire le regate:
 Contiene i metodi per modificare una regata, creare una regata, o eliminare una regata.
 
-[TODO: link a docs regattarepository]
+[Documentazione metodi](https://github.com/open-roboe/roboapp/blob/master/app/src/main/java/it/halb/roboapp/dataLayer/RegattaInterface.java)
 
 ## RunningRegattaRepository
 
@@ -36,7 +36,7 @@ la lista di boe, roboe, barche, e altre info su questa regata.
 Nota che il concetto di "regata in corso"
 All'interno del codice è tradotto come "running regatta".
 
-[TODO: link a docs runningregattarepository]
+[Documentazione metodi](https://github.com/open-roboe/roboapp/blob/master/app/src/main/java/it/halb/roboapp/dataLayer/RunningRegattaInterface.java)
 
 Questa repository è complicata perchè quando si "lancia" una regatta, Occorre fare due cose:
 - Salvare in memoria il nome della regata lanciata
