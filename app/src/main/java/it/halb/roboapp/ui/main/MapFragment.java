@@ -33,8 +33,10 @@ import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 
 import java.util.List;
 
@@ -108,7 +110,24 @@ public class MapFragment extends Fragment implements SensorEventListener {
                     firstBuoys=true;
                 }
             });
+
+            googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                @Override
+                public boolean onMarkerClick(@NonNull Marker marker) {
+
+                    for (String s:Constants.StringArray
+                    ) {
+                        if(s.equals(marker.getTitle()))
+                        {
+                            model.setTarget(marker.getTitle());
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            });
         });
+
         return binding.getRoot();
     }
 
@@ -155,6 +174,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 binding.compass.setImageAlpha(255);
             }
         });
+
         model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
             Log.d("OBS_", "target changed " + name);
             if (name == null) {

@@ -31,15 +31,11 @@ public class MapViewModel extends AndroidViewModel {
     public boolean hasSensors = false;
     public final float[] accelerometerReading = new float[3];
     public final float[] magnetometerReading = new float[3];
-
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
-
     private final LiveData<Location> currentLocation;
     private final LiveData<List<Buoy>> buoys;
-
     private final LiveData<List<Roboa>> robuoys;
-
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
 
     public MapViewModel(@NonNull Application application) {
@@ -67,6 +63,10 @@ public class MapViewModel extends AndroidViewModel {
     }
 
     public void setTarget(Buoy buoy){
+        navigationTarget.setValue(new NavigationTarget(buoy));
+    }
+
+    public void setTarget(String buoy){
         navigationTarget.setValue(new NavigationTarget(buoy));
     }
 

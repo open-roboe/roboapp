@@ -2,6 +2,7 @@ package it.halb.roboapp.util;
 
 import android.graphics.Color;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,6 +60,7 @@ public class RegattaController {
 
                 }else
                 {
+
                     map.addMarker(new MarkerOptions()
                             .position(buoy.getPosition())
                             .title(buoy.getId()));

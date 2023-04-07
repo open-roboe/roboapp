@@ -39,6 +39,9 @@ public class Constants {
 
     public static final String TriangleMark = "TRIANGLE MARK";
 
+    public static final String[] StringArray = {"TRIANGLE MARK", "MID LINE START", "START MARK", "UP WIND MARK",
+            "SECOND UP WIND MARK", "BREAK MARK", "BOTTOM MARK", "GATE MARK SX", "GATE MARK DX"};
+
     //constant string for regatta type
 
     public static final String stickRegatta = "STICK";
