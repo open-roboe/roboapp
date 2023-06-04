@@ -66,4 +66,5 @@
     <string name="running_regatta_error_location_permission">Device location failed</string>
     <string name="snackbar_info_swipe_to_delete_regatta">Swipe left to delete this regatta</string>
     <string name="create_regatta_creation_generic_error">\"Regatta creation failed. Error \"</string>
+    <string name="fragment_edit_regatta_button">Edit Regatta</string>
 </resources>

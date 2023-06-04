@@ -28,22 +28,22 @@ import com.google.android.material.snackbar.Snackbar;
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
+import it.halb.roboapp.databinding.FragmentEditRegattaBinding;
 import it.halb.roboapp.util.Permissions;
 
-public class CreateRegattaFragment extends Fragment {
-
-    private FragmentCreateRegattaBinding binding;
+public class EditRegattaFragment extends Fragment {
+    private FragmentEditRegattaBinding binding;
 
     private MaterialButtonToggleGroup regattaTypeSegmentedButton;
 
-    private Button createRegattaButton;
+    private Button editRegattaButton;
 
-    private CreateRegattaViewModel model;
+    private EditRegattaViewModel model;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCreateRegattaBinding.inflate(inflater, container, false);
+        binding = FragmentEditRegattaBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -52,9 +52,38 @@ public class CreateRegattaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //initialize viewmodel
-        model = new ViewModelProvider(this).get(CreateRegattaViewModel.class);
+        model = new ViewModelProvider(this).get(EditRegattaViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
-        binding.setCreateRegattaViewModel(model);
+        binding.setEditRegattaViewModel(model);
+        binding.textInputRegattaName.getEditText().setText(getArguments().get("name").toString());
+        binding.textInputRegattaCourseAxis.getEditText().setText(getArguments().get("windDirection").toString());
+        binding.textInputRegattaCourseLength.getEditText().setText(getArguments().get("courseLength").toString());
+        binding.textInputRegattaStartLineLength.getEditText().setText(getArguments().get("startLineLen").toString());
+        if (getArguments().get("type").equals("triangle")) {
+            binding.toggleButton.check(R.id.buttonTriangle);
+            binding.textInputRegattaBuoyStern.setEnabled(false);
+        }
+        if (getArguments().get("breakDistance").equals(0.0))
+            binding.materialSwitchStacchetto.setChecked(false);
+        else {
+            binding.materialSwitchStacchetto.setChecked(true);
+            binding.textInputRegattaStacchettoDistance.getEditText().setText(getArguments().get("breakDistance").toString());
+        }
+        if (getArguments().get("secondMarkDistance").equals(0.0))
+            binding.materialSwitchBolina.setChecked(false);
+        else {
+            binding.materialSwitchBolina.setChecked(true);
+            binding.textInputRegattaBolinaDistance.getEditText().setText(getArguments().get("secondMarkDistance").toString());
+        }
+        if (getArguments().get("bottonBuoy").equals(false)) {
+            binding.textInputRegattaBuoyStern.getEditText().setText("None");
+        }
+        else if (getArguments().get("gate").equals(false)) {
+            binding.textInputRegattaBuoyStern.getEditText().setText("Single");
+        }
+        else {
+            binding.textInputRegattaBuoyStern.getEditText().setText("Gate");
+        }
 
         //ask for location permissions. we notify the viewModel the result so that a
         // manual coordinates input can be created in case of denied permissions
@@ -69,8 +98,10 @@ public class CreateRegattaFragment extends Fragment {
                 () -> model.setLocationPermissions(false)
         );
 
+        model.getFormFields(getArguments()).observe(getViewLifecycleOwner(), error -> {});
+
         regattaTypeSegmentedButton = binding.toggleButton;
-        createRegattaButton = binding.buttonCreateRegatta;
+        editRegattaButton = binding.buttonEditRegatta;
 
         model.getFormFieldsErrors().getValue().get("regattaNameError").observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
@@ -115,7 +146,7 @@ public class CreateRegattaFragment extends Fragment {
             }
         });
 
-        createRegattaButton.setOnClickListener(v -> {
+        editRegattaButton.setOnClickListener(v -> {
             //set the current location, then create the regatta
             setCurrentLocation(
                     vv -> createRegatta()
@@ -171,4 +202,5 @@ public class CreateRegattaFragment extends Fragment {
     }
 
 }
+
 

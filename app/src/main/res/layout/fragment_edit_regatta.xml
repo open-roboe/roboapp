@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="editRegattaViewModel"
+            type="it.halb.roboapp.ui.main.EditRegattaViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:isScrollContainer="false"
+        >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <com.google.android.material.appbar.AppBarLayout
+                android:id="@+id/appBarLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:id="@+id/topAppBar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:navigationIcon="@drawable/baseline_arrow_back_24"
+                    app:title="@string/fragment_create_regatta_title"
+                    />
+            </com.google.android.material.appbar.AppBarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                >
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/textfield_hint_regatta_name"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaCourseAxis"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:onTextChanged="@{editRegattaViewModel::onRegattaNameTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.REGATTA_NAME)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaCourseAxis"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/textfield_hint_regatta_course_axis"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaCourseLength"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:onTextChanged="@{editRegattaViewModel::onCourseAxisTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.COURSE_AXIS)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaCourseLength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:hint="@string/textfield_hint_regatta_course_length"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaStartLineLength"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:onTextChanged="@{editRegattaViewModel::onCourseLengthTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.COURSE_LENGTH)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaStartLineLength"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="32dp"
+                    android:hint="@string/textfield_hint_regatta_start_line_length"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/toggleButton"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="numberDecimal"
+                        android:onTextChanged="@{editRegattaViewModel::onStartLineLengthTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.START_LINE_LENGTH)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButtonToggleGroup
+                    android:id="@+id/toggleButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    app:singleSelection="true"
+                    app:selectionRequired="true"
+                    app:checkedButton="@+id/buttonStick"
+                    app:layout_constraintBottom_toTopOf="@+id/materialSwitchStacchetto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <Button
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:id="@+id/buttonStick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/buttonToggle_stick"
+                        />
+                    <Button
+                        style="?attr/materialButtonOutlinedStyle"
+                        android:id="@+id/buttonTriangle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/toggleButton_triangle"
+                        />
+                </com.google.android.material.button.MaterialButtonToggleGroup>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/materialSwitchStacchetto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:checked="true"
+                    android:onClick="@{() -> editRegattaViewModel.setStacchetto()}"
+                    android:text="@string/materialSwitch_stacchetto"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaStacchettoDistance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaStacchettoDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:enabled="@{editRegattaViewModel.enableStacchettoDistance}"
+                    android:hint="@string/textfield_hint_regatta_stacchetto_distance"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/materialSwitchBolina"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:onTextChanged="@{editRegattaViewModel::onStacchettoDistanceTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.STACCHETTO_DISTANCE)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.materialswitch.MaterialSwitch
+                    android:id="@+id/materialSwitchBolina"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/materialSwitch_bolina"
+                    android:layout_marginBottom="8dp"
+                    android:onClick="@{() -> editRegattaViewModel.setBolina()}"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaBolinaDistance"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaBolinaDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:enabled="@{editRegattaViewModel.enableBolinaDistance}"
+                    android:hint="@string/textfield_hint_regatta_bolina_distance"
+                    app:errorEnabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/textInputRegattaBuoyStern"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="number"
+                        android:onTextChanged="@{editRegattaViewModel::onBolinaDistanceTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.BOLINA_DISTANCE)}"
+                        app:layout_constraintWidth_max="488dp" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/textInputRegattaBuoyStern"
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="72dp"
+                    android:enabled="@{editRegattaViewModel.enableBuoyStern}"
+                    android:hint="@string/textfield_hint_regatta_buoy_stern"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonEditRegatta"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent">
+
+                    <AutoCompleteTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:onTextChanged="@{editRegattaViewModel::onBuoySternTextChanged}"
+                        android:text="@{editRegattaViewModel.formFields.get(editRegattaViewModel.BUOY_STERN)}"
+                        app:simpleItems="@array/buoy_stern_array" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Button
+                    android:id="@+id/buttonEditRegatta"
+                    style="@style/Widget.Material3.Button.UnelevatedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/fragment_edit_regatta_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/buttonCancel"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/button_cancel"
+                    app:layout_constraintStart_toEndOf="@+id/buttonEditRegatta"
+                    app:layout_constraintTop_toTopOf="@+id/buttonEditRegatta" />
+
+                <View
+                    android:id="@+id/divider"
+                    android:layout_width="377dp"
+                    android:layout_height="1dp"
+                    android:layout_marginBottom="16dp"
+                    android:background="?android:attr/listDivider"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonEditRegatta"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+
+</layout>
