@@ -293,8 +293,13 @@ public class MapFragment extends Fragment implements SensorEventListener {
         //TODO
         // heading * heading + targetAngle
 
+
         if (heading > 360) heading = heading - 360;
-        float angle = heading;
+
+        float bearing = currentLocation.bearingTo(targetLocation);
+
+
+        float angle = heading + bearing;
 
         //to avoid flickering, skip the animation if the angle is not significantly different from the current angle
         if (model.angleFilterData != 0 && Math.abs(angle - model.angleFilterData) < ANGLE_CAP) {
