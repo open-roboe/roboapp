@@ -10,6 +10,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -40,6 +41,8 @@ public class MapViewModel extends AndroidViewModel {
 
     private final LiveData<List<Roboa>> robuoys;
 
+    private LiveData<Roboa> currentRoboa;
+
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
 
     public MapViewModel(@NonNull Application application) {
@@ -62,6 +65,8 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Buoy>> getBuoy() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
+    public LiveData<Roboa> getCurrentRoboa(){ return currentRoboa; }
+
     public LiveData<Location> getCurrentLocation() {
         return currentLocation;
     }
@@ -72,6 +77,10 @@ public class MapViewModel extends AndroidViewModel {
 
     public void setTarget(Boat boat){
         navigationTarget.setValue(new NavigationTarget(boat));
+    }
+    public void setCurrentRoboa(Roboa roboa){
+        LiveData<Roboa> temp = new MutableLiveData<>(roboa);
+        currentRoboa = temp;
     }
 
     public void clearTarget(){

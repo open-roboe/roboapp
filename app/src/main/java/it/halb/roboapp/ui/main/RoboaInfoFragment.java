@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
@@ -48,19 +49,41 @@ public class RoboaInfoFragment extends Fragment {
         RoboaListSimpleAdapter adapter = new RoboaListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.robuoyListView.setAdapter(adapter);
 
+
         //set onClickListener for listview
         binding.robuoyListView.setOnItemClickListener((parent, view1, position, id) -> {
             Roboa roboa = adapter.getItemAt(position);
             Log.d("RoboaInfoFragment", "onViewCreated: " + roboa.getId());
             //model.setTarget(roboa);
-            //Navigation.findNavController(view1).navigate(R.id.mapFragment);
+            model.setCurrentRoboa(roboa);
+            NavHostFragment.findNavController(this).navigate(
+                    RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
         });
+
+        //
+        //
+        //
+        //fake initialization
+        Roboa fakeRoboa = new Roboa(123);
+        fakeRoboa.setName("Roboa1");
+        fakeRoboa.setActive(true);
+        //delete line addding the fake roboa to the list
+        //
+        //
+        //
 
         model.getRoboa().observe(getViewLifecycleOwner(), roboa -> {
             adapter.clear();
             adapter.addAll(roboa);
+            adapter.add(fakeRoboa);
             adapter.notifyDataSetChanged();
         });
+
+
+
+
+
+
 
     }
 }

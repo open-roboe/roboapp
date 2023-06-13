@@ -1,6 +1,8 @@
 package it.halb.roboapp.ui.main.adapters;
 
 import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import it.halb.roboapp.R;
@@ -32,15 +35,17 @@ public class RoboaListSimpleAdapter extends ArrayAdapter<Roboa> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         if (convertView == null) {
-            convertView = View.inflate(context, R.layout.roboa_item, null);
+            convertView = LayoutInflater.from(context).inflate(R.layout.roboa_item, parent, false);
         }
 
         Roboa currentRoboa = roboas.get(position);
 
+
         TextView title = convertView.findViewById(R.id.textViewTitleRoboaItem);
-        title.setText(currentRoboa.getId());
+        title.setText(currentRoboa.getId() + "");
         TextView description = convertView.findViewById(R.id.textViewDescriptionRoboaItem);
         description.setText("Roboa: " + currentRoboa.getName() + ", stato: " + currentRoboa.isActive());
+
 
 
         return convertView;
