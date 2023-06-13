@@ -13,7 +13,7 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/play_store_512"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Roboapp"
@@ -21,7 +21,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyBLUT6Dxr2PKc3vfnBT9mdJeo7b1lQ8uC8" />
+            android:value="${MAPS_API_KEY}" />
 
         <service
             android:name=".RunningRegattaService"
