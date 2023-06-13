@@ -64,7 +64,9 @@ public class MapFragment extends Fragment implements SensorEventListener {
                              Bundle savedInstanceState) {
 
         binding = FragmentMapBinding.inflate(inflater, container, false);
+        binding.setLifecycleOwner(this);
         c = this.getContext();
+
 
         supportmapfragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.google_map);
 

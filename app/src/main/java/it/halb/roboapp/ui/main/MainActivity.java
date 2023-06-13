@@ -19,13 +19,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import it.halb.roboapp.R;
 import it.halb.roboapp.ui.auth.AuthActivity;
 
+
+
 public class MainActivity extends AppCompatActivity {
+
+    //private Main binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
+
         model.getAccount().observe(this, account -> {
             //If there is no account, redirect to auth activity
             if(account == null){
@@ -67,4 +72,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }
