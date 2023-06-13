@@ -187,29 +187,10 @@ public class RegattaListFragment extends Fragment {
 
     //used to move to map fragment
     private void handleRegattaClick(String regattaName){
-        hideKeyboard();
+        binding.searchView.clearFocus();
         NavHostFragment.findNavController(this).navigate(
                 RegattaListFragmentDirections.actionCourseListToLoadFragment(regattaName)
         );
-    }
-
-    //makes the keyboard go down so the layout of map fragment is not messed up
-    private void hideKeyboard(){
-        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        View view = requireActivity().getCurrentFocus();
-        if (view != null) {
-            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-        try{
-            Thread.currentThread().sleep(100);
-        }
-        catch (InterruptedException e){
-            e.printStackTrace();
-        }
-        binding.searchView.setOnCloseListener(() -> {
-            binding.searchView.clearFocus();
-            return false;
-        });
     }
 
     //filter the list based on the query
