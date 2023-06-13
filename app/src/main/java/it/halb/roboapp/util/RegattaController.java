@@ -6,12 +6,13 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
@@ -47,9 +48,10 @@ public class RegattaController {
         return instance;
     }
     public void setCourse() {
+        //cambia l'immagine del marker con il file speedboat_yellow1.png
         map.addMarker(new MarkerOptions().position(regatta.getValue().getPosition())
                 .title("Jury")
-                .snippet("id:" + regatta.getValue().getName()));
+                .snippet("id:" + regatta.getValue().getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.speedboat_yellow3)).anchor(0.5f, 0.5f)).setRotation(regatta.getValue().getWindDirection());
 
         List list = buoys.getValue();
         for (int i = 0; i < list.size(); i++) {
