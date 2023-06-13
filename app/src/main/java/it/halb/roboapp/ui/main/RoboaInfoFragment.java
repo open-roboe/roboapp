@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
@@ -62,5 +63,12 @@ public class RoboaInfoFragment extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
+        //adapter.add(new Roboa(123));
+        List<Roboa> fakeRoboaList = new ArrayList<>();
+        Roboa fakeRoboa = new Roboa(123);
+        fakeRoboa.setName("Roboa1");
+        fakeRoboa.setActive(true);
+        fakeRoboaList.add(fakeRoboa);
+        adapter.addAll(fakeRoboaList);
     }
 }
