@@ -22,10 +22,11 @@
             <SearchView
                 android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="61dp"
+                android:layout_height="60dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="18dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="-1dp"
                 android:background="@drawable/search_view"
                 android:iconifiedByDefault="false"
                 android:queryHint="@string/fragment_regatta_list_searchbar_text" />
@@ -35,7 +36,6 @@
             android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="668dp"
-            android:layout_marginTop="-1dp"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.recyclerview.widget.RecyclerView

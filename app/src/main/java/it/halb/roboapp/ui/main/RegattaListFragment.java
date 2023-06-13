@@ -195,9 +195,21 @@ public class RegattaListFragment extends Fragment {
 
     //makes the keyboard go down so the layout of map fragment is not messed up
     private void hideKeyboard(){
-        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(requireActivity().getWindow().getDecorView().getRootView().getWindowToken(), 0);
-        binding.searchView.clearFocus();
+        InputMethodManager imm = (InputMethodManager) requireContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        View view = requireActivity().getCurrentFocus();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+        try{
+            Thread.currentThread().sleep(100);
+        }
+        catch (InterruptedException e){
+            e.printStackTrace();
+        }
+        binding.searchView.setOnCloseListener(() -> {
+            binding.searchView.clearFocus();
+            return false;
+        });
     }
 
     //filter the list based on the query
