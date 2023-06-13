@@ -8,16 +8,63 @@
             name="MapViewModel"
             type="it.halb.roboapp.ui.main.MapViewModel" />
     </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:text="TextView"
+            android:textSize="20dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:text="TextView"
+            android:textSize="16dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+
+
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textSize="24dp"
+            android:gravity="left"
+            android:paddingLeft="58dp"
+            android:text="@string/lista_boe_da_cui_scegliere"
+            app:layout_constraintTop_toBottomOf="@+id/textView6"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:padding="28dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+            <ListView
+                android:id="@+id/buoysListViewInBindFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="96dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/buoy_item" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

@@ -15,14 +15,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
+import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentBindBoaAndRoboaBinding;
 import it.halb.roboapp.databinding.FragmentBoatInfoBinding;
 import it.halb.roboapp.ui.main.MapViewModel;
+import it.halb.roboapp.ui.main.adapters.BuoyListSimpleAdapter;
 
 public class BindBoaAndRoboa extends Fragment {
     private FragmentBindBoaAndRoboaBinding binding;
     private MapViewModel model;
+    private Roboa currentRoboa;
+    private Buoy selectedBuoy;
 
     public BindBoaAndRoboa() {
     }
@@ -43,9 +50,26 @@ public class BindBoaAndRoboa extends Fragment {
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
+        BuoyListSimpleAdapter adapter = new BuoyListSimpleAdapter(requireContext(), new ArrayList<>());
+        binding.buoysListViewInBindFragment.setAdapter(adapter);
+
         model.getCurrentRoboa().observe(getViewLifecycleOwner(), roboa -> {
-            Log.d("BindBoaAndRoboa", "onViewCreated: " + roboa.getId());
-            binding.textView5.setText(roboa.getId() + "");
+            currentRoboa = roboa;
+            binding.textView5.setText("Roboa corrente: " + currentRoboa.getName() + ", con id: " + currentRoboa.getId());
+            binding.textView6.setText("(Lat: " + currentRoboa.getLongitude() + " Lon: " + currentRoboa.getLongitude() + ")");
         });
+
+        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+            adapter.clear();
+            adapter.addAll(buoy);
+            adapter.notifyDataSetChanged();
+        });
+
+        binding.buoysListViewInBindFragment.setOnItemClickListener((parent, view1, position, id) -> {
+            selectedBuoy = adapter.getItemAt(position);
+            Log.d("BindBoaAndRoboa", "selectedBuoy: " + selectedBuoy.getId());
+        });
+
+
     }
 }

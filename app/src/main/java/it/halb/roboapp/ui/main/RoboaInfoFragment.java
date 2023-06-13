@@ -53,8 +53,6 @@ public class RoboaInfoFragment extends Fragment {
         //set onClickListener for listview
         binding.robuoyListView.setOnItemClickListener((parent, view1, position, id) -> {
             Roboa roboa = adapter.getItemAt(position);
-            Log.d("RoboaInfoFragment", "onViewCreated: " + roboa.getId());
-            //model.setTarget(roboa);
             model.setCurrentRoboa(roboa);
             NavHostFragment.findNavController(this).navigate(
                     RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
@@ -67,6 +65,12 @@ public class RoboaInfoFragment extends Fragment {
         Roboa fakeRoboa = new Roboa(123);
         fakeRoboa.setName("Roboa1");
         fakeRoboa.setActive(true);
+        Roboa fakeRoboa2 = new Roboa(456);
+        fakeRoboa2.setName("Roboa2");
+        fakeRoboa2.setActive(true);
+        Roboa fakeRoboa3 = new Roboa(789);
+        fakeRoboa3.setName("Roboa3");
+        fakeRoboa3.setActive(true);
         //delete line addding the fake roboa to the list
         //
         //
@@ -76,6 +80,8 @@ public class RoboaInfoFragment extends Fragment {
             adapter.clear();
             adapter.addAll(roboa);
             adapter.add(fakeRoboa);
+            adapter.add(fakeRoboa2);
+            adapter.add(fakeRoboa3);
             adapter.notifyDataSetChanged();
         });
 
