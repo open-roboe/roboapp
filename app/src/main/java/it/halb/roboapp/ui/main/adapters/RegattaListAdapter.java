@@ -1,14 +1,19 @@
 package it.halb.roboapp.ui.main.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.sql.Date;
+import java.time.LocalDate;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
@@ -43,13 +48,14 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
         return new RegattaHolder(itemView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RegattaHolder holder, int position) {
         //this is where we bind data in our regattas list to RegattaHolder instances
         Regatta currentRegatta = getItem(position);
         holder.textViewTitle.setText(currentRegatta.getName());
         holder.textViewDescription.setText(currentRegatta.getType());
-        holder.textViewDate.setText("dec 12");
+        holder.textViewDate.setText(LocalDate.now().toString());
     }
 
 
@@ -69,4 +75,6 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
             this.textViewDate = itemView.findViewById(R.id.textViewUpdate);
         }
     }
+
+
 }

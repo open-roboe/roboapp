@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,9 +30,18 @@ import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 import it.halb.roboapp.ui.main.adapters.RegattaListAdapter;
 import it.halb.roboapp.util.RecyclerItemClickListener;
+import android.content.Context;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RegattaListFragment extends Fragment {
     private FragmentRegattaListBinding binding;
+    private RegattaListViewModel model;
+    private RegattaListAdapter adapter;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -53,14 +63,14 @@ public class RegattaListFragment extends Fragment {
                                 .clear();
 
         //viewModel initialization
-        RegattaListViewModel model = new ViewModelProvider(this).get(RegattaListViewModel.class);
+        model = new ViewModelProvider(this).get(RegattaListViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setRegattaListViewModel(model);
 
         //recyclerview initialization
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
         binding.recyclerView.setHasFixedSize(true);
-        RegattaListAdapter adapter = new RegattaListAdapter();
+        adapter = new RegattaListAdapter();
         binding.recyclerView.setAdapter(adapter);
 
         //viewModel update listeners
@@ -72,30 +82,21 @@ public class RegattaListFragment extends Fragment {
             binding.noRegattasPlaceholder.setVisibility(
                     regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
             );
-            //update searchbar scroll
-            AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) binding.fakeSearchBar.getLayoutParams();
-            p.setScrollFlags(
-                    regattas.size() > 5 ?
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL :
-                    AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-            );
-            binding.fakeSearchBar.setLayoutParams(p);
         });
 
-        //temporary test
-        binding.fakeSearchBar.setOnClickListener(v -> {
-            model.debugFakeregatta();
-            /*
-            Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
-                    .setDuration(10 * 1000)
-                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
-                        model.testLogout();
-                    })
-                    .show();
+        //searching in the list using the latest added search View
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-             */
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
         });
-
 
         //refresh listener
         binding.refreshLayout.setOnRefreshListener(() -> {
@@ -184,10 +185,37 @@ public class RegattaListFragment extends Fragment {
         ));
     }
 
+    //used to move to map fragment
     private void handleRegattaClick(String regattaName){
+        hideKeyboard();
         NavHostFragment.findNavController(this).navigate(
                 RegattaListFragmentDirections.actionCourseListToLoadFragment(regattaName)
         );
     }
+
+    //makes the keyboard go down so the layout of map fragment is not messed up
+    private void hideKeyboard(){
+        InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(requireActivity().getWindow().getDecorView().getRootView().getWindowToken(), 0);
+        binding.searchView.clearFocus();
+        try {
+            Thread.currentThread().sleep(000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //filter the list based on the query
+    private void filterList(String query){
+        List<Regatta> filteredList = new ArrayList<>();
+        for (Regatta regatta : model.getAllRegattas().getValue()) {
+            if (regatta.getName().toLowerCase().contains(query.toLowerCase())) {
+                filteredList.add(regatta);
+            }
+        }
+        adapter.submitList(filteredList);
+    }
+
+
 
 }
