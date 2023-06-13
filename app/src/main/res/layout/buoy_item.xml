@@ -20,7 +20,7 @@
             android:layout_height="45dp"
             android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            app:srcCompat="@drawable/speedboat_yellow1" />
+            app:srcCompat="@drawable/pin_dark" />
 
         <TextView
             android:id="@+id/textViewTitleBuoy"
