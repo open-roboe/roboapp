@@ -51,13 +51,11 @@ import it.halb.roboapp.util.RegattaController;
 
 
 public class MapFragment extends Fragment implements SensorEventListener {
-
     private FragmentMapBinding binding;
     private SupportMapFragment supportmapfragment;
     Context c;
     private MapViewModel model;
     private SensorManager sensorManager;
-
     private boolean firstRegatta = false; //andra tolto una volta risolto il problema nella tabella current regatta
     private boolean firstBuoys = false; //andra tolto una volta risolto il problema nella tabella current regatta
 
@@ -120,6 +118,7 @@ public class MapFragment extends Fragment implements SensorEventListener {
                         if(s.equals(marker.getTitle()))
                         {
                             model.setTarget(marker.getTitle());
+
                             return true;
                         }
                     }
@@ -173,6 +172,18 @@ public class MapFragment extends Fragment implements SensorEventListener {
                 binding.compass.setColorFilter(null);
                 binding.compass.setImageAlpha(255);
             }
+
+            if(!(model.getTargetLocation() == null))
+            {
+                float dist = location.distanceTo(model.getTargetLocation());
+                model.setDistanceToTarget(dist);
+                binding.dustanceToTarget.setVisibility(View.VISIBLE);
+
+            }else{
+
+                binding.dustanceToTarget.setVisibility(View.INVISIBLE);
+
+            }
         });
 
         model.getNavigationTargetReadableName().observe(getViewLifecycleOwner(), name -> {
@@ -204,7 +215,6 @@ public class MapFragment extends Fragment implements SensorEventListener {
         });
 
     }
-
 
     @Override
     public void onResume() {

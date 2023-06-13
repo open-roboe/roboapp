@@ -82,6 +82,17 @@
             app:srcCompat="@drawable/compass_round_bright" />
 
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="16dp"
+            android:id="@+id/dustanceToTarget"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topAppBarCard"
+            android:text="@{mapViewModel.distance}"
+            />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

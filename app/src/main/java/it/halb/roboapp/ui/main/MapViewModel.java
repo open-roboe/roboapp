@@ -38,6 +38,8 @@ public class MapViewModel extends AndroidViewModel {
     private final LiveData<List<Roboa>> robuoys;
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
 
+    private MutableLiveData<Float> distance = new MutableLiveData<>(0f);
+
     public MapViewModel(@NonNull Application application) {
         super(application);
         Log.d("VIEWMODEL_SCOPING_TEST", "constructor run");
@@ -47,6 +49,19 @@ public class MapViewModel extends AndroidViewModel {
         buoys = runningRegattaRepository.getBuoys();
         robuoys = runningRegattaRepository.getRoboas();
         currentLocation = runningRegattaRepository.getCurrentLocation();
+    }
+
+    public MutableLiveData<String> getDistance() {
+
+        MutableLiveData<String> data = new MutableLiveData<>();
+
+        if(!(distance == null)) {
+            data.setValue(distance.getValue().toString());
+
+            return data;
+        }
+        data.setValue("0");
+        return data;
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -72,6 +87,11 @@ public class MapViewModel extends AndroidViewModel {
 
     public void setTarget(Boat boat){
         navigationTarget.setValue(new NavigationTarget(boat));
+    }
+
+    public void setDistanceToTarget(float dist)
+    {
+        distance.setValue(dist);
     }
 
     public void clearTarget(){

@@ -21,7 +21,6 @@ import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaController {
-
     private static RegattaController instance;
     private Regatta regatta;
     private List<Buoy> buoys;
