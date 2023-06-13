@@ -198,11 +198,6 @@ public class RegattaListFragment extends Fragment {
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(requireActivity().getWindow().getDecorView().getRootView().getWindowToken(), 0);
         binding.searchView.clearFocus();
-        try {
-            Thread.currentThread().sleep(000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     //filter the list based on the query
