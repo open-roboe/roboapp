@@ -178,12 +178,13 @@ public class MapFragment extends Fragment implements SensorEventListener {
             if(!(model.getTargetLocation() == null))
             {
                 float dist = location.distanceTo(model.getTargetLocation());
-                model.setDistanceToTarget(dist);
-                binding.dustanceToTarget.setVisibility(View.VISIBLE);
+                model.setDistanceToTarget((int)dist);
+                binding.distanceToTarget.setVisibility(View.VISIBLE);
+
 
             }else{
 
-                binding.dustanceToTarget.setVisibility(View.INVISIBLE);
+                binding.distanceToTarget.setVisibility(View.INVISIBLE);
 
             }
         });

@@ -40,7 +40,7 @@ public class MapViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> data = new MutableLiveData<>("0.0");
 
-    private MutableLiveData<Float> distance = new MutableLiveData<>(0f);
+    private MutableLiveData<Integer> distance = new MutableLiveData<>(0);
 
     public MapViewModel(@NonNull Application application) {
         super(application);
@@ -82,7 +82,7 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(boat));
     }
 
-    public void setDistanceToTarget(float dist)
+    public void setDistanceToTarget(int dist)
     {
         distance.setValue(dist);
     }
@@ -159,5 +159,4 @@ public class MapViewModel extends AndroidViewModel {
         }
         return location;
     }
-
 }
