@@ -53,6 +53,9 @@
         <action
             android:id="@+id/action_roboaInfoFragment_to_bindBoaAndRoboaFragment"
             app:destination="@id/BindBoaAndRoboaFragment" />
+        <action
+            android:id="@+id/action_roboaInfoFragment_to_manageRobuoyFragment"
+            app:destination="@id/manageRobuoyFragment" />
     </fragment>
     <fragment
         android:id="@+id/createRegattaFragment"
@@ -68,5 +71,10 @@
         android:name="it.halb.roboapp.ui.main.BindBoaAndRoboa"
         android:label="BindBoaAndRoboaFragment"
         tools:layout="@layout/fragment_bind_boa_and_roboa" />
+    <fragment
+        android:id="@+id/manageRobuoyFragment"
+        android:name="it.halb.roboapp.ui.main.ManageRobuoyFragment"
+        android:label="ManageRobuoyFragment"
+        tools:layout="@layout/fragment_manage_robuoy" />
 
 </navigation>

@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,9 +54,24 @@ public class RoboaInfoFragment extends Fragment {
         //set onClickListener for listview
         binding.robuoyListView.setOnItemClickListener((parent, view1, position, id) -> {
             Roboa roboa = adapter.getItemAt(position);
-            model.setCurrentRoboa(roboa);
-            NavHostFragment.findNavController(this).navigate(
-                    RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
+            //prima verifico che la roboa sia online
+            if(roboa.getStatus().equals("online")) {
+                model.setCurrentRoboa(roboa);
+                //se una roboa non ha boe associate ed è online allora si può associare una boa
+                if (roboa.getBindedBuoy().equals("") && roboa.isActive()) {
+                    NavHostFragment.findNavController(this).navigate(
+                            RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
+                }
+                //altrimenti andiamo alla schermata di gestione della roboa
+                else {
+                    NavHostFragment.findNavController(this).navigate(
+                            RoboaInfoFragmentDirections.actionRoboaInfoFragmentToManageRobuoyFragment());
+                }
+            }
+            //se non lo è mando un messaggio di errore
+            else{
+                Toast.makeText(this.requireContext(), "This robuoy is offline", Toast.LENGTH_SHORT).show();
+            }
         });
 
         //
@@ -67,7 +83,7 @@ public class RoboaInfoFragment extends Fragment {
         fakeRoboa.setActive(true);
         Roboa fakeRoboa2 = new Roboa(456);
         fakeRoboa2.setName("Roboa2");
-        fakeRoboa2.setActive(true);
+        fakeRoboa2.setActive(false);
         Roboa fakeRoboa3 = new Roboa(789);
         fakeRoboa3.setName("Roboa3");
         fakeRoboa3.setActive(true);
@@ -84,12 +100,5 @@ public class RoboaInfoFragment extends Fragment {
             adapter.add(fakeRoboa3);
             adapter.notifyDataSetChanged();
         });
-
-
-
-
-
-
-
     }
 }

@@ -64,9 +64,6 @@ public class MapViewModel extends AndroidViewModel {
     }
     public LiveData<List<Buoy>> getBuoy() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
-
-    public LiveData<Roboa> getCurrentRoboa(){ return currentRoboa; }
-
     public LiveData<Location> getCurrentLocation() {
         return currentLocation;
     }
@@ -82,6 +79,8 @@ public class MapViewModel extends AndroidViewModel {
         LiveData<Roboa> temp = new MutableLiveData<>(roboa);
         currentRoboa = temp;
     }
+    public LiveData<Roboa> getCurrentRoboa(){ return currentRoboa; }
+
 
     public void clearTarget(){
         navigationTarget.setValue(null);

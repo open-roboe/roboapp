@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -65,9 +66,23 @@ public class BindBoaAndRoboa extends Fragment {
             adapter.notifyDataSetChanged();
         });
 
+        //da questa lista si seleziona la boa da bindare
         binding.buoysListViewInBindFragment.setOnItemClickListener((parent, view1, position, id) -> {
             selectedBuoy = adapter.getItemAt(position);
             Log.d("BindBoaAndRoboa", "selectedBuoy: " + selectedBuoy.getId());
+            Log.d("prova", "selectedBuoy: " + selectedBuoy.getBindedRobuoy() + ".");
+
+            //QUA PURTROPPO C'è UNA NULL POINTER EXCEPTION DA CORREGGERE
+
+            //se la boa è libera procediamo a bindarla
+            if(selectedBuoy.getBindedRobuoy().equals("")){
+                selectedBuoy.setBindedRobuoy(currentRoboa.getId() + "");
+                currentRoboa.setBindedBuoy(selectedBuoy.getId());
+            }
+            //altrimenti mandiamo un messaggio di errore
+            else{
+                Toast.makeText(this.getContext(), "This buoy is already binded to a robouy!", Toast.LENGTH_SHORT).show();
+            }
         });
 
 
