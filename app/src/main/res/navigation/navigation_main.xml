@@ -70,11 +70,19 @@
         android:id="@+id/BindBoaAndRoboaFragment"
         android:name="it.halb.roboapp.ui.main.BindBoaAndRoboa"
         android:label="BindBoaAndRoboaFragment"
-        tools:layout="@layout/fragment_bind_boa_and_roboa" />
+        tools:layout="@layout/fragment_bind_boa_and_roboa" >
+        <action
+            android:id="@+id/action_bindBoaAndRoboaFragment_to_roboaInfoFragment"
+            app:destination="@id/roboaInfoFragment" />
+    </fragment>
     <fragment
         android:id="@+id/manageRobuoyFragment"
         android:name="it.halb.roboapp.ui.main.ManageRobuoyFragment"
         android:label="ManageRobuoyFragment"
-        tools:layout="@layout/fragment_manage_robuoy" />
+        tools:layout="@layout/fragment_manage_robuoy" >
+        <action
+            android:id="@+id/action_manageRobuoyFragment_to_roboaInfoFragment"
+            app:destination="@id/roboaInfoFragment" />
+    </fragment>
 
 </navigation>

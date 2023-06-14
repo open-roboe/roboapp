@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
@@ -25,8 +27,8 @@ public class ManageRobuoyFragment extends Fragment {
 
     private MapViewModel model;
     private FragmentManageRobuoyBinding binding;
-
     private Roboa currentRoboa;
+    private List<Buoy> buoys;
 
 
     public ManageRobuoyFragment() {
@@ -48,11 +50,15 @@ public class ManageRobuoyFragment extends Fragment {
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
+        //i get the list of buoys
+        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+            buoys = buoy;
+        });
 
+        //initialization of the textviews
         model.getCurrentRoboa().observe(getViewLifecycleOwner(), roboa -> {
             currentRoboa = roboa;
 
-            //initialization of the textviews
             binding.textView16.setText("Robuoy: " + currentRoboa.getName() + ", con id: " + currentRoboa.getId());
             binding.textView9.setText("- status: " + currentRoboa.getStatus());
             binding.textView10.setText("- estimated time arriving: " + currentRoboa.getEta());
@@ -69,7 +75,7 @@ public class ManageRobuoyFragment extends Fragment {
             }
         });
 
-        //facciamo partire/fermare la robuoy
+        //this stops/starts a robuoy
         binding.buttonGOSTOP.setOnClickListener(v -> {
             if (binding.buttonGOSTOP.getText().equals("GO"))
                 Log.d("ManageRobuoyFragment", "buttonGO pressed");
@@ -77,16 +83,13 @@ public class ManageRobuoyFragment extends Fragment {
                 Log.d("ManageRobuoyFragment", "buttonSTOP pressed");
         });
 
-        //scolleghiamo una boa da una roboa
+        //this unbinds a robuoy from a buoy and viceversa
         binding.buttonUNBIND.setOnClickListener(v -> {
-            Log.d("ManageRobuoyFragment", "buttonUnbind pressed");
-            Buoy tempBuoy = BuoyFactory.buoyFinder(model.getBuoy().getValue(), currentRoboa.getBindedBuoy());
+            Buoy tempBuoy = BuoyFactory.buoyFinder(buoys, currentRoboa.getBindedBuoy());
             tempBuoy.setBindedRobuoy(null);
             currentRoboa.setBindedBuoy(null);
-            Log.d("UNBIND", "now the buoy and the robuoy are unbinded");
+            NavHostFragment.findNavController(this).navigate
+                    (ManageRobuoyFragmentDirections.actionManageRobuoyFragmentToRoboaInfoFragment());
         });
-
-
-
     }
 }

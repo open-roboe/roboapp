@@ -25,7 +25,6 @@ public class Roboa {
 
     public Roboa(int id) {
         this.id = id;
-        this.bindedBuoy = "";
     }
 
     @Override
