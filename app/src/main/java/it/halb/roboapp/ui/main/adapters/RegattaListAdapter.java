@@ -1,5 +1,6 @@
 package it.halb.roboapp.ui.main.adapters;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -15,12 +16,16 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
+
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.generated.callback.OnClickListener;
 import it.halb.roboapp.ui.main.RegattaListFragment;
 import it.halb.roboapp.ui.main.RegattaListFragmentDirections;
 import it.halb.roboapp.ui.main.RegattaListViewModel;
+import it.halb.roboapp.util.Constants;
+import it.halb.roboapp.util.EditingRegatta;
 import it.halb.roboapp.util.callback.EditRegattaCallback;
 
 public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.RegattaHolder> {
@@ -105,18 +110,18 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
                 @Override
                 public void onClick(View v) {
                     Bundle bundle = new Bundle();
-                    bundle.putString("name", adapter.getRegattaAt(getAdapterPosition()).getName());
-                    bundle.putString("type", adapter.getRegattaAt(getAdapterPosition()).getType());
-                    bundle.putInt("creationDate", adapter.getRegattaAt(getAdapterPosition()).getCreationDate());
-                    bundle.putInt("windDirection", adapter.getRegattaAt(getAdapterPosition()).getWindDirection());
-                    bundle.putDouble("startLineLen", adapter.getRegattaAt(getAdapterPosition()).getStartLineLen());
-                    bundle.putDouble("breakDistance", adapter.getRegattaAt(getAdapterPosition()).getBreakDistance());
-                    bundle.putDouble("courseLength", adapter.getRegattaAt(getAdapterPosition()).getCourseLength());
-                    bundle.putDouble("secondMarkDistance", adapter.getRegattaAt(getAdapterPosition()).getSecondMarkDistance());
-                    bundle.putBoolean("bottonBuoy", adapter.getRegattaAt(getAdapterPosition()).isBottonBuoy());
-                    bundle.putBoolean("gate", adapter.getRegattaAt(getAdapterPosition()).isGate());
-                    bundle.putDouble("longitude", adapter.getRegattaAt(getAdapterPosition()).getLongitude());
-                    bundle.putDouble("latitude", adapter.getRegattaAt(getAdapterPosition()).getLatitude());
+                    bundle.putString(Constants.regattaName, adapter.getRegattaAt(getAdapterPosition()).getName());
+                    bundle.putString(Constants.regattaType, adapter.getRegattaAt(getAdapterPosition()).getType());
+                    bundle.putInt(Constants.regattaCreationDate, adapter.getRegattaAt(getAdapterPosition()).getCreationDate());
+                    bundle.putInt(Constants.regattaWindDirection, adapter.getRegattaAt(getAdapterPosition()).getWindDirection());
+                    bundle.putDouble(Constants.regattaStartLineLen, adapter.getRegattaAt(getAdapterPosition()).getStartLineLen());
+                    bundle.putDouble(Constants.regattaBreakDistance, adapter.getRegattaAt(getAdapterPosition()).getBreakDistance());
+                    bundle.putDouble(Constants.regattaCourseLength, adapter.getRegattaAt(getAdapterPosition()).getCourseLength()/1000.0);
+                    bundle.putDouble(Constants.regattaSecondMarkDistance, adapter.getRegattaAt(getAdapterPosition()).getSecondMarkDistance());
+                    bundle.putBoolean(Constants.regattaBottonBuoy, adapter.getRegattaAt(getAdapterPosition()).isBottonBuoy());
+                    bundle.putBoolean(Constants.regattaGate, adapter.getRegattaAt(getAdapterPosition()).isGate());
+                    bundle.putDouble(Constants.regattaLongitude, adapter.getRegattaAt(getAdapterPosition()).getLongitude());
+                    bundle.putDouble(Constants.regattaLatitude, adapter.getRegattaAt(getAdapterPosition()).getLatitude());
                     NavHostFragment.findNavController(fragment).navigate(
                             R.id.action_courseList_to_editRegattaFragment, bundle);
                 }

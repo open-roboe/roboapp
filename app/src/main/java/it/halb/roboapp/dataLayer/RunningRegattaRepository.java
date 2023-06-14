@@ -31,7 +31,6 @@ public class RunningRegattaRepository {
 
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
-
     private final BuoyDao buoyDao;
     private final BoatDao boatDao;
     private final RoboaDao roboaDao;

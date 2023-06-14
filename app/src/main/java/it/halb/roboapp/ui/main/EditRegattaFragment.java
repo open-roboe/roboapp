@@ -29,6 +29,7 @@ import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
 import it.halb.roboapp.databinding.FragmentEditRegattaBinding;
+import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.Permissions;
 
 public class EditRegattaFragment extends Fragment {
@@ -53,37 +54,12 @@ public class EditRegattaFragment extends Fragment {
 
         //initialize viewmodel
         model = new ViewModelProvider(this).get(EditRegattaViewModel.class);
+
+
+        model.setBundle(getArguments());
+
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setEditRegattaViewModel(model);
-        binding.textInputRegattaName.getEditText().setText(getArguments().get("name").toString());
-        binding.textInputRegattaCourseAxis.getEditText().setText(getArguments().get("windDirection").toString());
-        binding.textInputRegattaCourseLength.getEditText().setText(getArguments().get("courseLength").toString());
-        binding.textInputRegattaStartLineLength.getEditText().setText(getArguments().get("startLineLen").toString());
-        if (getArguments().get("type").equals("triangle")) {
-            binding.toggleButton.check(R.id.buttonTriangle);
-            binding.textInputRegattaBuoyStern.setEnabled(false);
-        }
-        if (getArguments().get("breakDistance").equals(0.0))
-            binding.materialSwitchStacchetto.setChecked(false);
-        else {
-            binding.materialSwitchStacchetto.setChecked(true);
-            binding.textInputRegattaStacchettoDistance.getEditText().setText(getArguments().get("breakDistance").toString());
-        }
-        if (getArguments().get("secondMarkDistance").equals(0.0))
-            binding.materialSwitchBolina.setChecked(false);
-        else {
-            binding.materialSwitchBolina.setChecked(true);
-            binding.textInputRegattaBolinaDistance.getEditText().setText(getArguments().get("secondMarkDistance").toString());
-        }
-        if (getArguments().get("bottonBuoy").equals(false)) {
-            binding.textInputRegattaBuoyStern.getEditText().setText("None");
-        }
-        else if (getArguments().get("gate").equals(false)) {
-            binding.textInputRegattaBuoyStern.getEditText().setText("Single");
-        }
-        else {
-            binding.textInputRegattaBuoyStern.getEditText().setText("Gate");
-        }
 
         //ask for location permissions. we notify the viewModel the result so that a
         // manual coordinates input can be created in case of denied permissions
@@ -98,50 +74,59 @@ public class EditRegattaFragment extends Fragment {
                 () -> model.setLocationPermissions(false)
         );
 
-        model.getFormFields(getArguments()).observe(getViewLifecycleOwner(), error -> {});
+        //model.getFormFields().observe(getViewLifecycleOwner(), error -> {});
 
         regattaTypeSegmentedButton = binding.toggleButton;
         editRegattaButton = binding.buttonEditRegatta;
 
-        model.getFormFieldsErrors().getValue().get("regattaNameError").observe(getViewLifecycleOwner(), error -> {
+        if(getArguments().get(getString(R.string.type)).equals(Constants.triangleRegatta)) {
+            regattaTypeSegmentedButton.check(R.id.buttonTriangle);
+        }
+        else {
+            regattaTypeSegmentedButton.check(R.id.buttonStick);
+        }
+
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_name_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("courseAxisError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_course_axis_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseAxis.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("courseLengthError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_course_length_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseLength.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("startLineLengthError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_start_line_length_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStartLineLength.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("stacchettoDistanceError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_stacchetto_distance_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStacchettoDistance.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("bolinaDistanceError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_bolina_distance_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBolinaDistance.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("buoySternError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_buoy_stern_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBuoyStern.setError(error);
         });
 
+
         model.getEnableStacchettoDistance().observe(getViewLifecycleOwner(), enable -> {
-            binding.textInputRegattaStacchettoDistance.getEditText().setText("");
+            if (!binding.materialSwitchStacchetto.isChecked())
+                binding.textInputRegattaStacchettoDistance.getEditText().setText("");
         });
 
         model.getEnableBolinaDistance().observe(getViewLifecycleOwner(), enable -> {
-            binding.textInputRegattaBolinaDistance.getEditText().setText("");
+            if (!binding.materialSwitchBolina.isChecked())
+                binding.textInputRegattaBolinaDistance.getEditText().setText("");
         });
 
         regattaTypeSegmentedButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
-                Log.d("CreateRegattaFragment", "onViewCreated: " + checkedId);
                 model.onRegattaTypeChanged(group.indexOfChild(view.findViewById(checkedId)));
             }
         });
@@ -189,7 +174,7 @@ public class EditRegattaFragment extends Fragment {
                 //creation success
                 regattaName -> {
                     NavHostFragment.findNavController(this)
-                            .navigate(CreateRegattaFragmentDirections.actionCreateRegattaFragmentToRunRegattaFragment(regattaName));
+                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToRunRegattaFragment(regattaName));
                 },
                 //creation error
                 (code, details) -> {
