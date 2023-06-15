@@ -367,6 +367,12 @@ public class EditRegattaViewModel extends AndroidViewModel {
                     (code, detail)->{}
             );
 
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
             //repository call to create the regatta
             regattaRepository.insertRegatta(
                     regatta,

@@ -67,8 +67,8 @@
         android:name="it.halb.roboapp.ui.main.EditRegattaFragment"
         android:label="EditRegattaFragment" >
         <action
-            android:id="@+id/action_editRegattaFragment_to_runRegattaFragment"
-            app:destination="@id/runRegattaFragment" />
+            android:id="@+id/action_editRegattaFragment_to_courseList"
+            app:destination="@id/courseList" />
     </fragment>
 
 </navigation>

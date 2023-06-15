@@ -174,7 +174,7 @@ public class EditRegattaFragment extends Fragment {
                 //creation success
                 regattaName -> {
                     NavHostFragment.findNavController(this)
-                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToRunRegattaFragment(regattaName));
+                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToCourseList());
                 },
                 //creation error
                 (code, details) -> {
