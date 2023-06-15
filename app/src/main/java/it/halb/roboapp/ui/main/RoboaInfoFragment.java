@@ -19,17 +19,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentRobuoyInfoBinding;
 import it.halb.roboapp.ui.main.adapters.RoboaListSimpleAdapter;
+import it.halb.roboapp.util.FakeInitialization;
 
 
 public class RoboaInfoFragment extends Fragment {
     private FragmentRobuoyInfoBinding binding;
+    private List<Roboa> fakeRoboaList = new ArrayList<>();
+    private List<Buoy> buoys;
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentRobuoyInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -50,16 +63,28 @@ public class RoboaInfoFragment extends Fragment {
         RoboaListSimpleAdapter adapter = new RoboaListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.robuoyListView.setAdapter(adapter);
 
+        //i get the list of buoys
+        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+            Log.d("RoboaInfoFragment", "onViewCreated: " + buoy.size());
+            buoys = buoy;
+            //go fake-initialize the list
+            if(FakeInitialization.flag == false) {
+                fakeRoboaList = FakeInitialization.fakeInitialization(buoys);
+            }
+            else
+                fakeRoboaList = FakeInitialization.getFakeRoboaList();
+        });
+
 
         //set onClickListener for listview
         binding.robuoyListView.setOnItemClickListener((parent, view1, position, id) -> {
             Roboa roboa = adapter.getItemAt(position);
 
             //prima verifico che la roboa sia online
-            if(roboa.getStatus().equals("online")) {
+            if(roboa.isActive()) {
                 model.setCurrentRoboa(roboa);
                 //se una roboa non ha boe associate allora si può associare una boa
-                if (roboa.getBindedBuoy() == null && roboa.isActive()) {
+                if (roboa.getBindedBuoy() == null) {
                     NavHostFragment.findNavController(this).navigate(
                             RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
                 }
@@ -75,39 +100,16 @@ public class RoboaInfoFragment extends Fragment {
             }
         });
 
-
-        //quello che succede è che quando si torna indietro dalla schermata di gestione della roboa
-        //ri avviene la fake initialization e quindi non si vedono le cose testate
-        //
-        //
-        //
-        //fake initialization
-        Roboa fakeRoboa = new Roboa(123);
-        fakeRoboa.setName("Roboa1");
-        fakeRoboa.setActive(true);
-        fakeRoboa.setStatus("online");
-        fakeRoboa.setBindedBuoy("MID LINE START");
-        //MID LINE START non ha associata questa boa!
-        Roboa fakeRoboa2 = new Roboa(456);
-        fakeRoboa2.setName("Roboa2");
-        fakeRoboa2.setActive(false);
-        fakeRoboa2.setStatus("offline");
-        Roboa fakeRoboa3 = new Roboa(789);
-        fakeRoboa3.setName("Roboa3");
-        fakeRoboa3.setActive(true);
-        fakeRoboa3.setStatus("online");
-        //delete line addding the fake roboa to the list
-        //
-        //
-        //
-
         model.getRoboa().observe(getViewLifecycleOwner(), roboa -> {
             adapter.clear();
             adapter.addAll(roboa);
-            adapter.add(fakeRoboa);
-            adapter.add(fakeRoboa2);
-            adapter.add(fakeRoboa3);
+            adapter.addAll(fakeRoboaList);
             adapter.notifyDataSetChanged();
         });
+
+
+
+
+
     }
 }

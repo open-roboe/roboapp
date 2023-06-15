@@ -24,6 +24,7 @@ public class Buoy {
         this.latitude = latitude;
         this.longitude = longitude;
         this.regattaName = regattaName;
+        this.bindedRobuoy = null;
     }
 
     @Override

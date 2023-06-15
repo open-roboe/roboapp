@@ -20,6 +20,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentBindBoaAndRoboaBinding;
@@ -29,6 +30,7 @@ import it.halb.roboapp.ui.main.adapters.BuoyListSimpleAdapter;
 
 public class BindBoaAndRoboa extends Fragment {
     private FragmentBindBoaAndRoboaBinding binding;
+    private RunningRegattaRepository repository;
     private MapViewModel model;
     private Roboa currentRoboa;
     private Buoy selectedBuoy;
@@ -75,6 +77,7 @@ public class BindBoaAndRoboa extends Fragment {
             if(selectedBuoy.getBindedRobuoy() == null){
                 selectedBuoy.setBindedRobuoy(currentRoboa.getId() + "");
                 currentRoboa.setBindedBuoy(selectedBuoy.getId());
+                model.updateBindedBuoy(selectedBuoy);
                 NavHostFragment.findNavController(this).navigate
                         (BindBoaAndRoboaDirections.actionBindBoaAndRoboaFragmentToRoboaInfoFragment());
             }

@@ -88,6 +88,7 @@ public class ManageRobuoyFragment extends Fragment {
             Buoy tempBuoy = BuoyFactory.buoyFinder(buoys, currentRoboa.getBindedBuoy());
             tempBuoy.setBindedRobuoy(null);
             currentRoboa.setBindedBuoy(null);
+            model.updateBindedBuoy(tempBuoy);
             NavHostFragment.findNavController(this).navigate
                     (ManageRobuoyFragmentDirections.actionManageRobuoyFragmentToRoboaInfoFragment());
         });

@@ -61,7 +61,7 @@ public class RoboaListSimpleAdapter extends ArrayAdapter<Roboa> {
         else
             buoyBinded.setText("binded buoy: none");
 
-        if(currentRoboa.getStatus().equals("offline")){
+        if(!currentRoboa.isActive()){
             title.setAlpha(0.5f);
             description.setAlpha(0.5f);
             date.setText("offline");

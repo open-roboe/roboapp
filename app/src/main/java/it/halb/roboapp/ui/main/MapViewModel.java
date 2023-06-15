@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
@@ -17,6 +18,7 @@ import java.util.Objects;
 import javax.annotation.Nullable;
 
 import it.halb.roboapp.dataLayer.RunningRegattaInterface;
+import it.halb.roboapp.dataLayer.RunningRegattaRepository;
 import it.halb.roboapp.dataLayer.RunningRegattaRepositoryMock;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
@@ -44,11 +46,13 @@ public class MapViewModel extends AndroidViewModel {
     private LiveData<Roboa> currentRoboa;
 
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
+    private RunningRegattaRepository runningRegattaRepository2;
 
     public MapViewModel(@NonNull Application application) {
         super(application);
         Log.d("VIEWMODEL_SCOPING_TEST", "constructor run");
         RunningRegattaInterface runningRegattaRepository = RunningRegattaRepositoryMock.getInstance(application);
+        runningRegattaRepository2 = new RunningRegattaRepository(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
         buoys = runningRegattaRepository.getBuoys();
@@ -80,6 +84,9 @@ public class MapViewModel extends AndroidViewModel {
         currentRoboa = temp;
     }
     public LiveData<Roboa> getCurrentRoboa(){ return currentRoboa; }
+    public void updateBindedBuoy(Buoy buoy){
+        runningRegattaRepository2.updateBuoy(buoy);
+    }
 
 
     public void clearTarget(){
