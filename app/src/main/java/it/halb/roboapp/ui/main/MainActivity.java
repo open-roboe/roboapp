@@ -3,6 +3,9 @@ package it.halb.roboapp.ui.main;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentOnAttachListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
@@ -12,6 +15,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d("MainActivity", "onCreate: " + getIntent().getExtras());
+
+
         MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
 
         model.getAccount().observe(this, account -> {
@@ -43,15 +50,18 @@ public class MainActivity extends AppCompatActivity {
             else{
                 //inflate view
                 setContentView(R.layout.activity_main);
+
                 //setup bottom bar
                 NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().
                         findFragmentById(R.id.fragmentContainerView);
                 if(navHostFragment == null) return;
                 BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
                 NavController navController = navHostFragment.getNavController();
+                navController.setGraph(R.navigation.navigation_main, getIntent().getExtras());
                 NavigationUI.setupWithNavController(bottomNav, navController);
                 //handle bottom bar visibility: only some fragments need it
                 //https://stackoverflow.com/questions/56215403/how-to-hide-bottom-nav-bar-in-fragment
+
                 navController.addOnDestinationChangedListener(
                         (navController1, navDestination, bundle) -> {
                             //put here the fragments you want to have a bottomNavbar. The id
@@ -72,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 }

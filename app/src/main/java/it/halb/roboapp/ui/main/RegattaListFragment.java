@@ -44,7 +44,6 @@ public class RegattaListFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         // stop the followService, since we are not following any regatta
         requireActivity().stopService(new Intent(getContext(), RunningRegattaService.class));
         // Clear the runningRegatta viewModel.
@@ -59,13 +58,16 @@ public class RegattaListFragment extends Fragment {
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setRegattaListViewModel(model);
 
+        /*if (!getArguments().getBoolean("isAdmin")) {
+            binding.floatingActionButton.setVisibility(View.GONE);
+            binding.floatingActionButton.setEnabled(false);
+        }*/
+
         //recyclerview initialization
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerView.setHasFixedSize(true);
 
         RegattaListAdapter adapter = new RegattaListAdapter(model, this);
-
-
 
         binding.recyclerView.setAdapter(adapter);
 
