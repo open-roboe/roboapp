@@ -21,6 +21,9 @@ public interface BuoyDao {
     @Query("DELETE FROM buoy_table")
     void deleteAll();
 
+    @Query("DELETE FROM buoy_table WHERE regattaName = :regattaName")
+    void delete(String regattaName);
+
     @Query("SELECT * FROM buoy_table where regattaName = :regattaName")
     LiveData<List<Buoy>> getBuoy(String regattaName);
 

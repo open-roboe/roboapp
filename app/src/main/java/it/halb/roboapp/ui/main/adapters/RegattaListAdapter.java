@@ -1,6 +1,7 @@
 package it.halb.roboapp.ui.main.adapters;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
@@ -63,13 +65,14 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
         return new RegattaHolder(itemView, model, this, fragment);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull RegattaHolder holder, int position) {
         //this is where we bind data in our regattas list to RegattaHolder instances
         Regatta currentRegatta = getItem(position);
         holder.textViewTitle.setText(currentRegatta.getName());
         holder.textViewDescription.setText(currentRegatta.getType());
-        holder.textViewDate.setText("dec 12");
+        holder.textViewDate.setText(LocalDate.now().toString());
     }
 
 
