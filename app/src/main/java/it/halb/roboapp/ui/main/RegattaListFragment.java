@@ -196,12 +196,16 @@ public class RegattaListFragment extends Fragment {
     //filter the list based on the query
     private void filterList(String query){
         List<Regatta> filteredList = new ArrayList<>();
-        for (Regatta regatta : model.getAllRegattas().getValue()) {
-            if (regatta.getName().toLowerCase().contains(query.toLowerCase())) {
-                filteredList.add(regatta);
+
+        model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
+            for (Regatta regatta : regattas) {
+                if (regatta.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(regatta);
+                }
             }
-        }
+        });
         adapter.submitList(filteredList);
+        adapter.notifyDataSetChanged();
     }
 
 
