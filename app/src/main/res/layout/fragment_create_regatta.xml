@@ -64,7 +64,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="text"
                             android:onTextChanged="@{createRegattaViewModel::onRegattaNameTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.REGATTA_NAME)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_name)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -85,7 +85,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:onTextChanged="@{createRegattaViewModel::onCourseAxisTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.COURSE_AXIS)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_course_axis)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -106,7 +106,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
                             android:onTextChanged="@{createRegattaViewModel::onCourseLengthTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.COURSE_LENGTH)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_course_length)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -127,7 +127,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="numberDecimal"
                             android:onTextChanged="@{createRegattaViewModel::onStartLineLengthTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.START_LINE_LENGTH)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_start_line_length)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -190,7 +190,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:onTextChanged="@{createRegattaViewModel::onStacchettoDistanceTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.STACCHETTO_DISTANCE)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_stacchetto_distance)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -225,7 +225,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="number"
                             android:onTextChanged="@{createRegattaViewModel::onBolinaDistanceTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.BOLINA_DISTANCE)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_bolina_distance)}"
                             app:layout_constraintWidth_max="488dp" />
 
                     </com.google.android.material.textfield.TextInputLayout>
@@ -247,7 +247,7 @@
                             android:layout_height="wrap_content"
                             android:inputType="none"
                             android:onTextChanged="@{createRegattaViewModel::onBuoySternTextChanged}"
-                            android:text="@{createRegattaViewModel.formFields.get(createRegattaViewModel.BUOY_STERN)}"
+                            android:text="@{createRegattaViewModel.formFields.get(@string/regatta_buoy_stern)}"
                             app:simpleItems="@array/buoy_stern_array" />
 
                     </com.google.android.material.textfield.TextInputLayout>

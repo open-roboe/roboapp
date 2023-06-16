@@ -39,10 +39,39 @@ public class Constants {
 
     public static final String TriangleMark = "TRIANGLE MARK";
 
+    public static final String[] StringArray = {"TRIANGLE MARK", "MID LINE START", "START MARK", "UP WIND MARK",
+            "SECOND UP WIND MARK", "BREAK MARK", "BOTTOM MARK", "GATE MARK SX", "GATE MARK DX"};
+
     //constant string for regatta type
 
     public static final String stickRegatta = "STICK";
     public static final String triangleRegatta = "TRIANGLE";
+
+    public static final String regattaName = "name";
+
+    public static final String regattaType = "type";
+
+    public static final String regattaCreationDate = "creationDate";
+
+    public static final String regattaWindDirection = "windDirection";
+
+    public static final String regattaStartLineLen = "startLineLen";
+
+    public static final String regattaBreakDistance = "breakDistance";
+
+    public static final String regattaCourseLength = "courseLength";
+
+    public static final String regattaSecondMarkDistance = "secondMarkDistance";
+
+    public static final String regattaBottonBuoy = "bottonBuoy";
+
+    public static final String regattaGate = "gate";
+
+    public static final String regattaLongitude = "longitude";
+
+    public static final String regattaLatitude = "latitude";
+
+
 
 
 

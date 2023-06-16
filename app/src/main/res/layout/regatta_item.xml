@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<it.halb.roboapp.util.SwipeRevealLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,53 +8,86 @@
     android:clickable="true"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardElevation="0dp"
-    android:focusable="true">
+    android:focusable="true"
+    app:dragFromEdge="left">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|end"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/delete_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_delete"
+            android:text="Delete"/>
+
+        <ImageButton
+            android:id="@+id/edit_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:srcCompat="@drawable/ic_edit"
+            android:text="Edit"/>
+
+    </LinearLayout>
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/item"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/md_theme_light_background"
+        android:elevation="5dp"
+        >
 
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_alignParentStart="true"
-            app:srcCompat="@drawable/track1" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentStart="true"
+                app:srcCompat="@drawable/track1"
+                app:elevation="5dp"/>
 
-        <TextView
-            android:id="@+id/textViewUpdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="Sep 12"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <TextView
+                android:id="@+id/textViewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="Sep 12"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:elevation="5dp"/>
 
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_toStartOf="@id/textViewUpdate"
-            android:layout_toEndOf="@id/imageView2"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body2"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@id/textViewDate"
+                android:layout_toEndOf="@id/imageView2"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Title aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                android:textStyle="bold"
+                app:elevation="5dp"/>
 
 
-        <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewTitle"
-            android:layout_marginTop="8dp"
-            android:layout_toEndOf="@id/imageView2"
-            android:layout_marginStart="16dp"
-            android:text="Subtitle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            <TextView
+                android:id="@+id/textViewDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/textViewTitle"
+                android:layout_marginTop="8dp"
+                android:layout_toEndOf="@id/imageView2"
+                android:layout_marginStart="16dp"
+                android:text="Subtitle"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                app:elevation="5dp"/>
 
     </RelativeLayout>
-</androidx.cardview.widget.CardView>
+</it.halb.roboapp.util.SwipeRevealLayout >

@@ -6,16 +6,20 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
+
 
 import java.util.List;
 import java.util.Objects;
 
 import javax.annotation.Nullable;
 
+import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.RunningRegattaInterface;
+
 import it.halb.roboapp.dataLayer.RunningRegattaRepositoryMock;
 import it.halb.roboapp.dataLayer.localDataSource.Boat;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
@@ -31,26 +35,35 @@ public class MapViewModel extends AndroidViewModel {
     public boolean hasSensors = false;
     public final float[] accelerometerReading = new float[3];
     public final float[] magnetometerReading = new float[3];
-
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
-
     private final LiveData<Location> currentLocation;
     private final LiveData<List<Buoy>> buoys;
-
     private final LiveData<List<Roboa>> robuoys;
 
+    private LiveData<Roboa> currentRoboa;
+
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
+    private RegattaRepository regattaRepository;
+
+    private final MutableLiveData<String> data = new MutableLiveData<>("0.0");
+
+    private MutableLiveData<Integer> distance = new MutableLiveData<>(0);
 
     public MapViewModel(@NonNull Application application) {
         super(application);
         Log.d("VIEWMODEL_SCOPING_TEST", "constructor run");
         RunningRegattaInterface runningRegattaRepository = RunningRegattaRepositoryMock.getInstance(application);
+        regattaRepository = new RegattaRepository(application);
         boats = runningRegattaRepository.getBoats();
         regatta = runningRegattaRepository.getRegatta();
         buoys = runningRegattaRepository.getBuoys();
         robuoys = runningRegattaRepository.getRoboas();
         currentLocation = runningRegattaRepository.getCurrentLocation();
+    }
+
+    public LiveData<String> getDistance() {
+            return Transformations.map(distance, distance -> Float.toString(distance));
     }
 
     public LiveData<Regatta> getRegatta(){
@@ -59,9 +72,8 @@ public class MapViewModel extends AndroidViewModel {
     public LiveData<List<Boat>> getBoats() {
         return boats;
     }
-    public LiveData<List<Buoy>> getBuoy() { return buoys; }
+    public LiveData<List<Buoy>> getBuoys() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
-
     public LiveData<Location> getCurrentLocation() {
         return currentLocation;
     }
@@ -70,8 +82,30 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(buoy));
     }
 
+    public void setTarget(String buoy){
+        navigationTarget.setValue(new NavigationTarget(buoy));
+    }
+
     public void setTarget(Boat boat){
         navigationTarget.setValue(new NavigationTarget(boat));
+    }
+    public void setCurrentRoboa(Roboa roboa){
+        LiveData<Roboa> temp = new MutableLiveData<>(roboa);
+        currentRoboa = temp;
+    }
+    public LiveData<Roboa> getCurrentRoboa(){ return currentRoboa; }
+    public void updateBindedBuoy(Buoy buoy){
+        regattaRepository.updateBuoy(buoy);
+    }
+
+    public void insertRoboa(Roboa roboa){
+        regattaRepository.insertRoboa(roboa);
+    }
+
+
+    public void setDistanceToTarget(int dist)
+    {
+        distance.setValue(dist);
     }
 
     public void clearTarget(){
@@ -146,5 +180,4 @@ public class MapViewModel extends AndroidViewModel {
         }
         return location;
     }
-
 }

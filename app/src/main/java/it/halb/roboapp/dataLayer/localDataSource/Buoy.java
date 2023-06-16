@@ -16,6 +16,7 @@ public class Buoy {
     private String id;
     private double latitude;
     private double longitude;
+    private String bindedRobuoy;
 
 
     public Buoy(@NonNull String id, @NonNull String regattaName, double latitude, double longitude) {
@@ -23,6 +24,7 @@ public class Buoy {
         this.latitude = latitude;
         this.longitude = longitude;
         this.regattaName = regattaName;
+        this.bindedRobuoy = null;
     }
 
     @Override
@@ -64,11 +66,17 @@ public class Buoy {
         this.longitude = longitude;
     }
 
-
-
     public LatLng getPosition()
     {
         return new LatLng(this.getLatitude(),this.getLongitude());
+    }
+
+    public String getBindedRobuoy() {
+        return bindedRobuoy;
+    }
+
+    public void setBindedRobuoy(String bindedRobuoy) {
+        this.bindedRobuoy = bindedRobuoy;
     }
 
     @NonNull

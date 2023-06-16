@@ -13,6 +13,9 @@ public class NavigationTarget {
     public NavigationTarget(Buoy buoy){
         this(buoy.getId(), Buoy.class);
     }
+    public NavigationTarget(String buoy){
+        this(buoy, Buoy.class);
+    }
     private NavigationTarget(String id, Class<?> targetClass) {
         this.id = id;
         this.targetClass = targetClass;

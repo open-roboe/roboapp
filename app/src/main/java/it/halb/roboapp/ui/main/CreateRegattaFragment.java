@@ -70,35 +70,31 @@ public class CreateRegattaFragment extends Fragment {
         regattaTypeSegmentedButton = binding.toggleButton;
         createRegattaButton = binding.buttonCreateRegatta;
 
-        /*model.getRegattas().observe(getViewLifecycleOwner(), regattas -> {
-            Log.d("CreateRegattaFragment", "Regatta Prova: " + regattas);
-        });*/
-
-        model.getFormFieldsErrors().getValue().get("regattaNameError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_name_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("courseAxisError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_course_axis_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseAxis.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("courseLengthError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_course_length_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaCourseLength.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("startLineLengthError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_start_line_length_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStartLineLength.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("stacchettoDistanceError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_stacchetto_distance_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaStacchettoDistance.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("bolinaDistanceError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_bolina_distance_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBolinaDistance.setError(error);
         });
 
-        model.getFormFieldsErrors().getValue().get("buoySternError").observe(getViewLifecycleOwner(), error -> {
+        model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_buoy_stern_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaBuoyStern.setError(error);
         });
 
