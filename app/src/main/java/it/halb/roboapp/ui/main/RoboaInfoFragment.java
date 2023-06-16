@@ -8,26 +8,26 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavBackStackEntry;
 import androidx.navigation.fragment.NavHostFragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.Toast;
 import java.util.ArrayList;
-
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentRobuoyInfoBinding;
 import it.halb.roboapp.ui.main.adapters.RoboaListSimpleAdapter;
+import it.halb.roboapp.util.RoboeInitialization;
+
 
 
 public class RoboaInfoFragment extends Fragment {
     private FragmentRobuoyInfoBinding binding;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         binding = FragmentRobuoyInfoBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
@@ -48,15 +48,34 @@ public class RoboaInfoFragment extends Fragment {
         RoboaListSimpleAdapter adapter = new RoboaListSimpleAdapter(requireContext(), new ArrayList<>());
         binding.robuoyListView.setAdapter(adapter);
 
+
         //set onClickListener for listview
         binding.robuoyListView.setOnItemClickListener((parent, view1, position, id) -> {
             Roboa roboa = adapter.getItemAt(position);
-            Log.d("RoboaInfoFragment", "onViewCreated: " + roboa.getId());
-            //model.setTarget(roboa);
-            //Navigation.findNavController(view1).navigate(R.id.mapFragment);
+
+            //i need to check whether the roboa is online or not
+            if(roboa.isActive()) {
+                model.setCurrentRoboa(roboa);
+                //if the robuoy is free, we navigate to the bind fragment
+                if (roboa.getBindedBuoy() == null) {
+                    NavHostFragment.findNavController(this).navigate(
+                            RoboaInfoFragmentDirections.actionRoboaInfoFragmentToBindBoaAndRoboaFragment());
+                }
+                //otherwise we navigate to the manage fragment
+                else {
+                    NavHostFragment.findNavController(this).navigate(
+                            RoboaInfoFragmentDirections.actionRoboaInfoFragmentToManageRobuoyFragment());
+                }
+            }
+            //if the robuoy is offline i notify the user
+            else{
+                Toast.makeText(this.requireContext(), "This robuoy is offline", Toast.LENGTH_SHORT).show();
+            }
         });
 
+        //i get the list of roboas
         model.getRoboa().observe(getViewLifecycleOwner(), roboa -> {
+            RoboeInitialization.roboeInitialization(roboa, model);
             adapter.clear();
             adapter.addAll(roboa);
             adapter.notifyDataSetChanged();

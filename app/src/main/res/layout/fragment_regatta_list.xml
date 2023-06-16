@@ -13,64 +13,37 @@
         android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
-            android:fitsSystemWindows="true"
+            android:id="@+id/appBarLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:visibility="visible">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/fakeSearchBar"
-                app:layout_scrollFlags="noScroll"
+            <SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="24dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:shadowColor="@color/md_theme_light_errorContainer"
-                app:cardBackgroundColor="@color/md_theme_light_surfaceVariant"
-                app:cardCornerRadius="100dp"
-                app:cardElevation="0dp">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
-                    android:layout_width="54dp"
-                    android:layout_gravity="center_vertical|start"
-                    android:layout_height="46dp"
-                    android:background="@color/md_theme_light_surfaceVariant"
-                    app:navigationIcon="@drawable/baseline_menu_24" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="60dp"
-                    android:text="@string/fragment_regatta_list_searchbar_text"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium">
-
-                </TextView>
-
-                <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical|end"
-                    android:layout_marginEnd="14dp"
-                    android:src="@drawable/baseline_search_24" />
-            </androidx.cardview.widget.CardView>
+                android:layout_height="60dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="18dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="-1dp"
+                android:background="@drawable/search_view"
+                android:iconifiedByDefault="false"
+                android:queryHint="@string/fragment_regatta_list_searchbar_text" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/refreshLayout"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="668dp"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="64dp"
                 android:clipToPadding="false"
+                android:paddingBottom="64dp"
                 tools:listitem="@layout/regatta_item" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

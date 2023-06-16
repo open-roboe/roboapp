@@ -104,4 +104,12 @@
     <string name="second_mark_distance">secondMarkDistance</string>
     <string name="botton_buoy">bottonBuoy</string>
     <string name="fragment_edit_regatta_title">Edit Regatta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="lista_boe_da_cui_scegliere">Pick a buoy to bind:</string>
+    <string name="manage_your_robuoy">Manage your robuoy</string>
+    <string name="click_to_unbind">Click to unbind</string>
+    <string name="actions_to_take">Actions you can take:</string>
+    <string name="info_about_robuoy">Some info about yout robuoy:</string>
+
 </resources>
