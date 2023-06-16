@@ -34,7 +34,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:navigationIcon="@drawable/baseline_arrow_back_24"
-                    app:title="@string/fragment_create_regatta_title"
+                    app:title="@string/fragment_edit_regatta_title"
                     />
             </com.google.android.material.appbar.AppBarLayout>
 

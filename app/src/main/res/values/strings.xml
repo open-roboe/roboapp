@@ -103,4 +103,5 @@
     <string name="break_distance">breakDistance</string>
     <string name="second_mark_distance">secondMarkDistance</string>
     <string name="botton_buoy">bottonBuoy</string>
+    <string name="fragment_edit_regatta_title">Edit Regatta</string>
 </resources>
