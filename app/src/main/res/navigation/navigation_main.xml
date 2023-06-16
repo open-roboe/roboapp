@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_courseList_to_createRegattaFragment"
             app:destination="@id/createRegattaFragment" />
+        <action
+            android:id="@+id/action_courseList_to_editRegattaFragment"
+            app:destination="@id/editRegattaFragment" />
     </fragment>
     <fragment
         android:id="@+id/runRegattaFragment"
@@ -58,6 +61,14 @@
         <action
             android:id="@+id/action_createRegattaFragment_to_runRegattaFragment"
             app:destination="@id/runRegattaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/editRegattaFragment"
+        android:name="it.halb.roboapp.ui.main.EditRegattaFragment"
+        android:label="EditRegattaFragment" >
+        <action
+            android:id="@+id/action_editRegattaFragment_to_courseList"
+            app:destination="@id/courseList" />
     </fragment>
 
 </navigation>

@@ -28,20 +28,23 @@ import com.google.android.material.snackbar.Snackbar;
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.databinding.FragmentCreateRegattaBinding;
+import it.halb.roboapp.databinding.FragmentEditRegattaBinding;
+import it.halb.roboapp.util.Constants;
 import it.halb.roboapp.util.Permissions;
 
-public class CreateRegattaFragment extends Fragment {
-    private FragmentCreateRegattaBinding binding;
+public class EditRegattaFragment extends Fragment {
+    private FragmentEditRegattaBinding binding;
 
     private MaterialButtonToggleGroup regattaTypeSegmentedButton;
 
-    private Button createRegattaButton;
-    private CreateRegattaViewModel model;
+    private Button editRegattaButton;
+
+    private EditRegattaViewModel model;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = FragmentCreateRegattaBinding.inflate(inflater, container, false);
+        binding = FragmentEditRegattaBinding.inflate(inflater, container, false);
         return binding.getRoot();
     }
 
@@ -50,9 +53,13 @@ public class CreateRegattaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         //initialize viewmodel
-        model = new ViewModelProvider(this).get(CreateRegattaViewModel.class);
+        model = new ViewModelProvider(this).get(EditRegattaViewModel.class);
+
+
+        model.setBundle(getArguments());
+
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
-        binding.setCreateRegattaViewModel(model);
+        binding.setEditRegattaViewModel(model);
 
         //ask for location permissions. we notify the viewModel the result so that a
         // manual coordinates input can be created in case of denied permissions
@@ -67,8 +74,17 @@ public class CreateRegattaFragment extends Fragment {
                 () -> model.setLocationPermissions(false)
         );
 
+        //model.getFormFields().observe(getViewLifecycleOwner(), error -> {});
+
         regattaTypeSegmentedButton = binding.toggleButton;
-        createRegattaButton = binding.buttonCreateRegatta;
+        editRegattaButton = binding.buttonEditRegatta;
+
+        if(getArguments().get(getString(R.string.type)).equals(Constants.triangleRegatta)) {
+            regattaTypeSegmentedButton.check(R.id.buttonTriangle);
+        }
+        else {
+            regattaTypeSegmentedButton.check(R.id.buttonStick);
+        }
 
         model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_name_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
@@ -98,22 +114,24 @@ public class CreateRegattaFragment extends Fragment {
             binding.textInputRegattaBuoyStern.setError(error);
         });
 
+
         model.getEnableStacchettoDistance().observe(getViewLifecycleOwner(), enable -> {
-            binding.textInputRegattaStacchettoDistance.getEditText().setText("");
+            if (!binding.materialSwitchStacchetto.isChecked())
+                binding.textInputRegattaStacchettoDistance.getEditText().setText("");
         });
 
         model.getEnableBolinaDistance().observe(getViewLifecycleOwner(), enable -> {
-            binding.textInputRegattaBolinaDistance.getEditText().setText("");
+            if (!binding.materialSwitchBolina.isChecked())
+                binding.textInputRegattaBolinaDistance.getEditText().setText("");
         });
 
         regattaTypeSegmentedButton.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             if (isChecked) {
-                Log.d("CreateRegattaFragment", "onViewCreated: " + checkedId);
                 model.onRegattaTypeChanged(group.indexOfChild(view.findViewById(checkedId)));
             }
         });
 
-        createRegattaButton.setOnClickListener(v -> {
+        editRegattaButton.setOnClickListener(v -> {
             //set the current location, then create the regatta
             setCurrentLocation(
                     vv -> createRegatta()
@@ -156,7 +174,7 @@ public class CreateRegattaFragment extends Fragment {
                 //creation success
                 regattaName -> {
                     NavHostFragment.findNavController(this)
-                            .navigate(CreateRegattaFragmentDirections.actionCreateRegattaFragmentToRunRegattaFragment(regattaName));
+                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToCourseList());
                 },
                 //creation error
                 (code, details) -> {
@@ -169,4 +187,5 @@ public class CreateRegattaFragment extends Fragment {
     }
 
 }
+
 

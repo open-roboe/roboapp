@@ -49,10 +49,20 @@
     </array>
     <string name="textfield_missing_field_error">Required field</string>
     <string name="textfield_invalid_field_error">Invalid field</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="regatta_menu_map">Map</string>
     <string name="regatta_menu_buoy">Buoys</string>
     <string name="regatta_menu_roboa">BuoyBots</string>
     <string name="regatta_menu_boat">Assistance</string>
+    <!-- TODO: Remove or change this -->
+    <string name="first_item_menu_boats">item1</string>
+    <!-- TODO: Remove or change this -->
+    <string name="second_item_menu_boats">item2</string>
+    <!-- TODO: Remove or change this -->
+    <string name="menu_boats">menu</string>
+    <!-- TODO: Remove or change this -->
+    <string name="click_on_boats">cavolo nico</string>
     <string name="running_regatta_error_location_permission">Device location failed</string>
     <string name="snackbar_info_swipe_to_delete_regatta">Swipe left to delete this regatta</string>
     <string name="create_regatta_creation_generic_error">\"Regatta creation failed. Error \"</string>
@@ -66,4 +76,31 @@
     <string name="textfield_duplicate_field_error">Regatta already exists! Please insert a valid name</string>
     <string name="compass_image_description">compass</string>
     <string name="DistancetoTarget">Distance(m)</string>
+    <string name="fragment_edit_regatta_button">Edit Regatta</string>
+    <string name="regatta_name">regattaName</string>
+    <string name="regatta_course_axis">courseAxis</string>
+    <string name="regatta_course_length">courseLength</string>
+    <string name="regatta_start_line_length">startLineLength</string>
+    <string name="regatta_stacchetto_distance">stacchettoDistance</string>
+    <string name="regatta_bolina_distance">bolinaDistance</string>
+    <string name="regatta_buoy_stern">buoyStern</string>
+    <string name="regatta_name_error">regattaNameError</string>
+    <string name="regatta_course_axis_error">courseAxisError</string>
+    <string name="regatta_course_length_error">courseLengthError</string>
+    <string name="regatta_start_line_length_error">startLineLengthError</string>
+    <string name="regatta_stacchetto_distance_error">stacchettoDistanceError</string>
+    <string name="regatta_bolina_distance_error">bolinaDistanceError</string>
+    <string name="regatta_buoy_stern_error">buoySternError</string>
+    <string name="regatta_buoy_stern_none">None</string>
+    <string name="regatta_buoy_stern_single">Single</string>
+    <string name="regatta_buoy_stern_gate">Gate</string>
+    <string name="error">Error</string>
+    <string name="name">name</string>
+    <string name="wind_direction">windDirection</string>
+    <string name="course_length">courseLength</string>
+    <string name="start_line_length">startLineLen</string>
+    <string name="type">type</string>
+    <string name="break_distance">breakDistance</string>
+    <string name="second_mark_distance">secondMarkDistance</string>
+    <string name="botton_buoy">bottonBuoy</string>
 </resources>

@@ -1,52 +1,56 @@
 package it.halb.roboapp.ui.main;
 
 import android.app.Application;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.ErrorCallback;
-import it.halb.roboapp.dataLayer.RegattaRepositoryMock;
+import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.SuccessCallback;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.util.BuoyFactory;
 import it.halb.roboapp.util.Constants;
+import it.halb.roboapp.util.EditingRegatta;
 
-public class CreateRegattaViewModel extends AndroidViewModel {
+public class EditRegattaViewModel extends AndroidViewModel {
 
     private MutableLiveData<Double> currentLat = new MutableLiveData<>(0.0);
     private MutableLiveData<Double> currentLon = new MutableLiveData<>(0.0);
     private MutableLiveData<Boolean> locationPermissions = new MutableLiveData<>(false);
 
-    private final RegattaRepositoryMock regattaRepository;
-
-    private final MutableLiveData<Boolean> loading = new MutableLiveData<>(false);
+    private final RegattaRepository regattaRepository;
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFields = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
     private MutableLiveData<HashMap<String, MutableLiveData<String>>> formFieldsErrors = new MutableLiveData<>(new HashMap<String, MutableLiveData<String>>());
 
+    private MutableLiveData<Bundle> bundle  = new MutableLiveData<>(null);
+
     private MutableLiveData<String> regattaType = new MutableLiveData<>(Constants.stickRegatta);
 
+    private MutableLiveData<Boolean> checkStacchettoButton = new MutableLiveData<>(true);
+
     private MutableLiveData<Boolean> enableStacchettoDistance = new MutableLiveData<>(true);
+
+    private MutableLiveData<Boolean> checkBolinaButton = new MutableLiveData<>(true);
 
     private MutableLiveData<Boolean> enableBolinaDistance = new MutableLiveData<>(true);
 
     private MutableLiveData<Boolean> enableBuoyStern = new MutableLiveData<>(true);
 
     private final String TAG = CreateRegattaViewModel.class.getSimpleName();
-
-    private LiveData<List<Regatta>> regattas;
 
     private boolean formValid = true;
 
@@ -78,6 +82,11 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         this.formValid = formValid;
     }
 
+    public void setBundle(Bundle bundle) {
+        this.bundle.setValue(bundle);
+        populateHashMaps();
+    }
+
     public LiveData<HashMap<String, MutableLiveData<String>>> getFormFields() {
         return formFields;
     }
@@ -86,8 +95,16 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         return formFieldsErrors;
     }
 
+    public LiveData<Boolean> getCheckStacchettoButton() {
+        return checkStacchettoButton;
+    }
+
     public LiveData<Boolean> getEnableStacchettoDistance() {
         return enableStacchettoDistance;
+    }
+
+    public LiveData<Boolean> getCheckBolinaButton() {
+        return checkBolinaButton;
     }
 
     public LiveData<Boolean> getEnableBolinaDistance() {
@@ -98,24 +115,60 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         return enableBuoyStern;
     }
 
-    public LiveData<List<Regatta>> getRegattas() {
-        return regattas;
-    }
-
-    public CreateRegattaViewModel(@NonNull Application application) {
+    public EditRegattaViewModel(@NonNull Application application) {
         super(application);
 
-        regattaRepository = new RegattaRepositoryMock(application);
-        regattas = regattaRepository.getAllRegattas();
-        regattas.observeForever(regattas -> {
-            Log.d(TAG, "Regattas: " + regattas.size());
-        });
-        populateHashMaps("");
-        populateHashMaps(getApplication().getString(R.string.error));
+        regattaRepository = new RegattaRepository(application);
+
+        populateHashMap("");
+        populateHashMap(getApplication().getString(R.string.error));
+    }
+
+    private void populateHashMaps() {
+        HashMap<String, MutableLiveData<String>> map = formFields.getValue();
+
+
+        map.put(getApplication().getString(R.string.regatta_name), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.name)).toString()));
+        map.put(getApplication().getString(R.string.regatta_course_axis), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.wind_direction)).toString()));
+        map.put(getApplication().getString(R.string.regatta_course_length), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.course_length)).toString()));
+        map.put(getApplication().getString(R.string.regatta_start_line_length), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.start_line_length)).toString()));
+        if (bundle.getValue().get(getApplication().getString(R.string.type)).equals(Constants.triangleRegatta)) {
+            regattaType.setValue(Constants.triangleRegatta);
+            enableBuoyStern.setValue(false);
+        }
+        if (bundle.getValue().get(getApplication().getString(R.string.break_distance)).equals(0.0)) {
+            enableStacchettoDistance.setValue(false);
+            checkStacchettoButton.setValue(false);
+        }
+        else {
+            enableStacchettoDistance.setValue(true);
+            checkStacchettoButton.setValue(true);
+            map.put(getApplication().getString(R.string.regatta_stacchetto_distance), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.break_distance)).toString()));
+        }
+        if (bundle.getValue().get(getApplication().getString(R.string.second_mark_distance)).equals(0.0)) {
+            enableBolinaDistance.setValue(false);
+            checkBolinaButton.setValue(false);
+        }
+        else {
+            enableBolinaDistance.setValue(true);
+            checkBolinaButton.setValue(true);
+            map.put(getApplication().getString(R.string.regatta_bolina_distance), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.second_mark_distance)).toString()));
+        }
+        if (bundle.getValue().get(getApplication().getString(R.string.botton_buoy)).equals(false)) {
+            map.put(getApplication().getString(R.string.regatta_buoy_stern), new MutableLiveData<String>(getApplication().getString(R.string.regatta_buoy_stern_none)));
+        }
+        else if (bundle.getValue().get(Constants.regattaGate).equals(false)) {
+            map.put(getApplication().getString(R.string.regatta_buoy_stern), new MutableLiveData<String>(getApplication().getString(R.string.regatta_buoy_stern_single)));
+        }
+        else {
+            map.put(getApplication().getString(R.string.regatta_buoy_stern), new MutableLiveData<String>(getApplication().getString(R.string.regatta_buoy_stern_gate)));
+        }
+
+        formFields.setValue(map);
 
     }
 
-    private void populateHashMaps(String suffix) {
+    private void populateHashMap(String suffix) {
         HashMap<String, MutableLiveData<String>> map = new HashMap<>();
         if (suffix.equals("")) {
             map = formFields.getValue();
@@ -203,12 +256,7 @@ public class CreateRegattaViewModel extends AndroidViewModel {
         }
     }
 
-    public LiveData<Boolean> getCanClick(){
-        return Transformations.map(loading, loading -> !loading);
-    }
-
     public Boolean[] getBuoySternInfo() {
-        Log.d(TAG, "getBuoySternInfo: " + formFields.getValue().get("buoyStern").getValue());
         Boolean[] buoySternInfo = new Boolean[2];
         if (enableBuoyStern.getValue()== false || formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals("")) {
             buoySternInfo[0] = false;
@@ -288,16 +336,13 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     }
 
     public void createRegatta(SuccessCallback<String> success, ErrorCallback error) {
-        if(Boolean.TRUE.equals(loading.getValue()))
-            return;
         validateForm();
         Boolean[] buoySternInfo = getBuoySternInfo();
         Double[] optionalDistances = getOptionalDistances();
         if(isFormValid()) {
-            loading.setValue(true);
 
             //create regatta object
-            Log.d(TAG, "createRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
+            Log.d(TAG, "editRegatta: " + buoySternInfo[0] + " " + buoySternInfo[1]);
             Regatta regatta = new Regatta(
                     formFields.getValue().get(getApplication().getString(R.string.regatta_name)).getValue(),
                     regattaType.getValue(),
@@ -312,23 +357,28 @@ public class CreateRegattaViewModel extends AndroidViewModel {
                     currentLat.getValue(),
                     currentLon.getValue()
             );
-            Log.d(TAG, "" + regatta.toString());
 
             //create buoys objects
             List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
+
+            regattaRepository.deleteRegatta(
+                    regatta,
+                    data->{},
+                    (code, detail)->{}
+            );
+
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
             //repository call to create the regatta
             regattaRepository.insertRegatta(
                     regatta,
                     buoys,
-                    v -> {
-                        loading.setValue(false);
-                        success.success(regatta.getName());
-                        },
-                    (code, details) -> {
-                        loading.setValue(false);
-                        error.error(code, details);
-                    }
+                    v -> success.success(regatta.getName()),
+                    error
             );
 
         }
