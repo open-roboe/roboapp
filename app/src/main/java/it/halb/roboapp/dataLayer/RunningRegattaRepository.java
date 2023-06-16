@@ -74,12 +74,6 @@ public class RunningRegattaRepository implements RunningRegattaInterface {
         roboaList = roboaDao.getAll();
     }
 
-    public void updateBuoy(Buoy buoy){
-        Database.databaseWriteExecutor.execute(() -> {
-            buoyDao.update(buoy);
-        });
-    }
-
     public LiveData<Regatta> getRegatta(){
         return regatta;
     }
