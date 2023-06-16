@@ -68,7 +68,6 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
         roboaDao = database.roboaDao();
         runningStatusDao = database.RunningStatusDao();
 
-
         account = accountDao.getAccount();
         //all this data can be null, and WILL be null if
         //a running regatta is not set
@@ -89,7 +88,6 @@ public class RunningRegattaRepositoryMock implements RunningRegattaInterface {
     public LiveData<Regatta> getRegatta(){
         return regatta;
     }
-
     public LiveData<List<Buoy>> getBuoys(){
         return buoyList;
     }

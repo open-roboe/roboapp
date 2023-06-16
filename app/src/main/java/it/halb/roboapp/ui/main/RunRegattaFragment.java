@@ -50,10 +50,10 @@ public class RunRegattaFragment extends Fragment {
         Permissions.manageLocationPermissions(
                 this,
                 //permissions granted
-                () ->{
+                () -> {
                     model.declareRegattaToRun(regattaName,
                             v -> startRunningRegattaService()
-                            );
+                    );
                 },
                 //permission denied
                 () -> {
@@ -74,7 +74,6 @@ public class RunRegattaFragment extends Fragment {
         });
 
     }
-
 
     public void startRunningRegattaService(){
         requireActivity().startService(

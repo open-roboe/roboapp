@@ -31,16 +31,16 @@ public class MapViewModel extends AndroidViewModel {
     public boolean hasSensors = false;
     public final float[] accelerometerReading = new float[3];
     public final float[] magnetometerReading = new float[3];
-
     private final LiveData<List<Boat>> boats;
     private final LiveData<Regatta> regatta;
-
     private final LiveData<Location> currentLocation;
     private final LiveData<List<Buoy>> buoys;
-
     private final LiveData<List<Roboa>> robuoys;
-
     private final MutableLiveData<NavigationTarget> navigationTarget = new MutableLiveData<>(null);
+
+    private final MutableLiveData<String> data = new MutableLiveData<>("0.0");
+
+    private MutableLiveData<Integer> distance = new MutableLiveData<>(0);
 
     public MapViewModel(@NonNull Application application) {
         super(application);
@@ -53,13 +53,17 @@ public class MapViewModel extends AndroidViewModel {
         currentLocation = runningRegattaRepository.getCurrentLocation();
     }
 
+    public LiveData<String> getDistance() {
+            return Transformations.map(distance, distance -> Float.toString(distance));
+    }
+
     public LiveData<Regatta> getRegatta(){
         return regatta;
     }
     public LiveData<List<Boat>> getBoats() {
         return boats;
     }
-    public LiveData<List<Buoy>> getBuoy() { return buoys; }
+    public LiveData<List<Buoy>> getBuoys() { return buoys; }
     public LiveData<List<Roboa>> getRoboa() { return robuoys; }
 
     public LiveData<Location> getCurrentLocation() {
@@ -70,8 +74,17 @@ public class MapViewModel extends AndroidViewModel {
         navigationTarget.setValue(new NavigationTarget(buoy));
     }
 
+    public void setTarget(String buoy){
+        navigationTarget.setValue(new NavigationTarget(buoy));
+    }
+
     public void setTarget(Boat boat){
         navigationTarget.setValue(new NavigationTarget(boat));
+    }
+
+    public void setDistanceToTarget(int dist)
+    {
+        distance.setValue(dist);
     }
 
     public void clearTarget(){
@@ -146,5 +159,4 @@ public class MapViewModel extends AndroidViewModel {
         }
         return location;
     }
-
 }

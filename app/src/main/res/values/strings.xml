@@ -65,4 +65,5 @@
     <string name="status_online">Online</string>
     <string name="textfield_duplicate_field_error">Regatta already exists! Please insert a valid name</string>
     <string name="compass_image_description">compass</string>
+    <string name="DistancetoTarget">Distance(m)</string>
 </resources>

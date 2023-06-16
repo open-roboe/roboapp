@@ -1,33 +1,35 @@
 package it.halb.roboapp.util;
 
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.List;
 
+import it.halb.roboapp.R;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaController {
-
     private static RegattaController instance;
-    private LiveData<Regatta> regatta;
-    private LiveData<List<Buoy>> buoys;
+    private Regatta regatta;
+    private List<Buoy> buoys;
     private GoogleMap map;
 
-    private RegattaController() {
-        regatta = new MutableLiveData<>();
-        buoys = new MutableLiveData<>();
+    public RegattaController() {
     }
 
-    public RegattaController(LiveData<Regatta> regatta, LiveData<List<Buoy>> buoys, GoogleMap map) {
+    public RegattaController(Regatta regatta, List<Buoy> buoys, GoogleMap map) {
         this.regatta = regatta;
         this.buoys = buoys;
         this.map = map;
@@ -39,47 +41,48 @@ public class RegattaController {
         }
         return instance;
     }
-
-    public static RegattaController getInstance(MutableLiveData<Regatta> regatta, MutableLiveData<List<Buoy>> buoys, GoogleMap map) {
+    public static RegattaController getInstance(Regatta regatta, List<Buoy> buoys, GoogleMap map) {
         if (instance == null) {
             instance = new RegattaController(regatta, buoys, map);
         }
         return instance;
     }
     public void setCourse() {
-        map.addMarker(new MarkerOptions().position(regatta.getValue().getPosition())
+        map.addMarker(new MarkerOptions().position(regatta.getPosition())
                 .title("Jury")
-                .snippet("id:" + regatta.getValue().getName()));
+                .snippet("id:" + regatta.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.pindark)));
 
-        List list = buoys.getValue();
+        List list = buoys;
+
         for (int i = 0; i < list.size(); i++) {
             Buoy buoy = (Buoy) list.get(i);
             if (buoy == null || buoy.getId().equals(Constants.MidLineStart)) {
 
             } else {
-                if(buoy.getId().equals(Constants.BottomMark) && regatta.getValue().isGate() == true)
+                if(buoy.getId().equals(Constants.BottomMark) && regatta.isGate() == true)
                 {
 
                 }else
                 {
                     map.addMarker(new MarkerOptions()
                             .position(buoy.getPosition())
-                            .title(buoy.getId()));
+                            .title(buoy.getId()).icon(BitmapDescriptorFactory.fromResource(R.drawable.pindark)));
                 }
             }
         }
         buildLine();
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(regatta.getPosition(),15));
     }
 
     private void buildLine() {
 
-        List list = buoys.getValue();
+        List list = buoys;
 
         Buoy StartBuoy = BuoyFactory.buoyFinder(list, Constants.StartMark);
         Buoy upBuoy = BuoyFactory.buoyFinder(list, Constants.UpMark);
         Buoy midLineBuoy = BuoyFactory.buoyFinder(list, Constants.MidLineStart);
 
-        PolylineOptions opt = new PolylineOptions().add(regatta.getValue().getPosition(), StartBuoy.getPosition()).width(3f).color(Color.GRAY);
+        PolylineOptions opt = new PolylineOptions().add(regatta.getPosition(), StartBuoy.getPosition()).width(3f).color(Color.GRAY);
         map.addPolyline(opt);
 
         opt = new PolylineOptions().add(midLineBuoy.getPosition(), upBuoy.getPosition()).width(2f).color(Color.GRAY);
@@ -117,11 +120,11 @@ public class RegattaController {
         this.map = map;
     }
 
-    public void setRegatta(MutableLiveData<Regatta> regatta) {
+    public void setRegatta(Regatta regatta) {
         this.regatta = regatta;
     }
 
-    public void setBuoys(MutableLiveData<List<Buoy>> buoys) {
+    public void setBuoys(List<Buoy> buoys) {
         this.buoys = buoys;
     }
 }

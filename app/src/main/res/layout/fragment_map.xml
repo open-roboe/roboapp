@@ -58,6 +58,7 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Large">
             </TextView>
 
+
             <ImageView
                 app:cardElevation="8dp"
                 android:adjustViewBounds="true"
@@ -70,16 +71,41 @@
 
         </androidx.cardview.widget.CardView>
 
+
         <ImageView
-            android:layout_marginStart="60dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/topAppBarCard"
             android:id="@+id/compass"
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:contentDescription="@string/compass_image_description"
             app:srcCompat="@drawable/compass_round_bright" />
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/textField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/compass"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/distanceToTarget"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:focusable="false"
+                android:text="@{mapViewModel.distance}"
+                android:textAlignment="center"
+                android:hint="@string/DistancetoTarget"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
