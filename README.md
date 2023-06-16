@@ -1,6 +1,13 @@
 > **Note** There is not an english documentation available yet. Open an issue to request it
 
-Questa è la repository per lo sviluppo della Roboapp android
+Questa è la repository per lo sviluppo della Roboapp android, per l'esame di programmazione di dispositivi mobili svolto da:
+Alberto Ventafridda,
+Domenico Borgognoni,
+Isaia Del Rosso,
+Nicolò Sansevrino,
+Davide Mariuzzo
+del Gruppo SDM
+
 
 ## Come iniziare
 
