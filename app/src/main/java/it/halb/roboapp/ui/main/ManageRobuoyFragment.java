@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import it.halb.roboapp.R;
+import it.halb.roboapp.dataLayer.RegattaRepository;
 import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Roboa;
 import it.halb.roboapp.databinding.FragmentManageRobuoyBinding;
@@ -27,6 +28,7 @@ public class ManageRobuoyFragment extends Fragment {
 
     private MapViewModel model;
     private FragmentManageRobuoyBinding binding;
+    private RegattaRepository repository;
     private Roboa currentRoboa;
     private List<Buoy> buoys;
 
@@ -47,6 +49,7 @@ public class ManageRobuoyFragment extends Fragment {
 
         NavBackStackEntry store = NavHostFragment.findNavController(this).getBackStackEntry(R.id.main_navigation);
         model = new ViewModelProvider(store).get(MapViewModel.class);
+        repository = new RegattaRepository(requireActivity().getApplication());
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setMapViewModel(model);
 
@@ -65,11 +68,11 @@ public class ManageRobuoyFragment extends Fragment {
             binding.textView11.setText(" - (Lat" + currentRoboa.getLatitude() + " Lon: " + currentRoboa.getLongitude() + ")");
             binding.textView12.setText("Buoy currently binded: " + currentRoboa.getBindedBuoy());
 
-            if(currentRoboa.isActive()){
+            if(currentRoboa.getStatus().equals("moving")){
                 binding.textView14.setText("Stop the robuoy  ");
                 binding.buttonGOSTOP.setText("STOP");
             }
-            else {
+            else if(currentRoboa.getStatus().equals("not moving")){
                 binding.textView14.setText("Start the robuoy  ");
                 binding.buttonGOSTOP.setText("GO");
             }
@@ -77,10 +80,17 @@ public class ManageRobuoyFragment extends Fragment {
 
         //this stops/starts a robuoy
         binding.buttonGOSTOP.setOnClickListener(v -> {
-            if (binding.buttonGOSTOP.getText().equals("GO"))
+            if (binding.buttonGOSTOP.getText().equals("GO")){
                 Log.d("ManageRobuoyFragment", "buttonGO pressed");
-            else
+                currentRoboa.setStatus("moving");
+            }
+            else{
                 Log.d("ManageRobuoyFragment", "buttonSTOP pressed");
+                currentRoboa.setStatus("not moving");
+            }
+            repository.updateRoboa(currentRoboa);
+            NavHostFragment.findNavController(this).navigate
+                    (ManageRobuoyFragmentDirections.actionManageRobuoyFragmentToRoboaInfoFragment());
         });
 
         //this unbinds a robuoy from a buoy and viceversa
@@ -89,6 +99,7 @@ public class ManageRobuoyFragment extends Fragment {
             tempBuoy.setBindedRobuoy(null);
             currentRoboa.setBindedBuoy(null);
             model.updateBindedBuoy(tempBuoy);
+            repository.updateRoboa(currentRoboa);
             NavHostFragment.findNavController(this).navigate
                     (ManageRobuoyFragmentDirections.actionManageRobuoyFragmentToRoboaInfoFragment());
         });

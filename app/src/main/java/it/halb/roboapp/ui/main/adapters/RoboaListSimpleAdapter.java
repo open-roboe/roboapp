@@ -55,7 +55,7 @@ public class RoboaListSimpleAdapter extends ArrayAdapter<Roboa> {
 
         date.setText("last time online: " + LocalTime.now().toString().substring(0, 8));
         title.setText("Roboa: " + currentRoboa.getId() + "");
-        description.setText("name: " + currentRoboa.getName() + ", stato: " + currentRoboa.isActive());
+        description.setText("name: " + currentRoboa.getName() + ", state: " + currentRoboa.getStatus());
         if(currentRoboa.getBindedBuoy() != null)
             buoyBinded.setText("binded buoy: " + currentRoboa.getBindedBuoy());
         else
