@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -21,6 +22,7 @@ import it.halb.roboapp.dataLayer.localDataSource.Buoy;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 
 public class RegattaController {
+
     private static RegattaController instance;
     private Regatta regatta;
     private List<Buoy> buoys;
@@ -48,8 +50,10 @@ public class RegattaController {
         return instance;
     }
     public void setCourse() {
+        //cambia l'immagine del marker con il file speedboat_yellow1.png
         map.addMarker(new MarkerOptions().position(regatta.getPosition())
                 .title("Jury")
+                .snippet("id:" + regatta.getValue().getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.speedboat_yellow3)).anchor(0.5f, 0.5f)).setRotation(regatta.getValue().getWindDirection());
                 .snippet("id:" + regatta.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.pindark)));
 
         List list = buoys;
