@@ -65,6 +65,12 @@ public class RegattaRepository implements RegattaInterface {
         //TODO: add constraint key, or manually delete buoys from here
     }
 
+    public void updateRegatta(Regatta regatta, SuccessCallback<Void> successCallback, ErrorCallback errorCallback){
+        //mock
+        Database.databaseWriteExecutor.execute(() -> regattaDao.update(regatta));
+        successCallback.success(null);
+    }
+
     @ParametersAreNonnullByDefault
     public void insertRegatta(
             Regatta regatta,

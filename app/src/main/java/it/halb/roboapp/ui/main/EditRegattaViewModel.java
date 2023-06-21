@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -269,8 +270,8 @@ public class EditRegattaViewModel extends AndroidViewModel {
             buoySternInfo[1] = false;
         }
         else {
-            buoySternInfo[0] = !(formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).equals(getApplication().getString(R.string.regatta_buoy_stern_none)));
-            buoySternInfo[1] = formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).equals(getApplication().getString(R.string.regatta_buoy_stern_gate));
+            buoySternInfo[0] = !(formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals(getApplication().getString(R.string.regatta_buoy_stern_none)));
+            buoySternInfo[1] = formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals(getApplication().getString(R.string.regatta_buoy_stern_gate));
         }
         return buoySternInfo;
     }
@@ -350,7 +351,7 @@ public class EditRegattaViewModel extends AndroidViewModel {
         });
     }
 
-    public void createRegatta(SuccessCallback<String> success, ErrorCallback error) {
+    public void editRegatta(SuccessCallback<String> success, ErrorCallback error) {
         validateForm();
         Boolean[] buoySternInfo = getBuoySternInfo();
         Double[] optionalDistances = getOptionalDistances();
@@ -376,7 +377,7 @@ public class EditRegattaViewModel extends AndroidViewModel {
             //create buoys objects
             List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
 
-            regattaRepository.deleteRegatta(
+            /*regattaRepository.deleteRegatta(
                     regatta,
                     data->{},
                     (code, detail)->{}
@@ -394,7 +395,12 @@ public class EditRegattaViewModel extends AndroidViewModel {
                     buoys,
                     v -> success.success(regatta.getName()),
                     error
-            );
+            );*/
+
+            regattaRepository.updateRegatta(
+                    regatta,
+                    v -> success.success(regatta.getName()),
+                    error);
 
         }
     }

@@ -144,7 +144,7 @@ public class EditRegattaFragment extends Fragment {
         editRegattaButton.setOnClickListener(v -> {
             //set the current location, then create the regatta
             setCurrentLocation(
-                    vv -> createRegatta()
+                    vv -> editRegatta()
             );
 
         });
@@ -179,12 +179,10 @@ public class EditRegattaFragment extends Fragment {
         }
     }
 
-    public void createRegatta(){
-        model.createRegatta(
+    public void editRegatta(){
+        model.editRegatta(
                 //creation success
                 regattaName -> {
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isRaceOfficer", true);
                     NavHostFragment.findNavController(this)
                             .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToRunRegattaFragment(regattaName));
                 },

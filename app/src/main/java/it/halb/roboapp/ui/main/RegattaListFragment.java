@@ -34,6 +34,7 @@ import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.databinding.FragmentRegattaListBinding;
 import it.halb.roboapp.generated.callback.OnClickListener;
 import it.halb.roboapp.ui.main.adapters.RegattaListAdapter;
+import it.halb.roboapp.util.LinearLayoutManagerWrapper;
 import it.halb.roboapp.util.RecyclerItemClickListener;
 import it.halb.roboapp.util.SwipeController;
 
@@ -76,7 +77,7 @@ public class RegattaListFragment extends Fragment {
         }
 
         //recyclerview initialization
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
+        binding.recyclerView.setLayoutManager(new LinearLayoutManagerWrapper(this.getContext(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerView.setHasFixedSize(true);
 
         adapter = new RegattaListAdapter(model, this, getArguments().getBoolean("isRaceOfficer"));
