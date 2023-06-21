@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -56,10 +57,13 @@ public class EditRegattaFragment extends Fragment {
         model = new ViewModelProvider(this).get(EditRegattaViewModel.class);
 
 
+
         model.setBundle(getArguments());
 
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setEditRegattaViewModel(model);
+
+        //binding.dropdownMenu.setText("Single", false);
 
         //ask for location permissions. we notify the viewModel the result so that a
         // manual coordinates input can be created in case of denied permissions
@@ -85,6 +89,12 @@ public class EditRegattaFragment extends Fragment {
         else {
             regattaTypeSegmentedButton.check(R.id.buttonStick);
         }
+
+        model.getFormFields().getValue().get(getString(R.string.regatta_buoy_stern)).observe(getViewLifecycleOwner(), value -> {
+            if (value != null) {
+                binding.dropdownMenu.setText(value, false);
+            }
+        });
 
         model.getFormFieldsErrors().getValue().get(getString(R.string.regatta_name_error)).observe(getViewLifecycleOwner(), error -> {
             binding.textInputRegattaName.setError(error);
@@ -173,8 +183,10 @@ public class EditRegattaFragment extends Fragment {
         model.createRegatta(
                 //creation success
                 regattaName -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putBoolean("isRaceOfficer", true);
                     NavHostFragment.findNavController(this)
-                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToCourseList());
+                            .navigate(EditRegattaFragmentDirections.actionEditRegattaFragmentToRunRegattaFragment(regattaName));
                 },
                 //creation error
                 (code, details) -> {

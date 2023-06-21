@@ -59,7 +59,7 @@ public class BindBoaAndRoboa extends Fragment {
         });
 
         //i get the list of buoys and set the adapter
-        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+        model.getBuoys().observe(getViewLifecycleOwner(), buoy -> {
             adapter.clear();
             adapter.addAll(buoy);
             adapter.notifyDataSetChanged();

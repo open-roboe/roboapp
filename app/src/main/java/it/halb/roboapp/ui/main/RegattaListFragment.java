@@ -16,12 +16,17 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import it.halb.roboapp.R;
 import it.halb.roboapp.RunningRegattaService;
@@ -34,6 +39,10 @@ import it.halb.roboapp.util.SwipeController;
 
 public class RegattaListFragment extends Fragment {
     private FragmentRegattaListBinding binding;
+    private RegattaListViewModel model;
+    private RegattaListAdapter adapter;
+
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -54,20 +63,23 @@ public class RegattaListFragment extends Fragment {
                                 .clear();
 
         //viewModel initialization
-        RegattaListViewModel model = new ViewModelProvider(this).get(RegattaListViewModel.class);
+        model = new ViewModelProvider(this).get(RegattaListViewModel.class);
         binding.setLifecycleOwner(this.getViewLifecycleOwner());
         binding.setRegattaListViewModel(model);
 
-        /*if (!getArguments().getBoolean("isAdmin")) {
+
+
+
+        if (!getArguments().getBoolean("isRaceOfficer")) {
             binding.floatingActionButton.setVisibility(View.GONE);
             binding.floatingActionButton.setEnabled(false);
-        }*/
+        }
 
         //recyclerview initialization
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false));
         binding.recyclerView.setHasFixedSize(true);
 
-        RegattaListAdapter adapter = new RegattaListAdapter(model, this);
+        adapter = new RegattaListAdapter(model, this, getArguments().getBoolean("isRaceOfficer"));
 
         binding.recyclerView.setAdapter(adapter);
 
@@ -75,33 +87,25 @@ public class RegattaListFragment extends Fragment {
         model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
             //update the list adapter
             adapter.submitList(regattas);
+            adapter.notifyDataSetChanged();
 
             //update placeholder visibility
             binding.noRegattasPlaceholder.setVisibility(
                     regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
             );
-            //update searchbar scroll
-            AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) binding.fakeSearchBar.getLayoutParams();
-            p.setScrollFlags(
-                    regattas.size() > 5 ?
-                            AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL :
-                            AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-            );
-            binding.fakeSearchBar.setLayoutParams(p);
         });
 
-        //temporary test
-        binding.fakeSearchBar.setOnClickListener(v -> {
-            model.debugFakeregatta();
-            /*
-            Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
-                    .setDuration(10 * 1000)
-                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
-                        model.testLogout();
-                    })
-                    .show();
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
 
-             */
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
         });
 
 
@@ -142,4 +146,19 @@ public class RegattaListFragment extends Fragment {
         }));*/
 
     }
+
+    private void filterList(String query){
+        List<Regatta> filteredList = new ArrayList<>();
+
+        model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
+            for (Regatta regatta : regattas) {
+                if (regatta.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(regatta);
+                }
+            }
+        });
+        adapter.submitList(filteredList);
+        adapter.notifyDataSetChanged();
+    }
+
 }

@@ -61,4 +61,8 @@ public class Account {
     public void setRaceOfficer(boolean raceOfficer) {
         isRaceOfficer = raceOfficer;
     }
+
+    public String toString(){
+        return "username: " + username + " authToken: " + authToken + " isAdmin: " + isAdmin + " isRaceOfficer: " + isRaceOfficer;
+    }
 }

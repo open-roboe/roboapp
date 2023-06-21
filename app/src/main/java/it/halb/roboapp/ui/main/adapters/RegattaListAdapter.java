@@ -36,10 +36,13 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
 
     private RegattaListFragment fragment;
 
-    public RegattaListAdapter(RegattaListViewModel model, RegattaListFragment fragment) {
+    private Boolean isRaceOfficer;
+
+    public RegattaListAdapter(RegattaListViewModel model, RegattaListFragment fragment, Boolean isRaceOfficer) {
         super(DIFF_CALLBACK);
         this.model = model;
         this.fragment = fragment;
+        this.isRaceOfficer = isRaceOfficer;
     }
 
     private static final DiffUtil.ItemCallback<Regatta> DIFF_CALLBACK = new DiffUtil.ItemCallback<Regatta>() {
@@ -62,7 +65,7 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
         //this is where we define and initialize/inflate the layout used by a sigle view
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.regatta_item, parent, false);
-        return new RegattaHolder(itemView, model, this, fragment);
+        return new RegattaHolder(itemView, model, this, fragment, isRaceOfficer);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -91,8 +94,14 @@ public class RegattaListAdapter extends ListAdapter<Regatta, RegattaListAdapter.
 
         private ImageButton deleteButton;
 
-        public RegattaHolder(@NonNull View itemView, RegattaListViewModel model, RegattaListAdapter adapter, RegattaListFragment fragment) {
+        public RegattaHolder(@NonNull View itemView, RegattaListViewModel model, RegattaListAdapter adapter, RegattaListFragment fragment, Boolean isRaceOfficer) {
             super(itemView);
+            if (!isRaceOfficer) {
+                itemView.findViewById(R.id.edit_button).setVisibility(View.GONE);
+                itemView.findViewById(R.id.delete_button).setVisibility(View.GONE);
+                itemView.findViewById(R.id.edit_button).setEnabled(false);
+                itemView.findViewById(R.id.delete_button).setEnabled(false);
+            }
             this.relativeLayout = itemView.findViewById(R.id.item);
             this.textViewTitle = itemView.findViewById(R.id.textViewTitle);
             this.textViewDescription = itemView.findViewById(R.id.textViewDescription);

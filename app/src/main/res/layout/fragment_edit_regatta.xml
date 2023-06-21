@@ -244,11 +244,11 @@
                     app:layout_constraintStart_toStartOf="parent">
 
                     <AutoCompleteTextView
+                        android:id="@+id/dropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:inputType="none"
                         android:onTextChanged="@{editRegattaViewModel::onBuoySternTextChanged}"
-                        android:text="@{editRegattaViewModel.formFields.get(@string/regatta_buoy_stern)}"
                         app:simpleItems="@array/buoy_stern_array" />
 
                 </com.google.android.material.textfield.TextInputLayout>

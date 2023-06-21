@@ -33,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Log.d("MainActivity", "onCreate: " + getIntent().getExtras());
-
-
         MainViewModel model = new ViewModelProvider(this).get(MainViewModel.class);
 
         model.getAccount().observe(this, account -> {
@@ -57,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
                 if(navHostFragment == null) return;
                 BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
                 NavController navController = navHostFragment.getNavController();
-                navController.setGraph(R.navigation.navigation_main, getIntent().getExtras());
+                Bundle accountType = new Bundle();
+                accountType.putBoolean("isRaceOfficer", account.isRaceOfficer());
+                navController.setGraph(R.navigation.navigation_main, accountType);
                 NavigationUI.setupWithNavController(bottomNav, navController);
                 //handle bottom bar visibility: only some fragments need it
                 //https://stackoverflow.com/questions/56215403/how-to-hide-bottom-nav-bar-in-fragment
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
 

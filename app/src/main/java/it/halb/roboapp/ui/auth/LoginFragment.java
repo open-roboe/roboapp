@@ -53,10 +53,9 @@ public class LoginFragment extends Fragment {
         model.getAccount().observe(getViewLifecycleOwner(), account -> {
             if(account != null){
                 //there is an account! move to main activity
-
                 Intent intent = new Intent(getContext(), MainActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.putExtra("isAdmin" , account.isAdmin());
+                intent.putExtra("isRaceOfficer" , account.isRaceOfficer());
                 startActivity(intent);
             }
         });

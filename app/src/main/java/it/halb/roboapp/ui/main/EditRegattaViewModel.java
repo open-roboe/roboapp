@@ -127,6 +127,9 @@ public class EditRegattaViewModel extends AndroidViewModel {
     private void populateHashMaps() {
         HashMap<String, MutableLiveData<String>> map = formFields.getValue();
 
+        Log.d(TAG, "populateHashMaps: " + bundle.getValue().get(getApplication().getString(R.string.botton_buoy)).toString());
+        Log.d(TAG, "populateHashMaps: " + bundle.getValue().get(Constants.regattaGate));
+
 
         map.put(getApplication().getString(R.string.regatta_name), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.name)).toString()));
         map.put(getApplication().getString(R.string.regatta_course_axis), new MutableLiveData<String>(bundle.getValue().get(getApplication().getString(R.string.wind_direction)).toString()));
@@ -224,8 +227,11 @@ public class EditRegattaViewModel extends AndroidViewModel {
     }
 
     public void onBuoySternTextChanged(CharSequence s, int start, int before, int count) {
-        formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).setValue(s.toString());
-        resetDisplayError(formFieldsErrors.getValue().get(getApplication().getString(R.string.regatta_buoy_stern_error)));
+        if(!(s.toString()).equals(formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue())) {
+            formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).setValue(s.toString());
+            Log.d("onBuoySternTextChanged", s.toString());
+            resetDisplayError(formFieldsErrors.getValue().get(getApplication().getString(R.string.regatta_buoy_stern_error)));
+        }
     }
 
     public void onRegattaTypeChanged(int index) {
@@ -318,12 +324,21 @@ public class EditRegattaViewModel extends AndroidViewModel {
                     mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_bolina_distance_error)).setValue(getApplication().getString(R.string.textfield_invalid_field_error));
                     setFormValid(false);
                 }
-            }else if (k.equals(getApplication().getString(R.string.regatta_buoy_stern))) {
+            } else if (k.equals(getApplication().getString(R.string.regatta_buoy_stern))) {
                 if (enableBuoyStern.getValue() == true && v.getValue().equals("")) {
                     mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_buoy_stern_error)).setValue(getApplication().getString(R.string.textfield_missing_field_error));
                     setFormValid(false);
                 }
-            } else {
+            } else if (k.equals(getApplication().getString(R.string.regatta_course_axis))) {
+                if (v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_course_axis_error)).setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (Double.parseDouble(v.getValue()) < 0 || Double.parseDouble(v.getValue()) > 360) {
+                    mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_course_axis_error)).setValue(getApplication().getString(R.string.textfield_invalid_field_error));
+                    setFormValid(false);
+                }
+            }
+            else {
                 if (v.getValue().equals("")) {
                     mapFormFieldsErrors.get(k + getApplication().getString(R.string.error)).setValue(getApplication().getString(R.string.textfield_missing_field_error));
                     setFormValid(false);
@@ -368,7 +383,7 @@ public class EditRegattaViewModel extends AndroidViewModel {
             );
 
             try {
-                Thread.sleep(500);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

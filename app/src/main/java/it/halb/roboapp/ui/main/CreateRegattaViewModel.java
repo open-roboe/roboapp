@@ -208,15 +208,15 @@ public class CreateRegattaViewModel extends AndroidViewModel {
     }
 
     public Boolean[] getBuoySternInfo() {
-        Log.d(TAG, "getBuoySternInfo: " + formFields.getValue().get("buoyStern").getValue());
+        Log.d(TAG, "getBuoySternInfo: " + formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue());
         Boolean[] buoySternInfo = new Boolean[2];
         if (enableBuoyStern.getValue()== false || formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals("")) {
             buoySternInfo[0] = false;
             buoySternInfo[1] = false;
         }
         else {
-            buoySternInfo[0] = !(formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).equals(getApplication().getString(R.string.regatta_buoy_stern_none)));
-            buoySternInfo[1] = formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).equals(getApplication().getString(R.string.regatta_buoy_stern_gate));
+            buoySternInfo[0] = !(formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals(getApplication().getString(R.string.regatta_buoy_stern_none)));
+            buoySternInfo[1] = formFields.getValue().get(getApplication().getString(R.string.regatta_buoy_stern)).getValue().equals(getApplication().getString(R.string.regatta_buoy_stern_gate));
         }
         return buoySternInfo;
     }
@@ -270,9 +270,17 @@ public class CreateRegattaViewModel extends AndroidViewModel {
                     mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_bolina_distance_error)).setValue(getApplication().getString(R.string.textfield_invalid_field_error));
                     setFormValid(false);
                 }
-            }else if (k.equals(getApplication().getString(R.string.regatta_buoy_stern))) {
+            } else if (k.equals(getApplication().getString(R.string.regatta_buoy_stern))) {
                 if (enableBuoyStern.getValue() == true && v.getValue().equals("")) {
                     mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_buoy_stern_error)).setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                }
+            } else if (k.equals(getApplication().getString(R.string.regatta_course_axis))) {
+                if (v.getValue().equals("")) {
+                    mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_course_axis_error)).setValue(getApplication().getString(R.string.textfield_missing_field_error));
+                    setFormValid(false);
+                } else if (Double.parseDouble(v.getValue()) < 0 || Double.parseDouble(v.getValue()) > 360) {
+                    mapFormFieldsErrors.get(getApplication().getString(R.string.regatta_course_axis_error)).setValue(getApplication().getString(R.string.textfield_invalid_field_error));
                     setFormValid(false);
                 }
             } else {
