@@ -79,6 +79,7 @@ public class AuthRepository {
                       @NonNull SuccessCallback<Account> successCallback,
                       @NonNull ErrorCallback errorCallback){
         //perform login api request
+        /*
         apiClient.getAccountApi().loginApiAccountAuthPost(
                 username, password,
                 "password", null, null, null
@@ -97,6 +98,12 @@ public class AuthRepository {
                 //error
                 errorCallback::error
         ));
+
+         */
+        //temp solution remove when server fixed
+        apiClient.setAuthToken("eytesttest");
+        loadAccount(successCallback, errorCallback);
+        //end of temp solution
     }
 
 
@@ -119,9 +126,22 @@ public class AuthRepository {
      * @param errorCallback This callback will be executed if the operation failed
      */
     public void loadAccount(@Nullable SuccessCallback<Account> successCallback, @Nullable ErrorCallback errorCallback){
+        //temp solution. remove when server fixed
+        Account account = new Account("antonio", "eytesttest", true, true);
+        account.setAuthToken(
+                apiClient.getAuthToken()
+        );
+        //update the local data source with the account data
+        Database.databaseWriteExecutor.execute(() -> accountDao.insert(account));
+        //update the callback if exists
+        if(successCallback != null)
+            successCallback.success(account);
+        //end of temp solution
+
         //perform api request
+        /*
         apiClient.getAccountApi().getLoggedUserApiAccountGet(
-                /* no parameters required for this method */
+
         ).enqueue(new ApiCallbackLambda<>(
                 //success
                 data -> {
@@ -147,6 +167,7 @@ public class AuthRepository {
                 //auth error
                 this::logout
         ));
+        */
     }
 
 
