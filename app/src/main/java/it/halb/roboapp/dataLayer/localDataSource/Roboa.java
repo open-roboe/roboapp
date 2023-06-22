@@ -21,7 +21,6 @@ public class Roboa {
     private double latitudeDestination;
     private double longitudeDestination;
     private boolean isActive;
-    private String bindedBuoy;
 
     public Roboa(int id) {
         this.id = id;
@@ -120,13 +119,5 @@ public class Roboa {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public void setBindedBuoy(String bindedBuoy) {
-        this.bindedBuoy = bindedBuoy;
-    }
-
-    public String getBindedBuoy() {
-        return bindedBuoy;
     }
 }

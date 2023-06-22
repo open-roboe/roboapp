@@ -15,8 +15,6 @@ import it.halb.roboapp.dataLayer.localDataSource.BuoyDao;
 import it.halb.roboapp.dataLayer.localDataSource.Database;
 import it.halb.roboapp.dataLayer.localDataSource.Regatta;
 import it.halb.roboapp.dataLayer.localDataSource.RegattaDao;
-import it.halb.roboapp.dataLayer.localDataSource.Roboa;
-import it.halb.roboapp.dataLayer.localDataSource.RoboaDao;
 import it.halb.roboapp.dataLayer.remoteDataSource.ApiClient;
 import it.halb.roboapp.util.SharedPreferenceUtil;
 
@@ -25,7 +23,6 @@ public class RegattaRepository implements RegattaInterface {
     private final AccountDao accountDao;
     private final RegattaDao regattaDao;
     private final BuoyDao buoyDao;
-    private final RoboaDao roboaDao;
     private final LiveData<Account> account;
     private final LiveData<List<Regatta>> regattas;
 
@@ -36,7 +33,7 @@ public class RegattaRepository implements RegattaInterface {
         accountDao = database.accountDao();
         regattaDao = database.regattaDao();
         buoyDao = database.buoyDao();
-        roboaDao = database.roboaDao();
+
         account = accountDao.getAccount();
         regattas = regattaDao.getAllRegattas();
         //init data used by remote data source
@@ -84,23 +81,5 @@ public class RegattaRepository implements RegattaInterface {
             buoyDao.insert(buoys);
         });
         successCallback.success(null);
-    }
-
-    public void updateBuoy(Buoy buoy){
-        Database.databaseWriteExecutor.execute(() -> {
-            buoyDao.update(buoy);
-        });
-    }
-
-    public void insertRoboa(Roboa roboa){
-        Database.databaseWriteExecutor.execute(() -> {
-            roboaDao.insert(roboa);
-        });
-    }
-
-    public void updateRoboa(Roboa roboa){
-        Database.databaseWriteExecutor.execute(() -> {
-            roboaDao.update(roboa);
-        });
     }
 }

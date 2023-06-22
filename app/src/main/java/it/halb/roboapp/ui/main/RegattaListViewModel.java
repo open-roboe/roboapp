@@ -1,7 +1,6 @@
 package it.halb.roboapp.ui.main;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -54,5 +53,11 @@ public class RegattaListViewModel extends AndroidViewModel {
         }, error);
     }
 
+    public void debugFakeregatta(){
+        String name = "Regatta-" + (new Random().nextInt());
+        Regatta regatta = new Regatta(name, Constants.stickRegatta, 0, 10, 100.1, 10.1, 1000.0, 10.0, true, true);
+        List<Buoy> buoys = BuoyFactory.buildCourse(regatta);
+        regattaRepository.insertRegatta(regatta, buoys, v->{}, (code, details) -> {});
+    }
 
 }

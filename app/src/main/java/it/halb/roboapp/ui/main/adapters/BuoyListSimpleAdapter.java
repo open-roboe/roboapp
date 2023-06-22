@@ -42,14 +42,11 @@ public class BuoyListSimpleAdapter extends ArrayAdapter <Buoy> {
 
         TextView title = convertView.findViewById(R.id.textViewTitleBuoy);
         TextView description = convertView.findViewById(R.id.textViewDescriptionBuoy);
-        TextView robuoyBinded = convertView.findViewById(R.id.textViewRobuoyBinded);
+
 
         title.setText(currentBuoy.getId());
-        description.setText("belongs to regatta: " + currentBuoy.getRegattaName());
-        if(currentBuoy.getBindedRobuoy() == null)
-            robuoyBinded.setText("binded robuoy: none");
-        else
-            robuoyBinded.setText("binded robuoy: " + currentBuoy.getBindedRobuoy());
+        description.setText("Appartiene alla regatta " + currentBuoy.getRegattaName());
+
 
         return convertView;
     }

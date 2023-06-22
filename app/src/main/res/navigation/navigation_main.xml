@@ -52,14 +52,7 @@
         android:id="@+id/roboaInfoFragment"
         android:name="it.halb.roboapp.ui.main.RoboaInfoFragment"
         tools:layout="@layout/fragment_robuoy_info"
-        android:label="RoboaInfoFragment" >
-        <action
-            android:id="@+id/action_roboaInfoFragment_to_bindBoaAndRoboaFragment"
-            app:destination="@id/BindBoaAndRoboaFragment" />
-        <action
-            android:id="@+id/action_roboaInfoFragment_to_manageRobuoyFragment"
-            app:destination="@id/manageRobuoyFragment" />
-    </fragment>
+        android:label="RoboaInfoFragment" />
     <fragment
         android:id="@+id/createRegattaFragment"
         android:name="it.halb.roboapp.ui.main.CreateRegattaFragment"
@@ -77,25 +70,6 @@
             android:id="@+id/action_editRegattaFragment_to_runRegattaFragment"
             app:destination="@id/runRegattaFragment" />
 
-    </fragment>
-
-    <fragment
-        android:id="@+id/BindBoaAndRoboaFragment"
-        android:name="it.halb.roboapp.ui.main.BindBoaAndRoboa"
-        android:label="BindBoaAndRoboaFragment"
-        tools:layout="@layout/fragment_bind_boa_and_roboa" >
-        <action
-            android:id="@+id/action_bindBoaAndRoboaFragment_to_roboaInfoFragment"
-            app:destination="@id/roboaInfoFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/manageRobuoyFragment"
-        android:name="it.halb.roboapp.ui.main.ManageRobuoyFragment"
-        android:label="ManageRobuoyFragment"
-        tools:layout="@layout/fragment_manage_robuoy" >
-        <action
-            android:id="@+id/action_manageRobuoyFragment_to_roboaInfoFragment"
-            app:destination="@id/roboaInfoFragment" />
     </fragment>
 
 </navigation>
