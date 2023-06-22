@@ -54,7 +54,7 @@ public class ManageRobuoyFragment extends Fragment {
         binding.setMapViewModel(model);
 
         //i get the list of buoys
-        model.getBuoy().observe(getViewLifecycleOwner(), buoy -> {
+        model.getBuoys().observe(getViewLifecycleOwner(), buoy -> {
             buoys = buoy;
         });
 

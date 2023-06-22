@@ -53,8 +53,7 @@ public class RegattaController {
         //cambia l'immagine del marker con il file speedboat_yellow1.png
         map.addMarker(new MarkerOptions().position(regatta.getPosition())
                 .title("Jury")
-                .snippet("id:" + regatta.getValue().getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.speedboat_yellow3)).anchor(0.5f, 0.5f)).setRotation(regatta.getValue().getWindDirection());
-                .snippet("id:" + regatta.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.pindark)));
+                .snippet("id:" + regatta.getName()).icon(BitmapDescriptorFactory.fromResource(R.drawable.speedboat_yellow3)).anchor(0.5f, 0.5f)).setRotation(regatta.getWindDirection());
 
         List list = buoys;
 

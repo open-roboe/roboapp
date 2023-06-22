@@ -71,40 +71,6 @@ public class RegattaListFragment extends Fragment {
 
         binding.recyclerView.setAdapter(adapter);
 
-        //viewModel update listeners
-        model.getAllRegattas().observe(this.getViewLifecycleOwner(), regattas -> {
-            //update the list adapter
-            adapter.submitList(regattas);
-
-            //update placeholder visibility
-            binding.noRegattasPlaceholder.setVisibility(
-                    regattas.size() > 0 ? View.INVISIBLE : View.VISIBLE
-            );
-            //update searchbar scroll
-            AppBarLayout.LayoutParams p = (AppBarLayout.LayoutParams) binding.fakeSearchBar.getLayoutParams();
-            p.setScrollFlags(
-                    regattas.size() > 5 ?
-                            AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL :
-                            AppBarLayout.LayoutParams.SCROLL_FLAG_NO_SCROLL
-            );
-            binding.fakeSearchBar.setLayoutParams(p);
-        });
-
-        //temporary test
-        binding.fakeSearchBar.setOnClickListener(v -> {
-            model.debugFakeregatta();
-            /*
-            Snackbar.make(v, snackbar_regatta_deleted_text, Snackbar.LENGTH_LONG)
-                    .setDuration(10 * 1000)
-                    .setAction(R.string.snackbar_regatta_deleted_undo, v1 -> {
-                        model.testLogout();
-                    })
-                    .show();
-
-             */
-        });
-
-
         //refresh listener
         binding.refreshLayout.setOnRefreshListener(() -> {
             model.refresh(
